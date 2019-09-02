@@ -7,10 +7,24 @@
     <RootNamespace>bellyful_proj_v._0._3</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20190902114630_addAppUser.cs" />
+    <Compile Remove="Data\Migrations\20190902114630_addAppUser.Designer.cs" />
+    <Compile Remove="Migrations\20190902113417_inheritIdentityUserForVolunteer.cs" />
+    <Compile Remove="Migrations\20190902113417_inheritIdentityUserForVolunteer.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Pages\Account\Manage\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>
