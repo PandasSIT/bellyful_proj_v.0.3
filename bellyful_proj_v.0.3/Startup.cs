@@ -35,6 +35,7 @@ namespace bellyful_proj_v._0._3
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.AddDbContext<bellyful_v03Context>(options => { options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")); });//配置EF 使用SQL Server
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(

@@ -4,7 +4,8 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <UserSecretsId>aspnet-bellyful_proj_v._0._3-FA3E7F52-24A4-4B51-BCB5-ECD46731C987</UserSecretsId>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-    <RootNamespace>bellyful_proj_v._0._3</RootNamespace>
+    <RootNamespace>bellyful_proj_v.0.3</RootNamespace>
+    <AssemblyName>bellyful_proj_v.0.3</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Views\VolunteerStatus\" />
     <Folder Include="wwwroot\lib\bellyful\css\" />
     <Folder Include="wwwroot\lib\bellyful\demo\" />
     <Folder Include="wwwroot\lib\bellyful\js\demo\" />
