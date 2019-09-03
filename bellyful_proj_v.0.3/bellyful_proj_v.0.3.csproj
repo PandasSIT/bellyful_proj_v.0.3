@@ -23,8 +23,13 @@
 
 
   <ItemGroup>
-    <Folder Include="Areas\Identity\Pages\Account\Manage\" />
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\lib\bellyful\css\" />
+    <Folder Include="wwwroot\lib\bellyful\demo\" />
+    <Folder Include="wwwroot\lib\bellyful\js\demo\" />
+    <Folder Include="wwwroot\lib\chart.js\" />
+    <Folder Include="wwwroot\lib\datatables\" />
+    <Folder Include="wwwroot\lib\jquery-easing\" />
   </ItemGroup>
 
 </Project>
