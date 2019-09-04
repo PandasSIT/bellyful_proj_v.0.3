@@ -6,17 +6,19 @@ using System.Threading.Tasks;
 
 namespace bellyful_proj_v._0._3.ViewModels
 {
-    public class AddAppUserViewModel
+    public class CreateAppUserViewModel
     {
-        [Required, Display(Name = "User Full Name")]
-        public string UserName { get; set; }
-
-        [Required, DataType(DataType.EmailAddress),EmailAddress]
+       
+        [Required, DataType(DataType.EmailAddress),EmailAddress,Display(Name ="Email(Login Use)")]
         public string Email { get; set; }
 
         [Required,DataType(DataType.Password)]
         public string Password { get; set; }
-
+        [Display(Name = "VID(if has)")]
         public int? VolunteerId { get; set; }
+
+        [Display(Name = "AppUserRole")]
+        public int? AppUserRoleId { get; set; }
+
     }
 }

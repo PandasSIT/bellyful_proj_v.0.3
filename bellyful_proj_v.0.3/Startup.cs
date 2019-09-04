@@ -40,7 +40,7 @@ namespace bellyful_proj_v._0._3
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<ApplicationUser>(
+            services.AddIdentity<ApplicationUser,IdentityRole>(  //注入 Role Identity   ,把Default去掉
                     options =>
                     {
                         options.Password.RequireNonAlphanumeric = false;

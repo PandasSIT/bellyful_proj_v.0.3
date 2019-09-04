@@ -8,6 +8,7 @@ using bellyful_proj_v._0._3.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace bellyful_proj_v._0._3.Controllers
@@ -16,10 +17,18 @@ namespace bellyful_proj_v._0._3.Controllers
     public class AppUserController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly bellyful_v03Context _context;
 
-        public AppUserController(UserManager<ApplicationUser> userManager)
+        public AppUserController(
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager, 
+            bellyful_v03Context context
+            )
         {
             _userManager = userManager;
+            _roleManager = roleManager;
+            _context = context;
         }
         public async Task<IActionResult> Index()
         {
@@ -48,30 +57,42 @@ namespace bellyful_proj_v._0._3.Controllers
             return View("Index", await _userManager.Users.ToListAsync());
         }
 
-        public IActionResult AddUser()
+        public IActionResult CreateAppUser()
         {
+            var vsList = _context.Volunteer.Select(
+                volunteer => 
+                    new VolunteerForSelection {
+                        VId = volunteer.VolunteerId,
+                        IdFullName = volunteer.VolunteerId.ToString()+". " +volunteer.FirstName + "   " + volunteer.LastName }
+                ).OrderBy(c=>c.VId);
+
+            var rList = _roleManager.Roles.ToList();
+
+            ViewData["Volunteers"] = new SelectList(vsList, "VId", "IdFullName");
+            ViewData["AppUserRoles"] = new SelectList(rList, "Id", "Name");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddUser(AddAppUserViewModel addAppUserViewModel)
+        public async Task<IActionResult> CreateAppUser(CreateAppUserViewModel createAppUserViewModel)
         {
             if (!ModelState.IsValid)//If not valid, return that model
             {
-                return View(addAppUserViewModel);
+                return View(createAppUserViewModel);
             }
             //otherwise create new IdentityUser
             var user = new ApplicationUser
             {
-                UserName = addAppUserViewModel.UserName,
-                Email = addAppUserViewModel.Email
+                VolunteerId = createAppUserViewModel.VolunteerId,
+                UserName = createAppUserViewModel.Email,
+                Email = createAppUserViewModel.Email
             };
-            var result = await _userManager.CreateAsync(user, addAppUserViewModel.Password);
+            var result = await _userManager.CreateAsync(user, createAppUserViewModel.Password);
 
             if (result.Succeeded)
             {//if succeeded, return to AppUser index page with all users
-                return View("Index", await _userManager.Users.ToListAsync());
+                return RedirectToAction("Index");
             }
             // otherwise load all errors 
             foreach (var error in result.Errors)
@@ -79,7 +100,7 @@ namespace bellyful_proj_v._0._3.Controllers
                 ModelState.AddModelError(string.Empty, error.Description);
             }
 
-            return View(addAppUserViewModel);
+            return View(createAppUserViewModel);
 
         }
     }
