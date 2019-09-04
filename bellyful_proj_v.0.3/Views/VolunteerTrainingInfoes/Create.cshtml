@@ -1,0 +1,58 @@
+﻿@model bellyful_proj_v._0._3.Models.VolunteerTrainingInfo
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+
+<h4>VolunteerTrainingInfo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="VolunteerId" class="control-label"></label>
+                <select asp-for="VolunteerId" class ="form-control" asp-items="ViewBag.VolunteerId"></select>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="DeliveryTraining" /> @Html.DisplayNameFor(model => model.DeliveryTraining)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="HSTraining" /> @Html.DisplayNameFor(model => model.HSTraining)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="FirstAidRaining" /> @Html.DisplayNameFor(model => model.FirstAidRaining)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="OtherTrainingSkill" class="control-label"></label>
+                <input asp-for="OtherTrainingSkill" class="form-control" />
+                <span asp-validation-for="OtherTrainingSkill" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+</body>
+</html>

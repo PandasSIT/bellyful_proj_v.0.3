@@ -25,7 +25,12 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Views\VolunteerEmergencyContacts\" />
+    <Folder Include="Views\VolunteerPoliceInfoes\" />
+    <Folder Include="Views\VolunteerRoles\" />
     <Folder Include="Views\VolunteerStatus\" />
+    <Folder Include="Views\Volunteers\" />
+    <Folder Include="Views\VolunteerTrainingInfoes\" />
     <Folder Include="wwwroot\lib\bellyful\css\" />
     <Folder Include="wwwroot\lib\bellyful\demo\" />
     <Folder Include="wwwroot\lib\bellyful\js\demo\" />
