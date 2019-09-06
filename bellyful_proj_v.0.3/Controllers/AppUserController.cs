@@ -22,7 +22,7 @@ namespace bellyful_proj_v._0._3.Controllers
 
         public AppUserController(
             UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager, 
+            RoleManager<IdentityRole> roleManager,
             bellyful_v03Context context
             )
         {
@@ -30,13 +30,84 @@ namespace bellyful_proj_v._0._3.Controllers
             _roleManager = roleManager;
             _context = context;
         }
+
+        async Task<IEnumerable<AppUserIndexViewMode>> GetAppUserIndexViewModel()
+        {
+
+            var sds = new List<AppUserIndexViewMode>();
+
+            foreach (var item in _userManager.Users)
+            {
+                var vm = new AppUserIndexViewMode
+                {
+                    Id = item.Id,
+                    Email = item.Email,
+                    //Role = _roleManager.FindByIdAsync(item.AppRoleId.ToString()).Result.Name,
+                    //
+                };
+                if (item.VolunteerId != null)
+                {
+                    var v = _context.Volunteer.SingleOrDefault(i => i.VolunteerId == item.VolunteerId);
+                    if (v != null)
+                    {
+                        vm.VIdName = v.VolunteerId.ToString() + ". " + v.FirstName;
+                    }
+                }
+
+                if (item.AppRoleId != null)
+                {
+                    vm.Role = _roleManager.FindByIdAsync(item.AppRoleId.ToString()).Result.Name;
+                }
+
+                sds.Add(vm);
+            }
+
+            return sds;
+        }
+
         public async Task<IActionResult> Index()
         {
-            return View(await _userManager.Users.ToListAsync());
+            return View(await GetAppUserIndexViewModel());
         }
 
 
-        [ValidateAntiForgeryToken,HttpPost]
+        [HttpGet]
+        public async Task<IActionResult> EditUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                return View(new AppUserCreateViewModel
+                {
+                    Email = user.Email,
+                    VolunteerId = user.VolunteerId,
+                    AppUserRoleId = user.AppRoleId
+                });
+            }
+            ViewData["Volunteers"] = new SelectList(GetVolunteerForSelection(), "VId", "IdFullName");
+            ViewData["AppUserRoles"] = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
+            return RedirectToAction("Index");
+
+
+        }
+
+        //[HttpPost]
+        //public async Task<IActionResult> EditUser()
+        //{
+
+        //}
+
+
+
+
+
+
+
+
+
+
+
+        [HttpPost]
         public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -54,54 +125,76 @@ namespace bellyful_proj_v._0._3.Controllers
                 ModelState.AddModelError(string.Empty, "User dose not exist！");
             }
 
-            return View("Index", await _userManager.Users.ToListAsync());
+            return View("Index", await GetAppUserIndexViewModel());
         }
+
+
+        public List<VolunteerForSelection> GetVolunteerForSelection()
+        {
+            return _context.Volunteer.Select(volunteer => new VolunteerForSelection
+            {
+                VId = volunteer.VolunteerId,
+                IdFullName = volunteer.VolunteerId +
+                              ". " + volunteer.FirstName + "   " + volunteer.LastName
+            }).OrderBy(c => c.VId).ToList();
+        }
+
+
 
         public IActionResult CreateAppUser()
         {
-            var vsList = _context.Volunteer.Select(
-                volunteer => 
-                    new VolunteerForSelection {
-                        VId = volunteer.VolunteerId,
-                        IdFullName = volunteer.VolunteerId.ToString()+". " +volunteer.FirstName + "   " + volunteer.LastName }
-                ).OrderBy(c=>c.VId);
-
-            var rList = _roleManager.Roles.ToList();
-
-            ViewData["Volunteers"] = new SelectList(vsList, "VId", "IdFullName");
-            ViewData["AppUserRoles"] = new SelectList(rList, "Id", "Name");
+            ViewData["Volunteers"] = new SelectList(GetVolunteerForSelection(), "VId", "IdFullName");
+            ViewData["AppUserRoles"] = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAppUser(CreateAppUserViewModel createAppUserViewModel)
+        public async Task<IActionResult> CreateAppUser(AppUserCreateViewModel appUserCreateViewModel)
         {
-            if (!ModelState.IsValid)//If not valid, return that model
+            async Task<IActionResult> ReturnToCreateGet()
             {
-                return View(createAppUserViewModel);
-            }
-            //otherwise create new IdentityUser
-            var user = new ApplicationUser
-            {
-                VolunteerId = createAppUserViewModel.VolunteerId,
-                UserName = createAppUserViewModel.Email,
-                Email = createAppUserViewModel.Email
-            };
-            var result = await _userManager.CreateAsync(user, createAppUserViewModel.Password);
-
-            if (result.Succeeded)
-            {//if succeeded, return to AppUser index page with all users
-                return RedirectToAction("Index");
-            }
-            // otherwise load all errors 
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
+                var vsList = await _context.Volunteer.Select(volunteer => new VolunteerForSelection
+                {
+                    VId = volunteer.VolunteerId,
+                    IdFullName = volunteer.VolunteerId +
+                                 ". " + volunteer.FirstName + "   " + volunteer.LastName
+                }).OrderBy(c => c.VId).ToListAsync();
+                ViewData["Volunteers"] = new SelectList(vsList, "VId", "IdFullName");
+                ViewData["AppUserRoles"] = new SelectList(await _roleManager.Roles.ToListAsync(), "Id", "Name", appUserCreateViewModel.AppUserRoleId);
+                return View(appUserCreateViewModel);
             }
 
-            return View(createAppUserViewModel);
+            if (ModelState.IsValid)//If not valid, return that model
+            {
+                var user = new ApplicationUser
+                {
+                    VolunteerId = appUserCreateViewModel.VolunteerId,
+                    AppRoleId = appUserCreateViewModel.AppUserRoleId,
+                    UserName = appUserCreateViewModel.Email,
+                    Email = appUserCreateViewModel.Email
+                };
+                var role = await _roleManager.FindByIdAsync(appUserCreateViewModel.AppUserRoleId.ToString());
+                var resultPassword = await _userManager.CreateAsync(user, appUserCreateViewModel.Password);
+                var resultAddToRole = await _userManager.AddToRoleAsync(user, role.Name);//Add AppUser to role table
+                if (resultPassword.Succeeded && resultAddToRole.Succeeded)
+                {//if succeeded, return to AppUser index page with all users
 
+
+                    return RedirectToAction("Index");
+                }
+                // otherwise load all errors 
+                foreach (var error in resultPassword.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                foreach (var error in resultAddToRole.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+                return await ReturnToCreateGet();
+            }
+
+            return await ReturnToCreateGet();
         }
     }
 }

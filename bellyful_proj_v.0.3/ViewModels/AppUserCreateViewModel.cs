@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace bellyful_proj_v._0._3.ViewModels
 {
-    public class CreateAppUserViewModel
+    public class AppUserCreateViewModel
     {
        
         [Required, DataType(DataType.EmailAddress),EmailAddress,Display(Name ="Email(Login Use)")]

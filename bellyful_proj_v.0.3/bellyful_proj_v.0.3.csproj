@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Properties\PublishProfiles\" />
     <Folder Include="Views\VolunteerEmergencyContacts\" />
     <Folder Include="Views\VolunteerPoliceInfoes\" />
     <Folder Include="Views\VolunteerRoles\" />

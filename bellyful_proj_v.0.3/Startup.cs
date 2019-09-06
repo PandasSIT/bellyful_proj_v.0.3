@@ -40,17 +40,23 @@ namespace bellyful_proj_v._0._3
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+            var dataProtectionProviderType = typeof(DataProtectorTokenProvider<ApplicationUser>);//No IUserTwoFactorTokenProvider<TUser> 
+            var phoneNumberProviderType = typeof(PhoneNumberTokenProvider<ApplicationUser>);     //named 'Default' is registered.
+            var emailTokenProviderType = typeof(EmailTokenProvider<ApplicationUser>);            //  error
             services.AddIdentity<ApplicationUser,IdentityRole>(  //注入 Role Identity   ,把Default去掉
                     options =>
                     {
                         options.Password.RequireNonAlphanumeric = false;
                         options.Password.RequireLowercase = false;
                         options.Password.RequireUppercase = false;
-                        options.Password.RequiredLength = 1;
+                        options.Password.RequiredLength = 3;
 
                     })
                 .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddTokenProvider(TokenOptions.DefaultProvider, dataProtectionProviderType)       //No IUserTwoFactorTokenProvider<TUser>
+                .AddTokenProvider(TokenOptions.DefaultEmailProvider, emailTokenProviderType)      //named 'Default' is registered.
+                .AddTokenProvider(TokenOptions.DefaultPhoneProvider, phoneNumberProviderType);    //  error
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

@@ -1,0 +1,16 @@
+﻿@model AppUserCreateViewModel
+
+@{
+    ViewBag.Title = "Edit an App User";
+}
+
+<form asp-action="EditUser" method="post">
+    <label asp-for="Email"></label>
+    <input asp-for="Email" asp-route="@Model.Email"/>
+    <label asp-for="Password"></label>
+    <input asp-for="Password" asp-route="@Model.Password"/>
+    <label asp-for="VolunteerId"></label>
+    <input asp-for="VolunteerId" asp-route="@Model.VolunteerId"/>
+    <label asp-for="AppUserRoleId"></label>
+    <input asp-for="AppUserRoleId" asp-route="@Model.AppUserRoleId"/>
+</form>
