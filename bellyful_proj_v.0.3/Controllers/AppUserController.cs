@@ -34,35 +34,36 @@ namespace bellyful_proj_v._0._3.Controllers
         async Task<IEnumerable<AppUserIndexViewMode>> GetAppUserIndexViewModel()
         {
 
-            var sds = new List<AppUserIndexViewMode>();
+            var appusers = new List<AppUserIndexViewMode>();
 
-            foreach (var item in _userManager.Users)
+            foreach (var user in _userManager.Users)
             {
                 var vm = new AppUserIndexViewMode
                 {
-                    Id = item.Id,
-                    Email = item.Email,
+                    Id = user.Id,
+                    Email = user.Email,
+                    Password = user.PasswordHash
                     //Role = _roleManager.FindByIdAsync(item.AppRoleId.ToString()).Result.Name,
                     //
                 };
-                if (item.VolunteerId != null)
+                if (user.VolunteerId != null)
                 {
-                    var v = _context.Volunteer.SingleOrDefault(i => i.VolunteerId == item.VolunteerId);
+                    var v = _context.Volunteer.SingleOrDefault(i => i.VolunteerId == user.VolunteerId);
                     if (v != null)
                     {
                         vm.VIdName = v.VolunteerId.ToString() + ". " + v.FirstName;
                     }
                 }
 
-                if (item.AppRoleId != null)
+                if (user.AppRoleId != null)
                 {
-                    vm.Role = _roleManager.FindByIdAsync(item.AppRoleId.ToString()).Result.Name;
+                    vm.Role = _roleManager.FindByIdAsync(user.AppRoleId.ToString()).Result.Name;
                 }
 
-                sds.Add(vm);
+                appusers.Add(vm);
             }
 
-            return sds;
+            return appusers;
         }
 
         public async Task<IActionResult> Index()
@@ -71,12 +72,17 @@ namespace bellyful_proj_v._0._3.Controllers
         }
 
 
-        [HttpGet]
         public async Task<IActionResult> EditUser(string id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
             var user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
+                ViewData["Volunteers"] = new SelectList(GetVolunteerForSelection(), "VId", "IdFullName");
+                ViewData["AppUserRoles"] = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
                 return View(new AppUserCreateViewModel
                 {
                     Email = user.Email,
@@ -84,18 +90,20 @@ namespace bellyful_proj_v._0._3.Controllers
                     AppUserRoleId = user.AppRoleId
                 });
             }
-            ViewData["Volunteers"] = new SelectList(GetVolunteerForSelection(), "VId", "IdFullName");
-            ViewData["AppUserRoles"] = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
+          
             return RedirectToAction("Index");
 
 
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> EditUser()
-        //{
-
-        //}
+        [HttpPost]
+        public async Task<IActionResult> EditUser(AppUserCreateViewModel appUserCreateViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                
+            }
+        }
 
 
 

@@ -31,5 +31,6 @@ namespace bellyful_proj_v._0._3.ViewModels
         public string Email { get; set; }
         public string Role { get; set; }
         public string VIdName { get; set; }
+        public string Password { get; set; }
     }
 }
