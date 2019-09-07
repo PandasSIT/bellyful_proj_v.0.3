@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace bellyful_proj_v._0._3.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "L1_Admin")]
     public class AppUserController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -81,7 +81,7 @@ namespace bellyful_proj_v._0._3.Controllers
             var user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
-                ViewData["Volunteers"] = new SelectList(GetVolunteerForSelection(), "VId", "IdFullName");
+                ViewData["Volunteers"] = new SelectList(await GetVolunteerForSelection(), "VId", "IdFullName");
                 ViewData["AppUserRoles"] = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
                 return View(new AppUserCreateViewModel
                 {
@@ -90,7 +90,7 @@ namespace bellyful_proj_v._0._3.Controllers
                     AppUserRoleId = user.AppRoleId
                 });
             }
-          
+
             return RedirectToAction("Index");
 
 
@@ -101,8 +101,49 @@ namespace bellyful_proj_v._0._3.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+                var user = await _userManager.FindByEmailAsync(appUserCreateViewModel.Email);
+                if (user != null)
+                {
+                    user.AppRoleId = appUserCreateViewModel.AppUserRoleId;
+                    user.VolunteerId = appUserCreateViewModel.VolunteerId;
+
+                    try
+                    {
+                        await _userManager.UpdateAsync(user);
+                        await _context.SaveChangesAsync();
+
+                        var role = await _roleManager.FindByIdAsync(appUserCreateViewModel.AppUserRoleId.ToString());
+                        var resultAddToRole = await _userManager.AddToRoleAsync(user, role.Name);//Add AppUser to role table
+                        if (resultAddToRole.Succeeded)
+                        {
+                            return RedirectToAction("Index");
+                        }
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        throw;
+                    }
+
+                    return RedirectToAction("index");
+                }
             }
+
+
+            async Task<IActionResult> ReturnToEditGet()
+            {
+                var vsList = await _context.Volunteer.Select(volunteer => new VolunteerForSelection
+                {
+                    VId = volunteer.VolunteerId,
+                    IdFullName = volunteer.VolunteerId +
+                                 ". " + volunteer.FirstName + "   " + volunteer.LastName
+                }).OrderBy(c => c.VId).ToListAsync();
+                ViewData["Volunteers"] = new SelectList(vsList, "VId", "IdFullName");
+                ViewData["AppUserRoles"] = new SelectList(await _roleManager.Roles.ToListAsync(), "Id", "Name", appUserCreateViewModel.AppUserRoleId);
+                return View(appUserCreateViewModel);
+            }
+
+
+            return await ReturnToEditGet();
         }
 
 
@@ -137,72 +178,81 @@ namespace bellyful_proj_v._0._3.Controllers
         }
 
 
-        public List<VolunteerForSelection> GetVolunteerForSelection()
+        public async Task<List<VolunteerForSelection>> GetVolunteerForSelection()
         {
-            return _context.Volunteer.Select(volunteer => new VolunteerForSelection
+            return await _context.Volunteer.Select(volunteer => new VolunteerForSelection
             {
                 VId = volunteer.VolunteerId,
                 IdFullName = volunteer.VolunteerId +
                               ". " + volunteer.FirstName + "   " + volunteer.LastName
-            }).OrderBy(c => c.VId).ToList();
+            }).OrderBy(c => c.VId).ToListAsync();
+
+
         }
 
 
 
-        public IActionResult CreateAppUser()
+        public async Task<IActionResult> CreateAppUser()
         {
-            ViewData["Volunteers"] = new SelectList(GetVolunteerForSelection(), "VId", "IdFullName");
+            ViewData["Volunteers"] = new SelectList(await GetVolunteerForSelection(), "VId", "IdFullName");
             ViewData["AppUserRoles"] = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAppUser(AppUserCreateViewModel appUserCreateViewModel)
-        {
-            async Task<IActionResult> ReturnToCreateGet()
-            {
-                var vsList = await _context.Volunteer.Select(volunteer => new VolunteerForSelection
-                {
-                    VId = volunteer.VolunteerId,
-                    IdFullName = volunteer.VolunteerId +
-                                 ". " + volunteer.FirstName + "   " + volunteer.LastName
-                }).OrderBy(c => c.VId).ToListAsync();
-                ViewData["Volunteers"] = new SelectList(vsList, "VId", "IdFullName");
-                ViewData["AppUserRoles"] = new SelectList(await _roleManager.Roles.ToListAsync(), "Id", "Name", appUserCreateViewModel.AppUserRoleId);
-                return View(appUserCreateViewModel);
-            }
-
+         {
             if (ModelState.IsValid)//If not valid, return that model
             {
-                var user = new ApplicationUser
-                {
-                    VolunteerId = appUserCreateViewModel.VolunteerId,
-                    AppRoleId = appUserCreateViewModel.AppUserRoleId,
-                    UserName = appUserCreateViewModel.Email,
-                    Email = appUserCreateViewModel.Email
-                };
-                var role = await _roleManager.FindByIdAsync(appUserCreateViewModel.AppUserRoleId.ToString());
+                var user = new ApplicationUser();
+
+                user.VolunteerId = appUserCreateViewModel.VolunteerId;
+                user.AppRoleId = appUserCreateViewModel.AppUserRoleId;
+                user.UserName = appUserCreateViewModel.Email;
+                user.Email = appUserCreateViewModel.Email;
                 var resultPassword = await _userManager.CreateAsync(user, appUserCreateViewModel.Password);
-                var resultAddToRole = await _userManager.AddToRoleAsync(user, role.Name);//Add AppUser to role table
-                if (resultPassword.Succeeded && resultAddToRole.Succeeded)
-                {//if succeeded, return to AppUser index page with all users
+                if (resultPassword.Succeeded)
+                {
+                    if (appUserCreateViewModel.AppUserRoleId != null)
+                    {
+                        var role = await _roleManager.FindByIdAsync(appUserCreateViewModel.AppUserRoleId.ToString());
+                        var resultAddToRole = await _userManager.AddToRoleAsync(user, role.Name);//Add AppUser to role table
+                        if (resultAddToRole.Succeeded)
+                        {
+                            return RedirectToAction("Index");
+                        }
 
+                        foreach (var error in resultAddToRole.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                        return await ReturnToCreateGet();
 
+                    }
                     return RedirectToAction("Index");
                 }
-                // otherwise load all errors 
+
                 foreach (var error in resultPassword.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
-                foreach (var error in resultAddToRole.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
+
+
+                // otherwise load all errors 
+
+
                 return await ReturnToCreateGet();
             }
 
             return await ReturnToCreateGet();
+
+            async Task<IActionResult> ReturnToCreateGet()
+            {
+
+                ViewData["Volunteers"] = new SelectList(await GetVolunteerForSelection(), "VId", "IdFullName");
+                ViewData["AppUserRoles"] = new SelectList(await _roleManager.Roles.ToListAsync(), "Id", "Name");
+                return View(appUserCreateViewModel);
+            }
         }
     }
 }

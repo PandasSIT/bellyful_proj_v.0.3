@@ -10,17 +10,12 @@
     <div class="form-group row">
         <label asp-for="Email" class="col-sm-2"></label>
         <div class="col-sm-5">
-            <input asp-for="Email" class="form-control" asp-route="@Model.Email" />
+            <input asp-for="Email" class="form-control" readOnly="readOnly" asp-route="@Model.Email" />
             <span class="text-danger" asp-validation-for="Email"></span>
         </div>
     </div>
-    <div class="form-group row">
-        <label asp-for="Password" class="col-sm-2"></label>
-        <div class="col-sm-5">
-            <input asp-for="Password" class="form-control" asp-route="@Model.Password" />
-            <span class="text-danger" asp-validation-for="Password"></span>
-        </div>
-    </div>
+    
+    <input type="hidden"  asp-for="Password" value="123456" />
 
     <div class="form-group row">
         <label asp-for="VolunteerId" class="col-sm-2"></label>
@@ -42,6 +37,13 @@
 
 
     <div class="text-danger" asp-validation-summary="All"></div>
+    
+    <br />
+    
+    <pre style="color: gray">
+ 1. The Email also is the Username for login.
+ 2. Only Level 4 & 5 GeneralStaff has a VolunteerId 
+</pre>
     <button type="submit" class="btn btn-primary">Save</button>
     <a asp-action="Index" class="btn btn-secondary">Return to List</a>
 </form>
