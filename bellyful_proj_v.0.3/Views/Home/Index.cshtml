@@ -8,11 +8,18 @@
 @if (@User.IsInRole("L1_Admin") || @User.IsInRole("L2_Manager"))
 {
     <partial name="_L1L2HomePartial" />
-}else if (@User.IsInRole("L3_ChefManager"))
+}
+else if (@User.IsInRole("L3_ChefManager"))
 {
-<partial name="_L3HomePartial" />
+    <partial name="_L3HomePartial" />
 }
 else if (@User.IsInRole("L4_DeliverMan"))
 {<partial name="_L4HomePartial" />}
-
+else if (@User.IsInRole("L5_GeneralStaff"))
+{<partial name="_L5HomePartial" />}
+else
+{
+    <h2>Dear Guest: </h2>
+    <h4> Please contact your Manager to Assign you a App User Role !</h4>
+}
 <br />

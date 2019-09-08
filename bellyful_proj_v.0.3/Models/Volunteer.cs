@@ -24,6 +24,7 @@ namespace bellyful_proj_v._0._3.Models
         public int? StatusId { get; set; }
         public int? BranchId { get; set; }
         public int? RoleId { get; set; }
+        public bool? IsAssignedUserAccount { get; set; }
 
         public virtual Branch Branch { get; set; }
         public virtual VolunteerRole Role { get; set; }
