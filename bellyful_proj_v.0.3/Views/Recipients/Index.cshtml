@@ -1,0 +1,149 @@
+﻿@model IEnumerable<bellyful_proj_v._0._3.Models.Recipient>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressNumStreet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TownCity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Postcode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DogOnProperty)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OtherReferralInfo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdultsNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Under5ChildrenNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model._510ChildrenNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model._1117ChildrenNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OtherAllergyInfo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AdditionalInfo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Branch)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DietaryRequirement)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReferralReason)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Referrer)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressNumStreet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TownCity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Postcode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DogOnProperty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OtherReferralInfo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdultsNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Under5ChildrenNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item._510ChildrenNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item._1117ChildrenNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OtherAllergyInfo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdditionalInfo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Branch.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DietaryRequirement.DietaryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReferralReason.ReferralReasonId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Referrer.FirstName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RecipientId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RecipientId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RecipientId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

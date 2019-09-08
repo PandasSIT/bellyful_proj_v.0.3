@@ -1,0 +1,71 @@
+﻿@model IEnumerable<bellyful_proj_v._0._3.Models.Order>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDatetime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AssignDatetime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PickupDatetime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveredDatetime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Recipient)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Volunteer)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDatetime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AssignDatetime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PickupDatetime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DeliveredDatetime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Recipient.AddressNumStreet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Volunteer.Address)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.OrderId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.OrderId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.OrderId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

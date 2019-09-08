@@ -6,6 +6,17 @@
 <a asp-action="CreateAppUser" class="btn btn-primary">Add New AppUser</a>
 <br>
 <br>
+<p>Admin and Manager : Access all the modules</p>
+<p>Admin and Manager : Access all the modules</p>
+
+<pre style="color: gray">
+ 1. Admin and Manager : Access all the modules.
+ 2. Chef Manager : Access Only Meal Instock,Order modules 
+</pre>
+
+
+<br>
+<br>
 <table class="table">
     <thead class="thead-dark">
         <tr>
@@ -23,7 +34,7 @@
         @foreach (var user in Model)
         {
             <tr>
-                <td scope="row">
+                <td>
                     <script>document.write(counter); counter++;</script>
                 </td>
                 <td>@user.Email</td>
@@ -32,11 +43,11 @@
                 </td>@*role*@
                 <td>@user.VIdName</td> @*VId*@
                 <td>
-                    
+
                     <form asp-action="EditUser" title="Edit AppUser" asp-route-id="@user.Id" class="d-inline" method="get">
                         <button type="submit" class="fas fa-edit"></button>
                     </form>
-                    <form asp-action="DeleteUser"  title="Delete AppUser" asp-route-id="@user.Id" class="d-inline" method="post">
+                    <form asp-action="DeleteUser" title="Delete AppUser" asp-route-id="@user.Id" class="d-inline" method="post">
                         <button type="submit" class="fas fa-times " onclick="return confirm('Are you Sure to delete this User?')"></button>
                     </form>
 

@@ -26,7 +26,17 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
     <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Views\Batches\" />
     <Folder Include="Views\Branches\" />
+    <Folder Include="Views\DietaryRequirements\" />
+    <Folder Include="Views\MealInstocks\" />
+    <Folder Include="Views\MealTypes\" />
+    <Folder Include="Views\OrderStatus\" />
+    <Folder Include="Views\Orders\" />
+    <Folder Include="Views\Recipients\" />
+    <Folder Include="Views\ReferralReasons\" />
+    <Folder Include="Views\ReferrerRoles\" />
+    <Folder Include="Views\Referrers\" />
     <Folder Include="Views\VolunteerEmergencyContacts\" />
     <Folder Include="Views\VolunteerPoliceInfoes\" />
     <Folder Include="Views\VolunteerRoles\" />

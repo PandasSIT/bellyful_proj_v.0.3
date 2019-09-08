@@ -1,0 +1,37 @@
+﻿@model IEnumerable<bellyful_proj_v._0._3.Models.MealInstock>
+
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.InstockAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MealType)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.InstockAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MealType.MealTypeName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MealTypeId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MealTypeId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MealTypeId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+

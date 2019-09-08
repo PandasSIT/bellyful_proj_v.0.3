@@ -1,8 +1,18 @@
-﻿@{
+﻿@using System.Data
+@using System
+@using Microsoft.CodeAnalysis.CSharp.Syntax
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@if (@User.IsInRole("L1_Admin") || @User.IsInRole("L2_Manager"))
+{
+    <partial name="_L1L2HomePartial" />
+}else if (@User.IsInRole("L3_ChefManager"))
+{
+<partial name="_L3HomePartial" />
+}
+else if (@User.IsInRole("L4_DeliverMan"))
+{<partial name="_L4HomePartial" />}
+
+<br />

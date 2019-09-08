@@ -1,0 +1,36 @@
+﻿@model bellyful_proj_v._0._3.Models.DietaryRequirement
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>DietaryRequirement</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DietaryName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DietaryName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MatchedSetMeal)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MatchedSetMeal)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.DietaryRequirementId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

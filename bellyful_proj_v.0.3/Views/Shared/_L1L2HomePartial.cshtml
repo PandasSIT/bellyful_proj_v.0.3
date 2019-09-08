@@ -1,0 +1,49 @@
+﻿<h4> Hi: Manager! </h4>
+<h6>Today is @DateTime.Today.DayOfYear th day of 2019</h6>
+<hr />
+<a class="btn btn-danger" asp-controller="AppUser" asp-action="Index">App User Management</a>
+<br /><br />
+
+<div class="row">
+
+
+
+
+<div class="col-md-3">
+
+    <div class="btn-group-vertical">
+
+        <a class="btn btn-success " asp-controller="Volunteers" asp-action="Index"><b>Volunteer</b></a>
+        <a class="btn btn-success" asp-controller="VolunteerStatus" asp-action="Index">Volunteer Status</a>
+        <a class="btn btn-success" asp-controller="VolunteerTrainingInfoes" asp-action="Index">Training Information</a>
+        <a class="btn btn-success" asp-controller="VolunteerEmergencyContacts" asp-action="Index">Emergency Contacts</a>
+        <a class="btn btn-success" asp-controller="VolunteerPoliceInfoes" asp-action="Index">Police Information</a>
+        <a class="btn btn-success" asp-controller="VolunteerRoles" asp-action="Index">Volunteer Roles</a>
+    </div>
+
+</div>
+<div class="col-md-3">
+    <div class="btn-group-vertical">
+        <a class="btn btn-info " asp-controller="Recipients" asp-action="Index"><b>Recipient</b></a>
+        <a class="btn btn-info" asp-controller="ReferralReasons" asp-action="Index">Referral Reason</a>
+        <a class="btn btn-info" asp-controller="Referrers" asp-action="Index">Referrer</a>
+        <a class="btn btn-info" asp-controller="ReferrerRoles" asp-action="Index">Referrer Role</a>
+        <a class="btn btn-info" asp-controller="DietaryRequirements" asp-action="Index">Dietary Requirement</a>
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="btn-group-vertical">
+        <a class="btn btn-success" asp-controller="Orders" asp-action="Index">Orders</a>
+        <a class="btn btn-success" asp-controller="OrderStatus" asp-action="Index">Order Status</a>
+        <a class="btn btn-success" asp-controller="Branches" asp-action="Index">Branches</a>
+    </div>
+</div>
+<div class="col-md-3">
+    <div class="btn-group-vertical">
+        <a class="btn btn-info" asp-controller="MealInstocks" asp-action="Index">MealInstocks</a>
+        <a class="btn btn-info" asp-controller="MealTypes" asp-action="Index">Meal Type</a>
+        <a class="btn btn-info" asp-controller="Batches" asp-action="Index">Batches</a>
+    </div>
+</div>
+
+</div>
