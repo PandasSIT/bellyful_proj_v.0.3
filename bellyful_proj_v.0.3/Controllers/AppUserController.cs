@@ -51,7 +51,15 @@ namespace bellyful_proj_v._0._3.Controllers
                     var v = _context.Volunteer.SingleOrDefault(i => i.VolunteerId == user.VolunteerId);
                     if (v != null)
                     {
-                        vm.VIdName = v.VolunteerId.ToString() + ". " + v.FirstName;
+                        if (v.IsAssignedUserAccount != null)
+                        {
+                            if (v.IsAssignedUserAccount.Value)
+                            {
+                                vm.VIdName = v.VolunteerId.ToString() + ". " + v.FirstName;
+                            }
+                        }
+
+
                     }
                 }
 
@@ -81,8 +89,18 @@ namespace bellyful_proj_v._0._3.Controllers
             var user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
-                ViewData["Volunteers"] = new SelectList(await GetVolunteerForSelection(), "VId", "IdFullName");
-                ViewData["AppUserRoles"] = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
+                if (user.VolunteerId != null)
+                {
+                    ViewData["Volunteers"] = new SelectList(await GetVolunteerForSelection(user.VolunteerId), "VId", "IdFullName");
+                    ViewData["AppUserRoles"] = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
+                }
+                else
+                {
+                    ViewData["Volunteers"] = new SelectList(await GetVolunteerForSelection(), "VId", "IdFullName");
+                    ViewData["AppUserRoles"] = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
+                }
+
+              
                 return View(new AppUserCreateViewModel
                 {
                     Email = user.Email,
@@ -101,7 +119,27 @@ namespace bellyful_proj_v._0._3.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 var user = await _userManager.FindByEmailAsync(appUserCreateViewModel.Email);
+                if (appUserCreateViewModel.VolunteerId != null)
+                {
+                    var currentVolunteer = await _context.Volunteer.FindAsync(appUserCreateViewModel.VolunteerId);
+                    if (currentVolunteer != null)
+                    {
+                        if (user.VolunteerId != null)
+                        {
+                            var previousVolunteer = await _context.Volunteer.FindAsync(user.VolunteerId);
+                            if (previousVolunteer != null && previousVolunteer.IsAssignedUserAccount == true)
+                            {
+                                previousVolunteer.IsAssignedUserAccount = false;
+                            }
+                        }
+
+                        currentVolunteer.IsAssignedUserAccount = true;
+                        await _context.SaveChangesAsync();
+                    }
+                }
+
                 if (user != null)
                 {
                     user.AppRoleId = appUserCreateViewModel.AppUserRoleId;
@@ -113,11 +151,15 @@ namespace bellyful_proj_v._0._3.Controllers
                         await _context.SaveChangesAsync();
 
                         var role = await _roleManager.FindByIdAsync(appUserCreateViewModel.AppUserRoleId.ToString());
-                        var resultAddToRole = await _userManager.AddToRoleAsync(user, role.Name);//Add AppUser to role table
-                        if (resultAddToRole.Succeeded)
+                        if (role != null)
                         {
-                            return RedirectToAction("Index");
+                            var resultAddToRole = await _userManager.AddToRoleAsync(user, role.Name);//Add AppUser to role table
+                            if (resultAddToRole.Succeeded)
+                            {
+                                return RedirectToAction("Index");
+                            }
                         }
+                        
                     }
                     catch (DbUpdateConcurrencyException)
                     {
@@ -131,12 +173,22 @@ namespace bellyful_proj_v._0._3.Controllers
 
             async Task<IActionResult> ReturnToEditGet()
             {
-                var vsList = await _context.Volunteer.Select(volunteer => new VolunteerForSelection
-                {
-                    VId = volunteer.VolunteerId,
-                    IdFullName = volunteer.VolunteerId +
-                                 ". " + volunteer.FirstName + "   " + volunteer.LastName
-                }).OrderBy(c => c.VId).ToListAsync();
+                //var vsList = await _context.Volunteer.Select(volunteer => 
+                //    new VolunteerForSelection
+                //{
+                //    VId = volunteer.VolunteerId,
+                //    IdFullName = volunteer.VolunteerId +
+                //                 ". " + volunteer.FirstName + "   " + volunteer.LastName
+                //}).OrderBy(c => c.VId).ToListAsync();
+
+                var vsList = await _context.Volunteer.Where(x => x.IsAssignedUserAccount != true).Select(volunteer =>
+                      new VolunteerForSelection
+                      {
+                          VId = volunteer.VolunteerId,
+                          IdFullName = volunteer.VolunteerId +
+                                       ". " + volunteer.FirstName + "   " + volunteer.LastName
+                      }).OrderBy(c => c.VId).ToListAsync();
+
                 ViewData["Volunteers"] = new SelectList(vsList, "VId", "IdFullName");
                 ViewData["AppUserRoles"] = new SelectList(await _roleManager.Roles.ToListAsync(), "Id", "Name", appUserCreateViewModel.AppUserRoleId);
                 return View(appUserCreateViewModel);
@@ -156,12 +208,24 @@ namespace bellyful_proj_v._0._3.Controllers
 
 
 
+
         [HttpPost]
         public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             if (user != null)
             {
+                if (user.VolunteerId != null)
+                {
+                    var Volunteer = await _context.Volunteer.FindAsync(user.VolunteerId);
+                    if (Volunteer != null)
+                    {
+                        Volunteer.IsAssignedUserAccount = false;
+                        await _context.SaveChangesAsync();
+                    }
+                }
+
+
                 var result = await _userManager.DeleteAsync(user);
                 if (result.Succeeded)
                 {
@@ -180,12 +244,42 @@ namespace bellyful_proj_v._0._3.Controllers
 
         public async Task<List<VolunteerForSelection>> GetVolunteerForSelection()
         {
-            return await _context.Volunteer.Select(volunteer => new VolunteerForSelection
-            {
-                VId = volunteer.VolunteerId,
-                IdFullName = volunteer.VolunteerId +
-                              ". " + volunteer.FirstName + "   " + volunteer.LastName
-            }).OrderBy(c => c.VId).ToListAsync();
+            //return await _context.Volunteer.Select(volunteer => new VolunteerForSelection
+            //{
+            //    VId = volunteer.VolunteerId,
+            //    IdFullName = volunteer.VolunteerId +
+            //                  ". " + volunteer.FirstName + "   " + volunteer.LastName
+            //}).OrderBy(c => c.VId).ToListAsync();
+
+
+            return await _context.Volunteer.Where(x => x.IsAssignedUserAccount != true).Select(volunteer =>
+                new VolunteerForSelection
+                {
+                    VId = volunteer.VolunteerId,
+                    IdFullName = volunteer.VolunteerId +
+                                 ". " + volunteer.FirstName + "   " + volunteer.LastName
+                }).OrderBy(c => c.VId).ToListAsync();
+
+
+        }
+
+        public async Task<List<VolunteerForSelection>> GetVolunteerForSelection(int? a)
+        {
+            //return await _context.Volunteer.Select(volunteer => new VolunteerForSelection
+            //{
+            //    VId = volunteer.VolunteerId,
+            //    IdFullName = volunteer.VolunteerId +
+            //                  ". " + volunteer.FirstName + "   " + volunteer.LastName
+            //}).OrderBy(c => c.VId).ToListAsync();
+
+
+            return await _context.Volunteer.Where(x => x.IsAssignedUserAccount != true  || x.VolunteerId == a).Select(volunteer =>
+                new VolunteerForSelection
+                {
+                    VId = volunteer.VolunteerId,
+                    IdFullName = volunteer.VolunteerId +
+                                 ". " + volunteer.FirstName + "   " + volunteer.LastName
+                }).OrderBy(c => c.VId).ToListAsync();
 
 
         }
@@ -201,7 +295,7 @@ namespace bellyful_proj_v._0._3.Controllers
 
         [HttpPost]
         public async Task<IActionResult> CreateAppUser(AppUserCreateViewModel appUserCreateViewModel)
-         {
+        {
             if (ModelState.IsValid)//If not valid, return that model
             {
                 var user = new ApplicationUser();

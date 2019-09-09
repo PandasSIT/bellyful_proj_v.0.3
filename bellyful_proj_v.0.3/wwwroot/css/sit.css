@@ -58,3 +58,7 @@ body {
 .btn-group-vertical a:first-child {
     border-bottom :2px solid black;
 }
+
+.col-md-3, .col-md-2 {
+    margin:  5px
+}
