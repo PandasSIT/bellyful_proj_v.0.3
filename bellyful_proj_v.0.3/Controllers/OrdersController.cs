@@ -47,11 +47,11 @@ namespace bellyful_proj_v._0._3.Controllers
         }
 
         // GET: Orders/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["RecipientId"] = new SelectList(_context.Recipient, "RecipientId", "AddressNumStreet");
+            ViewData["RecipientId"] = new SelectList(await _context.GetRecipientForSelection(), "RId", "IdFullName");
             ViewData["StatusId"] = new SelectList(_context.OrderStatus, "StatusId", "Content");
-            ViewData["VolunteerId"] = new SelectList(_context.Volunteer, "VolunteerId", "Address");
+            ViewData["VolunteerId"] = new SelectList(await _context.GetVolunteerForSelection(null), "VId", "IdFullName");
             return View();
         }
 
@@ -65,6 +65,7 @@ namespace bellyful_proj_v._0._3.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(order);
+             //   _context.Database.ExecuteSqlCommandAsync("s");
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -166,6 +167,11 @@ namespace bellyful_proj_v._0._3.Controllers
         private bool OrderExists(int id)
         {
             return _context.Order.Any(e => e.OrderId == id);
+        }
+
+        public IActionResult MyOrderIndex()
+        {
+            throw new NotImplementedException();
         }
     }
 }

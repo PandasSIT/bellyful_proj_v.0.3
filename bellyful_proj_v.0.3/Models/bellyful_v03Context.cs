@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using bellyful_proj_v._0._3.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -614,6 +618,45 @@ namespace bellyful_proj_v._0._3.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("a voluteer has a train info");
             });
+        }
+
+       
+        /// <summary>
+        /// 获取Volunteer Selections， a=-1：获取已分配Account；
+        /// a=Null: 获取全部；
+        /// a= VolunteerId: 获取已分配+该Volunteer
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns></returns>
+        public async Task<List<VolunteerForSelection>> GetVolunteerForSelection(int? a)
+        {
+            IQueryable<Volunteer> sss;
+            if (a == -1)
+            {
+                 sss = Volunteer.Where(x => x.IsAssignedUserAccount != true);
+            }else if (a == null)
+            {
+                sss = Volunteer;
+            }
+            else
+            {
+                //返回 没有分配Account 的志愿者，或者 Id 为 a的志愿者
+                sss = Volunteer.Where(x => x.IsAssignedUserAccount != true || x.VolunteerId == a);
+            }            
+            return await sss.Select(volunteer => new VolunteerForSelection
+                 {VId = volunteer.VolunteerId, IdFullName = volunteer.VolunteerId +
+                  ". " + volunteer.FirstName + "   " + volunteer.LastName }).OrderBy(c => c.VId).ToListAsync();
+            
+        }
+
+        public async Task<List<RecipientForSelection>> GetRecipientForSelection()
+        {
+            return await Recipient.Select(recipient => new RecipientForSelection
+            {
+                RId = recipient.RecipientId,
+                IdFullName = recipient.RecipientId +
+                             ". " + recipient.FirstName + "   " + recipient.LastName
+            }).OrderBy(c => c.RId).ToListAsync();
         }
     }
 }

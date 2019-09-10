@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="ViewModels\OrderVm\" />
     <Folder Include="Views\Batches\" />
     <Folder Include="Views\Branches\" />
     <Folder Include="Views\DietaryRequirements\" />
