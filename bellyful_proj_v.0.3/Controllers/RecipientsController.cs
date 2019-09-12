@@ -67,10 +67,10 @@ namespace bellyful_proj_v._0._3.Controllers
         {
             if (ModelState.IsValid)
             {
-                //_context.Add(recipient);
-                var name = new SqlParameter("@RName", recipient.FirstName);
-                _context.Database.ExecuteSqlCommand("sp_Add_Recipient @RName", name);
-              //  await _context.SaveChangesAsync();  //使用 Procedure 不用save
+                _context.Add(recipient);
+                //var name = new SqlParameter("@RName", recipient.FirstName);
+                //_context.Database.ExecuteSqlCommand("sp_Add_Recipient @RName", name);
+                await _context.SaveChangesAsync();  //使用 Procedure 不用save
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BranchId"] = new SelectList(_context.Branch, "BranchId", "Name", recipient.BranchId);

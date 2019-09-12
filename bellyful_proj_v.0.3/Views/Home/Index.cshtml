@@ -14,7 +14,16 @@ else if (@User.IsInRole("L3_ChefManager"))
     <partial name="_L3HomePartial" />
 }
 else if (@User.IsInRole("L4_DeliverMan"))
-{<partial name="_L4HomePartial" />}
+{
+    <partial name="_L4HomePartial" />
+    @*<form asp asp-action="MyOrderIndex"  asp-route-Name="@User.Identity.Name"  method="post">
+            <button type="submit" class="btn btn-success">My Order  @User.Identity.Name</button>
+        </form>*@
+
+
+}
+
+
 else if (@User.IsInRole("L5_GeneralStaff"))
 {<partial name="_L5HomePartial" />}
 else

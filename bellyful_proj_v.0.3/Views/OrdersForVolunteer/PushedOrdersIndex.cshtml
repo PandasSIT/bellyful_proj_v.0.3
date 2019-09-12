@@ -2,14 +2,14 @@
 
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Unassigned Orders";
 }
 
-<h1>Index</h1>
+<h1>Unassigned Orders</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@*<p>
+        <a asp-action="Create">Create New</a>
+    </p>*@
 <table class="table">
     <thead class="thead-dark">
         <tr>
@@ -40,7 +40,8 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var order in Model) {
+        @foreach (var order in Model)
+        {
         <tr>
             <td>
                 <script>document.write(counter); counter++;</script>.
@@ -67,11 +68,13 @@
                 @order.DeliveredTime
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@order.OrderId">Edit</a> |
-                <a asp-action="Push" asp-route-id="@order.OrderId">Push</a> |
-                <a asp-action="Delete" asp-route-id="@order.OrderId">Delete</a>
+                <a class="fas fa-calendar-check " 
+                   asp-action="TakeOrder" asp-route-OrderId="@order.OrderId" 
+                   asp-route-Name="@User.Identity.Name"
+                   onclick="return confirm('Are you Sure to take this ORDER?')"></a> 
+
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

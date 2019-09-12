@@ -31,8 +31,14 @@ namespace bellyful_proj_v._0._3.Controllers
             _context = context;
         }
 
-        async Task<IEnumerable<AppUserIndexViewMode>> GetAppUserIndexViewModel()
+        //async Task<IEnumerable<AppUserIndexViewMode>> GetAppUserIndexViewModel()
+        //{
+        //    return appusers;
+        //}
+
+        public async Task<IActionResult> Index()
         {
+            
             var appusers = new List<AppUserIndexViewMode>();
 
             foreach (var user in _userManager.Users)
@@ -45,17 +51,9 @@ namespace bellyful_proj_v._0._3.Controllers
                 };
                 if (user.VolunteerId != null)
                 {
-                    var v = _context.Volunteer.SingleOrDefault(i => i.VolunteerId == user.VolunteerId);
-                    if (v != null)
-                    {
-                        if (v.IsAssignedUserAccount != null)
-                        {
-                            if (v.IsAssignedUserAccount.Value)
-                            {
-                                vm.VIdName = v.VolunteerId.ToString() + ". " + v.FirstName;
-                            }
-                        }
-                    }
+                    var ss = await _context.GetVolunteerForIndex(user.VolunteerId.Value);
+
+                    vm.VIdName = ss;
                 }
                 if (user.AppRoleId != null)
                 {
@@ -63,12 +61,11 @@ namespace bellyful_proj_v._0._3.Controllers
                 }
                 appusers.Add(vm);
             }
-            return appusers;
-        }
 
-        public async Task<IActionResult> Index()
-        {
-            return View(await GetAppUserIndexViewModel());
+
+
+
+            return View( appusers);
         }
 
 
@@ -83,12 +80,12 @@ namespace bellyful_proj_v._0._3.Controllers
             {
                 if (user.VolunteerId != null)
                 {
-                    ViewData["Volunteers"] = new SelectList(await _context.GetVolunteerForSelection(user.VolunteerId), "VId", "IdFullName");
+                    ViewData["Volunteers"] = new SelectList(await _context.GetVolunteersForSelection(user.VolunteerId), "VId", "IdFullName");
                     ViewData["AppUserRoles"] = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
                 }
                 else
                 {
-                    ViewData["Volunteers"] = new SelectList(await _context.GetVolunteerForSelection(-1), "VId", "IdFullName");
+                    ViewData["Volunteers"] = new SelectList(await _context.GetVolunteersForSelection(-1), "VId", "IdFullName");
                     ViewData["AppUserRoles"] = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
                 }
 
@@ -106,30 +103,53 @@ namespace bellyful_proj_v._0._3.Controllers
         [HttpPost]
         public async Task<IActionResult> EditUser(AppUserCreateViewModel appUserCreateViewModel)
         {
-            if (ModelState.IsValid)
-            {
-
+            if (ModelState.IsValid) //如果验证通过
+            {    //通过接收的AppUserVM的邮件找到AppUser
                 var user = await _userManager.FindByEmailAsync(appUserCreateViewModel.Email);
-                if (appUserCreateViewModel.VolunteerId != null)
+
+                //如果找到User
+                if (user != null)
                 {
-                    var currentVolunteer = await _context.Volunteer.FindAsync(appUserCreateViewModel.VolunteerId);
-                    if (currentVolunteer != null)
+                    //============更新AppUser前  先判定志愿者的，并且取到，变更前和变更后的  VId=============
+                    //如果传进来的AppUserVM的VId不为空：即用户设定了新的Volunteer
+                    if (appUserCreateViewModel.VolunteerId != null)
                     {
+                        //通过AppUserVM的VId，找到志愿者， 赋值给 currentVolunteer
+                        var currentVolunteer = await _context.Volunteer.FindAsync(appUserCreateViewModel.VolunteerId);
+                        //通过AppUserVM的VId，如果找到志愿者
+                        if (currentVolunteer != null)
+                        {   //看是否有前任：如果AppUser之前的Vid（该AppUser的前任Volunteer） 不为空，
+                            if (user.VolunteerId != null)
+                            {
+                                //找到 前任，还原为 未分配。
+                                var previousVolunteer = await _context.Volunteer.FindAsync(user.VolunteerId);
+                                if (previousVolunteer != null && previousVolunteer.IsAssignedUserAccount == true)
+                                {
+                                    previousVolunteer.IsAssignedUserAccount = false;
+                                }
+                            }
+                            //新任志愿者  标记为 已分配
+                            currentVolunteer.IsAssignedUserAccount = true;
+                            await _context.SaveChangesAsync();
+                        }
+                    }
+                    else//如果传进来的AppUser 的Vid 为空： 即用户不打算分配任何志愿者
+                    {
+                        //看是否有前任：如果AppUser之前的Vid（该AppUser的前任Volunteer） 不为空，
                         if (user.VolunteerId != null)
                         {
+                            //找到 前任，还原为 未分配。
                             var previousVolunteer = await _context.Volunteer.FindAsync(user.VolunteerId);
                             if (previousVolunteer != null && previousVolunteer.IsAssignedUserAccount == true)
                             {
                                 previousVolunteer.IsAssignedUserAccount = false;
                             }
                         }
-                        currentVolunteer.IsAssignedUserAccount = true;
-                        await _context.SaveChangesAsync();
                     }
-                }
+                    //============更新AppUser前  先判定志愿者的选择状态，并且取到，变更前和变更后的  VId=============
 
-                if (user != null)
-                {
+
+
                     user.AppRoleId = appUserCreateViewModel.AppUserRoleId;
                     user.VolunteerId = appUserCreateViewModel.VolunteerId;
 
@@ -152,11 +172,10 @@ namespace bellyful_proj_v._0._3.Controllers
                     {
                         throw;
                     }
-
                     return RedirectToAction("index");
                 }
-            }
-            ViewData["Volunteers"] = new SelectList(await _context.GetVolunteerForSelection(-1), "VId", "IdFullName");
+            }//如果验证没通过 ， 直接返回
+            ViewData["Volunteers"] = new SelectList(await _context.GetVolunteersForSelection(-1), "VId", "IdFullName",appUserCreateViewModel.VolunteerId);
             ViewData["AppUserRoles"] = new SelectList(await _roleManager.Roles.ToListAsync(), "Id", "Name", appUserCreateViewModel.AppUserRoleId);
             return View(appUserCreateViewModel);
         }
@@ -188,14 +207,14 @@ namespace bellyful_proj_v._0._3.Controllers
             else
             {
                 ModelState.AddModelError(string.Empty, "User dose not exist！");
+                return RedirectToAction("Index");
             }
-
-            return View("Index", await GetAppUserIndexViewModel());
+            return RedirectToAction("Index");
         }
-        
+
         public async Task<IActionResult> CreateAppUser()
         {
-            ViewData["Volunteers"] = new SelectList(await _context.GetVolunteerForSelection(-1), "VId", "IdFullName");
+            ViewData["Volunteers"] = new SelectList(await _context.GetVolunteersForSelection(-1), "VId", "IdFullName");
             ViewData["AppUserRoles"] = new SelectList(_roleManager.Roles.ToList(), "Id", "Name");
             return View();
         }
@@ -214,6 +233,18 @@ namespace bellyful_proj_v._0._3.Controllers
                 var resultPassword = await _userManager.CreateAsync(user, appUserCreateViewModel.Password);
                 if (resultPassword.Succeeded)
                 {
+
+                    //通过AppUserVM的VId，找到志愿者， 赋值给 currentVolunteer
+                    var Volunteer = await _context.Volunteer.FindAsync(appUserCreateViewModel.VolunteerId);
+                    //通过AppUserVM的VId，如果找到志愿者
+                    if (Volunteer != null)
+                    {
+                        //新任志愿者  标记为 已分配
+                        Volunteer.IsAssignedUserAccount = true;
+                        await _context.SaveChangesAsync();
+                    }
+
+
                     if (appUserCreateViewModel.AppUserRoleId != null)
                     {
                         var role = await _roleManager.FindByIdAsync(appUserCreateViewModel.AppUserRoleId.ToString());
@@ -250,7 +281,7 @@ namespace bellyful_proj_v._0._3.Controllers
             async Task<IActionResult> ReturnToCreateGet()
             {
 
-                ViewData["Volunteers"] = new SelectList(await _context.GetVolunteerForSelection(-1), "VId", "IdFullName");
+                ViewData["Volunteers"] = new SelectList(await _context.GetVolunteersForSelection(-1), "VId", "IdFullName");
                 ViewData["AppUserRoles"] = new SelectList(await _roleManager.Roles.ToListAsync(), "Id", "Name");
                 return View(appUserCreateViewModel);
             }

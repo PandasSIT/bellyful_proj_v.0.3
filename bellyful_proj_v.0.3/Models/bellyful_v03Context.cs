@@ -620,7 +620,7 @@ namespace bellyful_proj_v._0._3.Models
             });
         }
 
-       
+
         /// <summary>
         /// 获取Volunteer Selections， a=-1：获取已分配Account；
         /// a=Null: 获取全部；
@@ -628,13 +628,14 @@ namespace bellyful_proj_v._0._3.Models
         /// </summary>
         /// <param name="a"></param>
         /// <returns></returns>
-        public async Task<List<VolunteerForSelection>> GetVolunteerForSelection(int? a)
+        public async Task<List<VolunteerForSelection>> GetVolunteersForSelection(int? a)
         {
             IQueryable<Volunteer> sss;
             if (a == -1)
             {
-                 sss = Volunteer.Where(x => x.IsAssignedUserAccount != true);
-            }else if (a == null)
+                sss = Volunteer.Where(x => x.IsAssignedUserAccount != true);
+            }
+            else if (a == null)
             {
                 sss = Volunteer;
             }
@@ -642,14 +643,17 @@ namespace bellyful_proj_v._0._3.Models
             {
                 //返回 没有分配Account 的志愿者，或者 Id 为 a的志愿者
                 sss = Volunteer.Where(x => x.IsAssignedUserAccount != true || x.VolunteerId == a);
-            }            
+            }
             return await sss.Select(volunteer => new VolunteerForSelection
-                 {VId = volunteer.VolunteerId, IdFullName = volunteer.VolunteerId +
-                  ". " + volunteer.FirstName + "   " + volunteer.LastName }).OrderBy(c => c.VId).ToListAsync();
-            
+            {
+                VId = volunteer.VolunteerId,
+                IdFullName = volunteer.VolunteerId +
+                  ". " + volunteer.FirstName + "   " + volunteer.LastName
+            }).OrderBy(c => c.VId).ToListAsync();
+
         }
 
-        public async Task<List<RecipientForSelection>> GetRecipientForSelection()
+        public async Task<List<RecipientForSelection>> GetRecipientsForSelection()
         {
             return await Recipient.Select(recipient => new RecipientForSelection
             {
@@ -657,6 +661,37 @@ namespace bellyful_proj_v._0._3.Models
                 IdFullName = recipient.RecipientId +
                              ". " + recipient.FirstName + "   " + recipient.LastName
             }).OrderBy(c => c.RId).ToListAsync();
+        }
+
+        public async Task<string> GetVolunteerForIndex(int vid)
+        {
+            var v = Volunteer.SingleOrDefault(i => i.VolunteerId == vid);
+            if (v != null)
+            {
+                if (v.IsAssignedUserAccount != null)
+                {
+                    if (v.IsAssignedUserAccount.Value)
+                    {
+                        return v.VolunteerId.ToString() + ". " + v.FirstName;
+                    }
+                    throw new ApplicationException("标记错误");
+                }
+                throw new ApplicationException("标记空值");
+            }
+            throw new ApplicationException("找不到志愿者");
+        }
+
+
+        public async Task<string> GetRecipientForIndex(int rid)
+        {
+            var recipient = Recipient.SingleOrDefault(i => i.RecipientId == rid);
+            if (recipient != null)
+            {
+                return recipient.RecipientId.ToString() + ". " + recipient.FirstName;
+
+            }
+            throw new ApplicationException("找不到受助者");
+
         }
     }
 }

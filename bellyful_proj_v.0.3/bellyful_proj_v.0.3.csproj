@@ -4,7 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <UserSecretsId>aspnet-bellyful_proj_v._0._3-FA3E7F52-24A4-4B51-BCB5-ECD46731C987</UserSecretsId>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-    <RootNamespace>bellyful_proj_v.0.3</RootNamespace>
+    <RootNamespace>bellyful_proj_v._0._3</RootNamespace>
     <AssemblyName>bellyful_proj_v.0.3</AssemblyName>
   </PropertyGroup>
 
@@ -27,14 +27,12 @@
 
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
-    <Folder Include="ViewModels\OrderVm\" />
     <Folder Include="Views\Batches\" />
     <Folder Include="Views\Branches\" />
     <Folder Include="Views\DietaryRequirements\" />
     <Folder Include="Views\MealInstocks\" />
     <Folder Include="Views\MealTypes\" />
     <Folder Include="Views\OrderStatus\" />
-    <Folder Include="Views\Orders\" />
     <Folder Include="Views\Recipients\" />
     <Folder Include="Views\ReferralReasons\" />
     <Folder Include="Views\ReferrerRoles\" />
@@ -48,6 +46,9 @@
     <Folder Include="wwwroot\lib\bellyful\css\" />
     <Folder Include="wwwroot\lib\bellyful\demo\" />
     <Folder Include="wwwroot\lib\bellyful\js\demo\" />
+    <Folder Include="wwwroot\lib\bellyful\vendor\fontawesome-free\svgs\brands\" />
+    <Folder Include="wwwroot\lib\bellyful\vendor\fontawesome-free\svgs\regular\" />
+    <Folder Include="wwwroot\lib\bellyful\vendor\fontawesome-free\svgs\solid\" />
     <Folder Include="wwwroot\lib\chart.js\" />
     <Folder Include="wwwroot\lib\datatables\" />
     <Folder Include="wwwroot\lib\jquery-easing\" />

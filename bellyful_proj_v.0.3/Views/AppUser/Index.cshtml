@@ -9,16 +9,14 @@
 
 <pre style="color: gray">Role Permissions:
  1. Admin and Manager : Access all the modules;
- 2. Chef Manager : Access Only MealInstock, Order modules;
- 3. Delivery Man : Can see their own orders and MealInstock;
- 4. Other: Can only see Orders and MealInstock;
+ 2. Chef Manager : Access Only Batch,MealInstock, Order modules;
+ 3. Delivery Man : Can only see their own orders and MealInstock;
+ 4. General Staff: Can only see the MealInstock;
  5. Guest: Waiting to Assign a Role.
 
-Volunteer:
-    A Volunteer can only be assign to One User Account !
+Role & VId:
+  An UserAccount can set Volunteer and Role or just leave empty  !
 </pre>
-
-
 <br>
 <br>
 <table class="table">
@@ -27,9 +25,9 @@ Volunteer:
             <th scope="col">No.</th>
 
             @*<th scope="col">   @Html.DisplayNameFor(model => model.Email)</th> 直接用实体类，无需用Html helper  *@
-            <th scope="col">Email(Use to Login)</th>
-            <th scope="col">App User Role</th>
-            <th scope="col">VId & Name(If has)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Email)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Role)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.VIdName)</th>
             <th scope="col">Operation</th>
         </tr>
     </thead>
@@ -39,7 +37,7 @@ Volunteer:
         {
             <tr>
                 <td>
-                    <script>document.write(counter); counter++;</script>
+                    <script>document.write(counter); counter++;</script>.
                 </td>
                 <td>@user.Email</td>
                 <td>
@@ -47,18 +45,14 @@ Volunteer:
                 </td>@*role*@
                 <td>@user.VIdName</td> @*VId*@
                 <td>
-
                     <form asp-action="EditUser" title="Edit AppUser" asp-route-id="@user.Id" class="d-inline" method="get">
                         <button type="submit" class="fas fa-edit"></button>
                     </form>
                     <form asp-action="DeleteUser" title="Delete AppUser" asp-route-id="@user.Id" class="d-inline" method="post">
                         <button type="submit" class="fas fa-times " onclick="return confirm('Are you Sure to delete this User?')"></button>
                     </form>
-
-
                 </td>
             </tr>
-
         }
     </tbody>
 </table>
