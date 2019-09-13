@@ -665,7 +665,7 @@ namespace bellyful_proj_v._0._3.Models
 
         public async Task<string> GetVolunteerForIndex(int vid)
         {
-            var v = Volunteer.SingleOrDefault(i => i.VolunteerId == vid);
+            var v = await Volunteer.SingleOrDefaultAsync(i => i.VolunteerId == vid);
             if (v != null)
             {
                 if (v.IsAssignedUserAccount != null)
@@ -684,7 +684,7 @@ namespace bellyful_proj_v._0._3.Models
 
         public async Task<string> GetRecipientForIndex(int rid)
         {
-            var recipient = Recipient.SingleOrDefault(i => i.RecipientId == rid);
+            var recipient =await Recipient.SingleOrDefaultAsync(i => i.RecipientId == rid);
             if (recipient != null)
             {
                 return recipient.RecipientId.ToString() + ". " + recipient.FirstName;

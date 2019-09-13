@@ -15,27 +15,25 @@
         <tr>
 
             <th scope="col">No.</th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.RIdName)
             </th>
+           
+            
             <th>
-                @Html.DisplayNameFor(model => model.VIdName)
+                @Html.DisplayNameFor(model => model.TheRecipientAddress) 
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TheRecipientDogOnProperty)   
+            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.PlacedTime)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AssignedTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PickedUpTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeliveredTime)
-            </th>
+
+            
+
             <th></th>
         </tr>
     </thead>
@@ -44,29 +42,23 @@
         {
         <tr>
             <td>
-                <script>document.write(counter); counter++;</script>.
-            </td>
-            <td>
-                @order.Status
+                @order.OrderId
             </td>
             <td>
                 @order.RIdName
             </td>
             <td>
-                @order.VIdName
+                
+                <a href="https://Maps.google.com/?q= @order.TheRecipientAddress">@order.TheRecipientAddress</a>
+                
+            </td>
+            <td>
+                @order.TheRecipientDogOnProperty
             </td>
             <td>
                 @order.PlacedTime
             </td>
-            <td>
-                @order.AssignedTime
-            </td>
-            <td>
-                @order.PickedUpTime
-            </td>
-            <td>
-                @order.DeliveredTime
-            </td>
+          
             <td>
                 <a class="fas fa-calendar-check " 
                    asp-action="TakeOrder" asp-route-OrderId="@order.OrderId" 

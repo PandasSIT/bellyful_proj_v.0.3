@@ -2,18 +2,16 @@
 
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "My Orders";
+    string mutipAddress = null;
 }
 
-<h1>Index</h1>
+<h2>@User.Identity.Name 's  Orders</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead class="thead-dark">
         <tr>
-
             <th scope="col">No.</th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
@@ -22,7 +20,7 @@
                 @Html.DisplayNameFor(model => model.RIdName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.VIdName)
+                @Html.DisplayNameFor(model => model.TheRecipientAddress)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PlacedTime)
@@ -41,12 +39,12 @@
     </thead>
     <tbody>
         @foreach (var order in Model)
-        {
+        {//1 Created  2 Pushed  3 Assigned 4 Delivering 5 Completed 6 Canceled
+
             <tr>
                 <td>
                     @order.OrderId
                 </td>
-
                 @switch (order.StatusId)
                 {
                     case 4:// Pushed ;
@@ -85,7 +83,8 @@
                     @order.RIdName
                 </td>
                 <td>
-                    @order.VIdName
+                    <a href="https://Maps.google.com/?q= @order.TheRecipientAddress">@order.TheRecipientAddress</a>
+                    @{mutipAddress += "/"+order.TheRecipientAddress;}
                 </td>
                 <td>
                     @order.PlacedTime
@@ -99,18 +98,38 @@
                 <td>
                     @order.DeliveredTime
                 </td>
-                <td>
-                    @if (order.StatusId == 3)
-                    {
-                        <a asp-action="Push" asp-route-OrderId="@order.OrderId">Push</a>
-                        <span> | </span>
-                    }
-                    @if (order.StatusId == 3 || order.StatusId == 4)
-                    {
-                        <a asp-action="Cancel" asp-route-OrderId="@order.OrderId">Cancel</a>
-                    }
-                </td>
+                @switch (order.StatusId)
+                {
+                    case 5:
+                        <td>
+                            <a asp-action="PickupMeal" asp-route-OrderId="@order.OrderId"
+                               asp-route-Name="@User.Identity.Name">Pick Up</a>
+                        </td>
+                        break;
+                    case 6:
+                        <td>
+                            <a asp-action="Finish" asp-route-OrderId="@order.OrderId"
+                               asp-route-Name="@User.Identity.Name">Finish</a>
+                        </td>
+                        break;
+                    default:
+                        <td></td>
+                        break;
+
+                }
+
+
+
             </tr>
+
         }
     </tbody>
 </table>
+@if (Model.Any(x => x.StatusId == 5))
+{
+    <a asp-action="PickUpAllMeals" title="Pick up Meals for all your orders" asp-route-Name="@User.Identity.Name">Pick Up of all</a>
+}
+
+<br />
+<a href="https://www.google.com/maps/dir @mutipAddress"> Generate the best route for driving! </a>
+

@@ -7,16 +7,12 @@
 <div class="row">
 
 
-    <div class="col-md-3">
-        <div class="btn-group-vertical">
-            <a class="btn btn-info" asp-controller="MealInstocks" asp-action="Index">MealInstocks</a>
-        </div>
-    </div>
+
     <div class="col-md-3">
         <div class="btn-group-vertical">
 
-            <a class="btn btn-success" asp-controller="OrdersForVolunteer" asp-action="PushedOrdersIndex" asp-route-Name="@User.Identity.Name">Unassigned Orders</a>
-            <a class="btn btn-success" asp-controller="OrdersForVolunteer" asp-action="MyOrdersIndex" asp-route-Name="@User.Identity.Name">My Orders</a>
+            <a class="btn btn-lg btn-success" asp-controller="OrdersForVolunteer" asp-action="PushedOrdersIndex" asp-route-Name="@User.Identity.Name">Unassigned Orders</a>
+            <a class="btn btn-lg btn-success" asp-controller="OrdersForVolunteer" asp-action="MyOrdersIndex" asp-route-Name="@User.Identity.Name">My Orders</a>
         </div>
     </div>
 </div>

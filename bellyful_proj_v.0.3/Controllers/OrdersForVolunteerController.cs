@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using bellyful_proj_v._0._3.Models;
 using bellyful_proj_v._0._3.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 namespace bellyful_proj_v._0._3.Controllers
 {
+    [Authorize(Roles = "L4_DeliverMan")]
     public class OrdersForVolunteerController : Controller
     {
-
-
         private readonly bellyful_v03Context _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
@@ -26,11 +26,7 @@ namespace bellyful_proj_v._0._3.Controllers
         }
 
 
-        public IActionResult Index()
-        {
-            return View();
-        }
-
+       
 
         public async Task<IActionResult> PushedOrdersIndex()
         {
@@ -38,29 +34,25 @@ namespace bellyful_proj_v._0._3.Controllers
 
             foreach (var o in _context.Order)
             {
-                if (o.StatusId == 2)
+                if (o.StatusId == 4)//
                 {
                     var vm = new OrderIndexViewModel { OrderId = o.OrderId };
 
-                    if (o.CreatedDatetime != null)
-                        vm.PlacedTime = o.CreatedDatetime.Value.ToString("d/M/yy HH:mm");
-                    if (o.AssignDatetime != null)
-                        vm.AssignedTime = o.AssignDatetime.Value.ToString("d/M/yy HH:mm");
-                    if (o.PickupDatetime != null)
-                        vm.PickedUpTime = o.PickupDatetime.Value.ToString("d/M/yy HH:mm");
-                    if (o.DeliveredDatetime != null)
-                        vm.DeliveredTime = o.DeliveredDatetime.Value.ToString("d/M/yy HH:mm");
-                    if (o.VolunteerId != null)
-                    {
-                        var ss = await _context.GetVolunteerForIndex(o.VolunteerId.Value);
-                        vm.VIdName = ss;
-                    }
+                    var r = await _context.Recipient.FindAsync(o.RecipientId);
 
-                    vm.RIdName = await _context.GetRecipientForIndex(o.RecipientId);
-                    if (o.StatusId != null)
+                    if (r != null)
                     {
-                        vm.Status = _context.OrderStatus.FindAsync(o.StatusId.Value).Result.Content;
+                       vm.TheRecipientAddress=  r.AddressNumStreet;
+                       if (r.DogOnProperty != null) vm.TheRecipientDogOnProperty = r.DogOnProperty.Value;
+                       vm.RIdName = r.FirstName + "" + r.LastName;
                     }
+                    if (o.CreatedDatetime != null) vm.PlacedTime = o.CreatedDatetime.Value.ToString("d/M/yy HH:mm");
+                    if (o.StatusId != null) vm.StatusId = o.StatusId.Value;
+                    //if (o.AssignDatetime != null) vm.AssignedTime = o.AssignDatetime.Value.ToString("d/M/yy HH:mm");
+                    //if (o.PickupDatetime != null) vm.PickedUpTime = o.PickupDatetime.Value.ToString("d/M/yy HH:mm");
+                    //if (o.DeliveredDatetime != null) vm.DeliveredTime = o.DeliveredDatetime.Value.ToString("d/M/yy HH:mm");
+                    // if (o.StatusId != null)vm.Status = _context.OrderStatus.FindAsync(o.StatusId.Value).Result.Content;
+
                     ordersVMs.Add(vm);
                 }
             }
@@ -83,43 +75,49 @@ namespace bellyful_proj_v._0._3.Controllers
                 {
                     if (o.VolunteerId == appuser.VolunteerId)
                     {
+
+
                         var vm = new OrderIndexViewModel
                         {
                             OrderId = o.OrderId
                         };
 
-                        if (o.CreatedDatetime != null)
-                            vm.PlacedTime = o.CreatedDatetime.Value.ToString("d/M/yy HH:mm");
-                        if (o.AssignDatetime != null)
-                            vm.AssignedTime = o.AssignDatetime.Value.ToString("d/M/yy HH:mm");
-                        if (o.PickupDatetime != null)
-                            vm.PickedUpTime = o.PickupDatetime.Value.ToString("d/M/yy HH:mm");
-                        if (o.DeliveredDatetime != null)
-                            vm.DeliveredTime = o.DeliveredDatetime.Value.ToString("d/M/yy HH:mm");
+                        var r = await _context.Recipient.FindAsync(o.RecipientId);
 
+                        if (r != null)
+                        {
+                            vm.TheRecipientAddress = r.AddressNumStreet;
+                            if (r.DogOnProperty != null) vm.TheRecipientDogOnProperty = r.DogOnProperty.Value;
+                            vm.RIdName = r.FirstName + "" + r.LastName;
+                        }
+
+                        if (o.CreatedDatetime != null)vm.PlacedTime = o.CreatedDatetime.Value.ToString("d/M/yy HH:mm");
+                        if (o.AssignDatetime != null)vm.AssignedTime = o.AssignDatetime.Value.ToString("d/M/yy HH:mm");
+                        if (o.PickupDatetime != null) vm.PickedUpTime = o.PickupDatetime.Value.ToString("d/M/yy HH:mm");
+                        if (o.DeliveredDatetime != null) vm.DeliveredTime = o.DeliveredDatetime.Value.ToString("d/M/yy HH:mm");
+                        if (o.StatusId != null) vm.StatusId = o.StatusId.Value;
                         if (o.VolunteerId != null)
                         {
                             var ss = await _context.GetVolunteerForIndex(o.VolunteerId.Value);
                             vm.VIdName = ss;
                         }
-
-                        vm.RIdName = await _context.GetRecipientForIndex(o.RecipientId);
+                        
                         if (o.StatusId != null)
                         {
                             vm.Status = _context.OrderStatus.FindAsync(o.StatusId.Value).Result.Content;
                         }
+
                         ordersVMs.Add(vm);
                     }
                 }
+
             }
+            ordersVMs.Sort();
             return View(ordersVMs);
 
         }
 
-        public IActionResult Push()
-        {
-            throw new NotImplementedException();
-        }
+      
 
         public async Task<IActionResult> TakeOrder(int orderId,string name)
         {
@@ -151,6 +149,68 @@ namespace bellyful_proj_v._0._3.Controllers
           
 
             return RedirectToAction("PushedOrdersIndex");
+        }
+
+        public async Task<IActionResult> PickupMeal(int orderId, string name)
+        {
+            var appuser = await _userManager.FindByEmailAsync(name);
+            if (appuser != null)
+            {
+                try
+                {
+                    _context.Database.ExecuteSqlCommand("sp_PickupMeal @Vid, @OrderId ",
+                        new SqlParameter("@Vid", appuser.VolunteerId),
+                        new SqlParameter("@OrderId", orderId));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+
+            return RedirectToAction("MyOrdersIndex", new { name = name });
+        }
+
+        public async Task<IActionResult> PickUpAllMeals(string name)
+        {
+            var appuser = await _userManager.FindByEmailAsync(name);
+            if (appuser != null)
+            {
+                try
+                {
+                    _context.Database.ExecuteSqlCommand("sp_PickupAllMealForAVolunteer @Vid ",
+                        new SqlParameter("@Vid", appuser.VolunteerId));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+
+            return RedirectToAction("MyOrdersIndex",new {name = name});
+        }
+
+        public async Task<IActionResult> Finish(int orderId, string name)
+        {//
+            var appuser = await _userManager.FindByEmailAsync(name);
+            if (appuser != null)
+            {
+                try
+                {
+                    _context.Database.ExecuteSqlCommand("sp_FinishedOrder @Vid, @OrderId ",
+                        new SqlParameter("@Vid", appuser.VolunteerId),
+                        new SqlParameter("@OrderId", orderId));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+
+            return RedirectToAction("MyOrdersIndex", new { name = name });
         }
     }
 }
