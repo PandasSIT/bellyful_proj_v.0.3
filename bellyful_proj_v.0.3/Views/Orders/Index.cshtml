@@ -2,10 +2,32 @@
 
 
 @{
-    ViewData["Title"] = "Index";
-}
+    ViewData["Title"] = "Orders";
+    TimeSpan timeSpan = TimeSpan.Zero;
 
-<h1>Index</h1>
+    string GetTime(DateTime? dateTime)
+    {
+        if (dateTime == null) { return "Null"; }
+        timeSpan = DateTime.Now - dateTime.Value;
+
+        //如果相差大于1天 显示具体日期
+        if (timeSpan > TimeSpan.FromDays(1)) { return string.Format("{0}", dateTime.Value.ToString("dd/MM/yyyy HH:mm")); }
+        //如果相差大于1小时 显示具体时间
+        if (timeSpan >= TimeSpan.FromHours(1)) { return string.Format("{0}", dateTime.Value.ToString("HH:mm tt")); }
+        //如果相差大于1分钟 显示分钟数
+        if (timeSpan > TimeSpan.FromMinutes(1)) { return string.Format("{0:N0} mins ago", timeSpan.TotalMinutes); }
+        //其他 显示1分钟
+        return "1 min ago";
+    }
+}
+<h1>Orders</h1>
+
+<pre style="color: gray">Tips:
+ 1. 添加订单会自动扣除库存(任意类别餐库存为0，则无法创建订单);
+ 2. 取消订单会返回库存。
+ 3. 只有状态为：Created 和 Pushed 的订单可以取消。
+</pre>
+
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -49,8 +71,13 @@
 
                 @switch (order.StatusId)
                 {
+                    case 3:// Created ;
+                        <td>
+                            <span style="background-color: rgb(153, 204, 15); border-radius:15px; padding: 7px"> @order.Status</span>
+                        </td>
+                        break;
                     case 4:// Pushed ;
-                        <td >
+                        <td>
                             <span style="background-color: rgb(153, 204, 255); border-radius:15px; padding: 7px"> @order.Status</span>
                         </td>
                         break;
@@ -60,7 +87,7 @@
                         </td>
                         break;
                     case 6:// Delivering
-                        <td >
+                        <td>
                             <span style="  background-color: rgb(241,126,97); border-radius:15px; padding: 7px"> @order.Status</span>
                         </td>
                         break;
@@ -84,21 +111,18 @@
                 <td>
                     @order.RIdName
                 </td>
-                <td>
-                    @order.VIdName
-                </td>
-                <td>
-                    @order.PlacedTime
-                </td>
-                <td>
-                    @order.AssignedTime
-                </td>
-                <td>
-                    @order.PickedUpTime
-                </td>
-                <td>
-                    @order.DeliveredTime
-                </td>
+
+                @if (order.VIdName == null)
+                {
+                    <td> Null </td> }
+                else
+                {
+                    <td>   @order.VIdName</td>}
+
+                <td> @GetTime(order.PlacedTime)</td>
+                <td> @GetTime(order.AssignedTime)</td>
+                <td> @GetTime(order.PickedUpTime)</td>
+                <td> @GetTime(order.DeliveredTime)</td>
                 <td>
                     @if (order.StatusId == 3)
                     {

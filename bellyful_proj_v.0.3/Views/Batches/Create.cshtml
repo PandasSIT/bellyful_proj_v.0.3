@@ -4,12 +4,17 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Add a new Batch</h1>
 
-<h4>Batches</h4>
 <hr />
 
-    <div class="row">
+<pre style="color: gray">Tips:
+ 1. 指定餐类及数量即可
+ 2. 餐品生产日期为当前时间
+</pre>
+
+<hr />
+<div class="row">
         <div class="col-md-4">
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -18,11 +23,8 @@
                     <input asp-for="AddAmount" class="form-control" />
                     <span asp-validation-for="AddAmount" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="ProductionDate" class="control-label"></label>
-                    <input asp-for="ProductionDate" class="form-control" />
-                    <span asp-validation-for="ProductionDate" class="text-danger"></span>
-                </div>
+                
+                
                 <div class="form-group">
                     <label asp-for="MealTypeId" class="control-label"></label>
                     <select asp-for="MealTypeId" class="form-control" asp-items="ViewBag.MealTypeId"></select>

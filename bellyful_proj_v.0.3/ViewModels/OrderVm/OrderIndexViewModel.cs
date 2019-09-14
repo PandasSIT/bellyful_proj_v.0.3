@@ -18,13 +18,11 @@ namespace bellyful_proj_v._0._3.ViewModels
 
         [Display(Name = "Deliveary Man")]
         public string VIdName { get; set; }
-
-        //[DataType(DataType.DateTime)]
-        //[DisplayFormat(DataFormatString = "{0:dd-mm-yyyy}", ApplyFormatInEditMode = true)]
-        public string PlacedTime { get; set; }
-        public string AssignedTime { get; set; }
-        public string PickedUpTime { get; set; }
-        public string DeliveredTime { get; set; }
+        
+        public DateTime? PlacedTime { get; set; }
+        public DateTime? AssignedTime { get; set; }
+        public DateTime? PickedUpTime { get; set; }
+        public DateTime? DeliveredTime { get; set; }
         [Display(Name = "Address")]
         public string TheRecipientAddress { get; set; }
 

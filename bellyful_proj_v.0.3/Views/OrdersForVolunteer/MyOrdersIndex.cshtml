@@ -4,9 +4,25 @@
 @{
     ViewData["Title"] = "My Orders";
     string mutipAddress = null;
+    TimeSpan timeSpan = TimeSpan.Zero;
+
+    string GetTime(DateTime? dateTime)
+    {
+        if (dateTime == null) { return "Null"; }
+        timeSpan = DateTime.Now - dateTime.Value;
+
+        //如果相差大于1天 显示具体日期
+        if (timeSpan > TimeSpan.FromDays(1)) {return string.Format("{0}", dateTime.Value.ToString("dd/MM/yyyy HH:mm"));}
+        //如果相差大于1小时 显示具体时间
+        if (timeSpan >= TimeSpan.FromHours(1)) {return string.Format("{0}", dateTime.Value.ToString("HH:mm tt"));}
+        //如果相差大于1分钟 显示分钟数
+        if (timeSpan > TimeSpan.FromMinutes(1)){return string.Format("{0:N0} mins ago", timeSpan.TotalMinutes);}
+        //其他 显示1分钟
+        return "1 min ago";
+    }
 }
 
-<h2>@User.Identity.Name 's  Orders</h2>
+<h2>My Orders</h2>
 
 
 <table class="table">
@@ -38,8 +54,12 @@
         </tr>
     </thead>
     <tbody>
+
+
+
         @foreach (var order in Model)
-        {//1 Created  2 Pushed  3 Assigned 4 Delivering 5 Completed 6 Canceled
+        {
+            // 1 Canceled 2 Completed 3 Created  4 Pushed  5 Assigned 6 Delivering
 
             <tr>
                 <td>
@@ -47,29 +67,29 @@
                 </td>
                 @switch (order.StatusId)
                 {
-                    case 4:// Pushed ;
-                        <td >
-                            <span style="background-color: rgb(153, 204, 255); border-radius:15px; padding: 7px"> @order.Status</span>
-                        </td>
-                        break;
-                    case 5://Assigned
+                    case 4: // Pushed ;
                         <td>
-                            <span style="background-color: rgb(241,238,103); border-radius:15px; padding: 7px"> @order.Status</span>
+                            <span style="background-color: rgb(153, 204, 255); border-radius: 15px; padding: 7px"> @order.Status</span>
                         </td>
                         break;
-                    case 6:// Delivering
-                        <td >
-                            <span style="  background-color: rgb(241,126,97); border-radius:15px; padding: 7px"> @order.Status</span>
-                        </td>
-                        break;
-                    case 2:// Completed
+                    case 5: //Assigned
                         <td>
-                            <span style="background-color:  rgb(87, 255, 255); border-radius:15px; padding: 7px"> @order.Status</span>
+                            <span style="background-color: rgb(241, 238, 103); border-radius: 15px; padding: 7px"> @order.Status</span>
                         </td>
                         break;
-                    case 1:// Cancelled
+                    case 6: // Delivering
                         <td>
-                            <span style="background-color:   rgb(133, 133, 133); border-radius:15px; padding: 7px"> @order.Status</span>
+                            <span style="background-color: rgb(241, 126, 97); border-radius: 15px; padding: 7px"> @order.Status</span>
+                        </td>
+                        break;
+                    case 2: // Completed
+                        <td>
+                            <span style="background-color: rgb(199, 255, 255); border-radius: 15px; padding: 7px"> @order.Status</span>
+                        </td>
+                        break;
+                    case 1: // Cancelled
+                        <td>
+                            <span style="background-color: rgb(133, 133, 133); border-radius: 15px; padding: 7px"> @order.Status</span>
                         </td>
                         break;
                     default:
@@ -84,20 +104,108 @@
                 </td>
                 <td>
                     <a href="https://Maps.google.com/?q= @order.TheRecipientAddress">@order.TheRecipientAddress</a>
-                    @{mutipAddress += "/"+order.TheRecipientAddress;}
+                    @if (order.StatusId == 6)
+                    {
+                        mutipAddress += order.TheRecipientAddress + "/";
+                    }
                 </td>
-                <td>
-                    @order.PlacedTime
-                </td>
-                <td>
-                    @order.AssignedTime
-                </td>
-                <td>
-                    @order.PickedUpTime
-                </td>
-                <td>
-                    @order.DeliveredTime
-                </td>
+
+                <td> @GetTime(order.PlacedTime)</td>
+                <td> @GetTime(order.AssignedTime)</td>
+                <td> @GetTime(order.PickedUpTime)</td>
+                <td> @GetTime(order.DeliveredTime)</td>
+
+
+
+
+                @{
+                    //============================create time========================
+
+                    @*//============================create time========================
+                         //============================AssignedTime========================
+                        DateTime timeSpan = TimeSpan.Zero;
+                         if (order.AssignedTime != null)
+                         {
+                             timeSpan = DateTime.Now - order.AssignedTime.Value;
+
+                             //如果相差大于1天 显示具体日期
+                             if (timeSpan > TimeSpan.FromDays(1))
+                             {<td>Html.DisplayFor(modelItem => order.AssignedTime)</td>}
+                             //如果相差大于1小时 显示小时数
+                             else if (timeSpan > TimeSpan.FromHours(1))
+                             {
+                                 <td><b>@String.Format("{0:N0}", timeSpan.TotalHours)</b> Hour(s) ago</td> }
+                             //如果相差大于1分钟 显示分钟数
+                             else if (timeSpan > TimeSpan.FromMinutes(1))
+                             {
+                                 <td><b>@String.Format("{0:N0}", timeSpan.TotalMinutes)</b> Mins ago</td> }
+                             //其他 显示秒数
+                             else
+                             {
+                                 <td><b>@String.Format("{0:N0}", timeSpan.TotalSeconds)</b>1 Min ago</td> }
+                         }
+                         else
+                         {
+                             <td> Null </td>
+                         }
+                         //============================AssignedTime========================
+                         //============================PickedUpTime========================
+                         timeSpan = TimeSpan.Zero;
+                         if (order.PickedUpTime != null)
+                         {
+                             timeSpan = DateTime.Now - order.PickedUpTime.Value;
+
+                             //如果相差大于1天 显示具体日期
+                             if (timeSpan > TimeSpan.FromDays(1))
+                             {<td>Html.DisplayFor(modelItem => order.PickedUpTime)</td>}
+                             //如果相差大于1小时 显示小时数
+                             else if (timeSpan > TimeSpan.FromHours(1))
+                             {
+                                 <td><b>@String.Format("{0:N0}", timeSpan.TotalHours)</b> Hour(s) ago</td> }
+                             //如果相差大于1分钟 显示分钟数
+                             else if (timeSpan > TimeSpan.FromMinutes(1))
+                             {
+                                 <td><b>@String.Format("{0:N0}", timeSpan.TotalMinutes)</b> Mins ago</td> }
+                             //其他 显示秒数
+                             else
+                             {
+                                 <td><b>@String.Format("{0:N0}", timeSpan.TotalSeconds)</b>1 Min ago</td> }
+                         }
+                         else
+                         {
+                             <td> Null </td>
+                         }
+                         //============================PickedUpTime========================
+
+                         //============================DeliveredTime========================
+                         timeSpan = TimeSpan.Zero;
+                         if (order.DeliveredTime != null)
+                         {
+                             timeSpan = DateTime.Now - order.DeliveredTime.Value;
+
+                             //如果相差大于1天 显示具体日期
+                             if (timeSpan > TimeSpan.FromDays(1))
+                             {<td>@Html.DisplayFor(modelItem => order.DeliveredTime).ToString()</td>}
+                             //如果相差大于1小时 显示小时数
+                             else if (timeSpan >= TimeSpan.FromHours(1))
+                             {//
+                              <td>@Html.DisplayFor(modelItem => order.DeliveredTime.Value.ToString("h:mm tt"))</td> }
+                             //如果相差大于1分钟 显示分钟数
+                             else if (timeSpan > TimeSpan.FromMinutes(1))
+                             {
+                                 <td><b>@String.Format("{0:N0}", timeSpan.TotalMinutes)</b> Mins ago</td> }
+                             //其他 显示秒数
+                             else
+                             {
+                                 <td><b>@String.Format("{0:N0}", timeSpan.TotalSeconds)</b>1 Min ago</td> }
+                         }
+                         else
+                         {
+                             <td> Null </td>
+                         }
+                         //============================DeliveredTime========================*@
+                }
+
                 @switch (order.StatusId)
                 {
                     case 5:
@@ -121,7 +229,6 @@
 
 
             </tr>
-
         }
     </tbody>
 </table>
@@ -130,6 +237,11 @@
     <a asp-action="PickUpAllMeals" title="Pick up Meals for all your orders" asp-route-Name="@User.Identity.Name">Pick Up of all</a>
 }
 
-<br />
-<a href="https://www.google.com/maps/dir @mutipAddress"> Generate the best route for driving! </a>
+@if (Model.Any(x => x.StatusId == 6))
+{
+    if (mutipAddress != null)
+    {<br />
+        <a href="https://www.google.com/maps/dir\@mutipAddress" +> String up On Google Map! </a>
+    }
+}
 

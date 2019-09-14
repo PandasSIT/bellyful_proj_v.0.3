@@ -672,7 +672,7 @@ namespace bellyful_proj_v._0._3.Models
                 {
                     if (v.IsAssignedUserAccount.Value)
                     {
-                        return v.VolunteerId.ToString() + ". " + v.FirstName;
+                        return v.FirstName + " " +v.LastName;
                     }
                     throw new ApplicationException("标记错误");
                 }
@@ -687,7 +687,7 @@ namespace bellyful_proj_v._0._3.Models
             var recipient =await Recipient.SingleOrDefaultAsync(i => i.RecipientId == rid);
             if (recipient != null)
             {
-                return recipient.RecipientId.ToString() + ". " + recipient.FirstName;
+                return recipient.FirstName + " "+ recipient.LastName;
 
             }
             throw new ApplicationException("找不到受助者");

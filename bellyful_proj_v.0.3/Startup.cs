@@ -76,7 +76,7 @@ namespace bellyful_proj_v._0._3
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+          //  app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 

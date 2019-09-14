@@ -10,44 +10,64 @@
     <title>Index</title>
 </head>
 <body>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.AddAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductionDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MealType)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.AddAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductionDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MealType.MealTypeName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.BatchId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.BatchId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.BatchId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <p>
+        <a asp-action="Create">Add a new Batch</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.AddAmount)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductionDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MealType)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddAmount)
+                </td>
+
+                @{
+                    TimeSpan timeSpan = TimeSpan.Zero;
+                    if (item.ProductionDate != null) { timeSpan = DateTime.Now - item.ProductionDate.Value; }
+
+                    if (timeSpan > TimeSpan.FromDays(1))
+                    {//如果相差大于1天 显示具体日期
+                        <td> @Html.DisplayFor(modelItem => item.ProductionDate)</td>
+                    }
+                    else if (timeSpan > TimeSpan.FromHours(1))
+                    {//如果相差大于1小时 显示小时数
+                        <td> @String.Format("{0}", timeSpan.TotalHours) Hours Ago</td>
+                    }
+                    else if (timeSpan > TimeSpan.FromMinutes(1))
+                    {//如果相差大于1小时 显示小时数
+                        <td> @String.Format("{0}", timeSpan.TotalMinutes) Mins Ago</td>
+                    }
+                    else
+                    {<td> @String.Format("{0}", timeSpan.TotalSeconds) Seconds Ago</td>
+                    }
+
+                }
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.MealType.MealTypeName)
+                </td>
+                <td>
+                  
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
 </body>
 </html>

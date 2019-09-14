@@ -39,10 +39,10 @@ namespace bellyful_proj_v._0._3.Controllers
                     OrderId = o.OrderId
                 };
 
-                if (o.CreatedDatetime != null)vm.PlacedTime = o.CreatedDatetime.Value.ToString("d/M/yy HH:mm");
-                if (o.AssignDatetime != null)vm.AssignedTime = o.AssignDatetime.Value.ToString("d/M/yy HH:mm");
-                if (o.PickupDatetime != null) vm.PickedUpTime = o.PickupDatetime.Value.ToString("d/M/yy HH:mm");
-                if (o.DeliveredDatetime != null) vm.DeliveredTime = o.DeliveredDatetime.Value.ToString("d/M/yy HH:mm");
+                if (o.CreatedDatetime != null)vm.PlacedTime = o.CreatedDatetime;
+                if (o.AssignDatetime != null)vm.AssignedTime = o.AssignDatetime;
+                if (o.PickupDatetime != null) vm.PickedUpTime = o.PickupDatetime;
+                if (o.DeliveredDatetime != null) vm.DeliveredTime = o.DeliveredDatetime;
                 if (o.StatusId != null) vm.StatusId = o.StatusId.Value;
                 if (o.VolunteerId != null)
                 {
