@@ -1,4 +1,5 @@
-﻿@model IEnumerable<bellyful_proj_v._0._3.ViewModels.OrderIndexViewModel>
+﻿@using System.Globalization
+@model IEnumerable<bellyful_proj_v._0._3.ViewModels.OrderIndexViewModel>
 
 
 @{
@@ -8,24 +9,44 @@
     string GetTime(DateTime? dateTime)
     {
         if (dateTime == null) { return "Null"; }
-        timeSpan = DateTime.Now - dateTime.Value;
 
-        //如果相差大于1天 显示具体日期
-        if (timeSpan > TimeSpan.FromDays(1)) { return string.Format("{0}", dateTime.Value.ToString("dd/MM/yyyy HH:mm")); }
-        //如果相差大于1小时 显示具体时间
-        if (timeSpan >= TimeSpan.FromHours(1)) { return string.Format("{0}", dateTime.Value.ToString("HH:mm tt")); }
-        //如果相差大于1分钟 显示分钟数
-        if (timeSpan > TimeSpan.FromMinutes(1)) { return string.Format("{0:N0} mins ago", timeSpan.TotalMinutes); }
-        //其他 显示1分钟
-        return "1 min ago";
+        if (DateTime.Now.Day != dateTime.Value.Day)
+        {//不在同一天
+
+
+            if (DateTime.Now.Day - dateTime.Value.Day ==1)
+            {
+                return string.Format("yday {0}", dateTime.Value.ToString("HH:mm tt", new CultureInfo("en-US")));
+            }
+            return string.Format("{0}", dateTime.Value.ToString("dd/MM/yy HH:mm", new CultureInfo("en-US")));
+
+        }
+        else
+        {//在同一天
+            timeSpan = DateTime.Now - dateTime.Value;//20：00 == 27
+
+            //如果相差大于1小时 显示具体时间
+            if (timeSpan >= TimeSpan.FromHours(1)) { return string.Format("{0}", dateTime.Value.ToString("HH:mm tt", new CultureInfo("en-US"))); }
+            //如果相差大于1分钟 显示分钟数
+            if (timeSpan > TimeSpan.FromMinutes(1)) { return string.Format("{0:N0} mins ago", timeSpan.TotalMinutes); }
+            //其他 显示1分钟
+            return "1 min ago";
+        }
     }
 }
 <h1>Orders</h1>
 
-<pre style="color: gray">Tips:
- 1. 添加订单会自动扣除库存(任意类别餐库存为0，则无法创建订单);
- 2. 取消订单会返回库存。
- 3. 只有状态为：Created 和 Pushed 的订单可以取消。
+<pre style="color: gray">
+ 1. 下订单会自动扣除库存(任意类别餐库存为0，则无法下订单);
+ 2. Push 订单会记录Push时间，覆盖掉PlacedTime
+ 3. 取消订单会返回库存。
+ 4. 只有状态为：Created 和 Pushed 的订单可以取消。
+
+日期显示：
+  1小时以前：x mins ago
+  1小时以上: XX:XX PM
+  昨天的时间： yday + XX:XX PM
+  超过昨天 ： day/month/year + XX:XX PM
 </pre>
 
 
