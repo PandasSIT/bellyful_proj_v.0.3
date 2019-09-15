@@ -19,11 +19,11 @@ namespace bellyful_proj_v._0._3.Controllers
         }
 
         // GET: MealInstocks
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            //var bellyful_v03Context = _context.MealInstock.Include(m => m.MealType);
-            //return View(await bellyful_v03Context.ToListAsync());
-            return ViewComponent("MealInstock", new { maxPriority = 3, isDone = false });
+            var bellyful_v03Context = _context.MealInstock.Include(m => m.MealType);
+            return View(await bellyful_v03Context.ToListAsync());
+           // return ViewComponent("MealInstock", new { maxPriority = 3, isDone = false });
         }
 
         // GET: MealInstocks/Details/5
@@ -49,6 +49,7 @@ namespace bellyful_proj_v._0._3.Controllers
         public IActionResult Create()
         {
             ViewData["MealTypeId"] = new SelectList(_context.MealType, "MealTypeId", "MealTypeName");
+
             return View();
         }
 
