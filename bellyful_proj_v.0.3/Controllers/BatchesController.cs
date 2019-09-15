@@ -22,7 +22,9 @@ namespace bellyful_proj_v._0._3.Controllers
         public async Task<IActionResult> Index()
         {
             var bellyful_v03Context = _context.Batch.Include(b => b.MealType);
-            return View(await bellyful_v03Context.ToListAsync());
+            var list = await bellyful_v03Context.ToListAsync();
+            list.Reverse();    //倒序显示
+            return View(list);
         }
 
         // GET: Batches/Details/5
@@ -62,7 +64,8 @@ namespace bellyful_proj_v._0._3.Controllers
             {
                 _context.Add(batch);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                ViewData["MealTypeId"] = new SelectList(_context.MealType, "MealTypeId", "MealTypeName");
+                return View();
             }
             ViewData["MealTypeId"] = new SelectList(_context.MealType, "MealTypeId", "MealTypeName", batch.MealTypeId);
             return View(batch);

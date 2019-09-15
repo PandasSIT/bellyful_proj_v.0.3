@@ -93,8 +93,6 @@ namespace bellyful_proj_v._0._3.Controllers
         public async Task<IActionResult> Create()
         {
             ViewData["RecipientId"] = new SelectList(await _context.GetRecipientsForSelection(), "RId", "IdFullName");
-            ViewData["StatusId"] = new SelectList(_context.OrderStatus, "StatusId", "Content");
-            ViewData["VolunteerId"] = new SelectList(await _context.GetVolunteersForSelection(null), "VId", "IdFullName");
             return View();
         }
 
@@ -126,7 +124,9 @@ namespace bellyful_proj_v._0._3.Controllers
                     return View(order);
                 }
 
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                ViewData["RecipientId"] = new SelectList(await _context.GetRecipientsForSelection(), "RId", "IdFullName");
+                return View();
             }
             ViewData["RecipientId"] = new SelectList(await _context.GetRecipientsForSelection(), "RId", "IdFullName", order.RecipientId);
             ViewData["StatusId"] = new SelectList(_context.OrderStatus, "StatusId", "Content", order.StatusId);

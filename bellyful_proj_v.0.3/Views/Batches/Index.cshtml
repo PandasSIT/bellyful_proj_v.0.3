@@ -1,73 +1,76 @@
-﻿@model IEnumerable<bellyful_proj_v._0._3.Models.Batch>
+﻿@using System.Globalization
+@model IEnumerable<bellyful_proj_v._0._3.Models.Batch>
 
 
 
-<!DOCTYPE html>
+@{
+    ViewData["Title"] = "Create";
+    TimeSpan timeSpan = TimeSpan.Zero;
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-    <p>
-        <a asp-action="Create">Add a new Batch</a>
-    </p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.AddAmount)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ProductionDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MealType)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
+    string GetTime(DateTime? dateTime)
+    {
+        if (dateTime == null) { return "Null"; }
+
+        if (DateTime.Now.Day != dateTime.Value.Day)
+        {//不在同一天
+
+
+            if (DateTime.Now.Day - dateTime.Value.Day == 1)
             {
+                return string.Format("yday {0}", dateTime.Value.ToString("HH:mm tt", new CultureInfo("en-US")));
+            }
+            return string.Format("{0}", dateTime.Value.ToString("dd/MM/yy HH:mm", new CultureInfo("en-US")));
+
+        }
+        else
+        {//在同一天
+            timeSpan = DateTime.Now - dateTime.Value;//20：00 == 27
+
+            //如果相差大于1小时 显示具体时间
+            if (timeSpan >= TimeSpan.FromHours(1)) { return string.Format("{0}", dateTime.Value.ToString("HH:mm tt", new CultureInfo("en-US"))); }
+            //如果相差大于1分钟 显示分钟数
+            if (timeSpan > TimeSpan.FromMinutes(1)) { return string.Format("{0:N0} mins ago", timeSpan.TotalMinutes); }
+            //其他 显示1分钟
+            return "1 min ago";
+        }
+    }
+}
+
+<h1>Meal Batches</h1>
+<p>
+    <a asp-action="Create">Add a new Batch</a>
+</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AddAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductionDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MealType)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.AddAmount)
                 </td>
-
-                @{
-                    TimeSpan timeSpan = TimeSpan.Zero;
-                    if (item.ProductionDate != null) { timeSpan = DateTime.Now - item.ProductionDate.Value; }
-
-                    if (timeSpan > TimeSpan.FromDays(1))
-                    {//如果相差大于1天 显示具体日期
-                        <td> @Html.DisplayFor(modelItem => item.ProductionDate)</td>
-                    }
-                    else if (timeSpan > TimeSpan.FromHours(1))
-                    {//如果相差大于1小时 显示小时数
-                        <td> @String.Format("{0}", timeSpan.TotalHours) Hours Ago</td>
-                    }
-                    else if (timeSpan > TimeSpan.FromMinutes(1))
-                    {//如果相差大于1小时 显示小时数
-                        <td> @String.Format("{0}", timeSpan.TotalMinutes) Mins Ago</td>
-                    }
-                    else
-                    {<td> @String.Format("{0}", timeSpan.TotalSeconds) Seconds Ago</td>
-                    }
-
-                }
-
+                <td> @GetTime(item.ProductionDate)</td>
 
                 <td>
                     @Html.DisplayFor(modelItem => item.MealType.MealTypeName)
                 </td>
-                <td>
-                  
-                </td>
+                <td></td>
             </tr>
-            }
-        </tbody>
-    </table>
-</body>
-</html>
+        }
+    </tbody>
+</table>
