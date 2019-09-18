@@ -18,7 +18,7 @@ namespace bellyful_proj_v._0._3.ViewModels
         [Display(Name = "App User Role")]
         public string Role { get; set; }
         
-        [Display(Name = "VId & Name(If has)")]
+        [Display(Name = "Volunteer Name")]
         public string VIdName { get; set; }
         
         public string Password { get; set; }

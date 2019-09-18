@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="ViewComponents\" />
     <Folder Include="Views\Batches\" />
     <Folder Include="Views\Branches\" />
     <Folder Include="Views\DietaryRequirements\" />
@@ -37,6 +38,7 @@
     <Folder Include="Views\ReferralReasons\" />
     <Folder Include="Views\ReferrerRoles\" />
     <Folder Include="Views\Referrers\" />
+    <Folder Include="Views\Shared\Components\MealInstock\" />
     <Folder Include="Views\VolunteerEmergencyContacts\" />
     <Folder Include="Views\VolunteerPoliceInfoes\" />
     <Folder Include="Views\VolunteerRoles\" />

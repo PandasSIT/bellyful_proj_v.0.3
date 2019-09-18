@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlClient;
+using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
@@ -20,22 +23,27 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly bellyful_v03Context _context;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            bellyful_v03Context context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _context = context;
+
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
 
+        
         public string ReturnUrl { get; set; }
 
         public class InputModel
@@ -55,6 +63,11 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            //新增 注册为管理层
+            [Display(Name = "Regisit as Management?")]
+            public bool IsManagement { get; set; }
+
         }
 
         public void OnGet(string returnUrl = null)
@@ -67,10 +80,26 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
+                
+
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email ,AppRoleId = 6};
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    if (!Input.IsManagement)
+                    {   //志愿者
+                        _context.Database.ExecuteSqlCommand("sp_Add_Volunteer @VEamil ", new SqlParameter("@VEamil", Input.Email));
+                       var volunteer = await _context.Volunteer.Where(v => v.Email == Input.Email).FirstOrDefaultAsync();
+                       user.VolunteerId = volunteer.VolunteerId;
+                       
+                       await  _userManager.UpdateAsync(user);
+                        //添加志愿者
+                        //取得志愿者邮箱
+
+                    }
+
+
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

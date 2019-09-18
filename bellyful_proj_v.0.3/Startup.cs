@@ -58,6 +58,16 @@ namespace bellyful_proj_v._0._3
                 .AddTokenProvider(TokenOptions.DefaultEmailProvider, emailTokenProviderType)      //named 'Default' is registered.
                 .AddTokenProvider(TokenOptions.DefaultPhoneProvider, phoneNumberProviderType);    //  error
 
+            //services.AddAuthentication()
+            //    .AddGoogle(options =>
+            //    {
+            //        IConfigurationSection googleAuthNSection =
+            //            Configuration.GetSection("Authentication:Google");
+
+            //        options.ClientId = googleAuthNSection["ClientId"];
+            //        options.ClientSecret = googleAuthNSection["ClientSecret"];
+            //    });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

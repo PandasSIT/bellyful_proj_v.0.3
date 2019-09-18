@@ -1,6 +1,8 @@
 ﻿@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+    var user = await UserManager.FindByEmailAsync(User.Identity.Name);
 }
 <ul class="nav nav-pills flex-column">
     <li class="nav-item"><a class="nav-link @ManageNavPages.IndexNavClass(ViewContext)" id="profile" asp-page="./Index">Profile</a></li>
@@ -11,4 +13,12 @@
     }
     <li class="nav-item"><a class="nav-link @ManageNavPages.TwoFactorAuthenticationNavClass(ViewContext)" id="two-factor" asp-page="./TwoFactorAuthentication">Two-factor authentication</a></li>
     <li class="nav-item"><a class="nav-link @ManageNavPages.PersonalDataNavClass(ViewContext)" id="personal-data" asp-page="./PersonalData">Personal data</a></li>
+    @if (user.VolunteerId != null)
+    {
+        <li id="external-logins" class="nav-item">
+            <a id="external-login" class="nav-link "
+               asp-controller="Volunteers" asp-action="VolunteerEdit" 
+               asp-route-VolunteerId=@user.VolunteerId asp-route-UserEmail="@user.Email">Edit My Volunteer Info </a>
+        </li>
+    }
 </ul>
