@@ -61,10 +61,6 @@ namespace bellyful_proj_v._0._3.Controllers
                 }
                 appusers.Add(vm);
             }
-
-
-
-
             return View( appusers);
         }
 

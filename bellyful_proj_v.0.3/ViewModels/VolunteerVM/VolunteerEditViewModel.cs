@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace bellyful_proj_v._0._3.ViewModels.VolunteerVM
 {
@@ -17,7 +18,7 @@ namespace bellyful_proj_v._0._3.ViewModels.VolunteerVM
         public DateTime Dob { get; set; }
         [Required]
         public string Email { get; set; }
-        [Required]
+        [Required, DataType(DataType.PhoneNumber)]
         public string PreferredPhone { get; set; }
         public string AlternativePhone { get; set; }
         [Required]
@@ -28,14 +29,15 @@ namespace bellyful_proj_v._0._3.ViewModels.VolunteerVM
         public int? StatusId { get; set; }
         public int? BranchId { get; set; }
         public int? RoleId { get; set; }
+        [Required]
         public bool? IsAssignedUserAccount { get; set; }
 
         //============= EmergencyContact
-        [Required,Display(Name ="FirstName")]
+        [Required,Display(Name ="First Name")]
         public string EFirstName { get; set; }
-        [Required, Display(Name = "FirstName")]
+        [Required, Display(Name = "Last Name")]
         public string ELastName { get; set; }
-        [Required, Display(Name = "Phone Number")]
+        [Required, Display(Name = "Phone Number"),DataType(DataType.PhoneNumber)]
         public string EPhoneNumber { get; set; }
         [Required, Display(Name = "Relationship")]
         public string ERelationship { get; set; }
@@ -49,5 +51,8 @@ namespace bellyful_proj_v._0._3.ViewModels.VolunteerVM
         public bool? FirstAidRaining { get; set; }
         public string OtherTrainingSkill { get; set; }
 
+
+        [TempData]
+        public string StatusMessage { get; set; }
     }
 }

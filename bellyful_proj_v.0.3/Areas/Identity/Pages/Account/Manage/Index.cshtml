@@ -4,9 +4,10 @@
     ViewData["Title"] = "Profile";
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
-
+@*账户管理页主页*@
 <h4>@ViewData["Title"]</h4>
 <partial name="_StatusMessage" for="StatusMessage" />
+<div class="text-danger" asp-validation-summary="All"></div>
 <div class="row">
     <div class="col-md-6">
         <form id="profile-form" method="post">
@@ -26,8 +27,8 @@
                 }
                 else
                 {
-                    <input asp-for="Input.Email" class="form-control" />
-                    <button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Send verification email</button>
+                    <input readonly="readonly" asp-for="Input.Email" class="form-control" />
+                    //<button id="email-verification" type="submit" asp-page-handler="SendVerificationEmail" class="btn btn-link">Send verification email</button>
                 }
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>

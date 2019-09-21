@@ -91,7 +91,6 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
                         _context.Database.ExecuteSqlCommand("sp_Add_Volunteer @VEamil ", new SqlParameter("@VEamil", Input.Email));
                        var volunteer = await _context.Volunteer.Where(v => v.Email == Input.Email).FirstOrDefaultAsync();
                        user.VolunteerId = volunteer.VolunteerId;
-                       
                        await  _userManager.UpdateAsync(user);
                         //添加志愿者
                         //取得志愿者邮箱

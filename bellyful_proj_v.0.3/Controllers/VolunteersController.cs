@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using bellyful_proj_v._0._3.Models;
+using bellyful_proj_v._0._3.ViewModels.VolunteerVM;
 using Microsoft.AspNetCore.Authorization;
 
 namespace bellyful_proj_v._0._3.Controllers
@@ -140,32 +141,62 @@ namespace bellyful_proj_v._0._3.Controllers
 
         // GET: Volunteers/Edit/5  //抵御通过URL 编辑其他志愿者,验证当前App Account 的Email 和志愿者的Email 是否一致，从而判定是否是本人，实现仅编辑本人数据
         [Authorize(Roles = "L4_DeliverMan, L5_GeneralStaff,Guest")]  //level 4 ,5 and register User access only
-        public async Task<IActionResult> VolunteerEdit(int? volunteerId , string userEmail)
+        public async Task<IActionResult> VolunteerEdit(int? volunteerId, string userEmail)
         {
             if (volunteerId == null)
             {
                 return NotFound();
             }
             var volunteer = await _context.Volunteer.FindAsync(volunteerId);
-            if (volunteer !=null)
+            var volunteerEC = await _context.VolunteerEmergencyContact.FindAsync(volunteerId);
+            if (volunteer != null)
             {
                 if (volunteer.Email != userEmail)
                 {
-                    return NotFound();// 无法编辑别的志愿者
+                    ModelState.AddModelError(string.Empty, "Volunteer Info Email 与 AppUser Name 不一致");
+                    //return RedirectToRoute(new {area = "Identity",controller="" pages = "/Account/Manage/Index"});
+                    return Redirect("/Identity/Account/Manage");
+                    // return NotFound();// 无法编辑别的志愿者
                 }
                 else//打包
                 {
                     ViewData["BranchId"] = new SelectList(_context.Branch, "BranchId", "Name", volunteer.BranchId);
-                    //ViewData["RoleId"] = new SelectList(_context.VolunteerRole, "RoleId", "RoleName", volunteer.RoleId);
-                    //ViewData["StatusId"] = new SelectList(_context.VolunteerStatus, "StatusId", "Content", volunteer.StatusId);
-                    //model 转成 viewmodel  再传view
+                    ViewData["RoleId"] = new SelectList(_context.VolunteerRole, "RoleId", "RoleName", volunteer.RoleId);
+                    ViewData["StatusId"] = new SelectList(_context.VolunteerStatus, "StatusId", "Content", volunteer.StatusId);
 
-                  //  volunteer.
-                    return View(volunteer);
+                    var vEvm = new VolunteerEditViewModel
+                    {
+                        VolunteerId = volunteer.VolunteerId,
+                        FirstName = volunteer.FirstName,
+                        LastName = volunteer.LastName,
+                        Dob = volunteer.Dob,
+                        Email = volunteer.Email,
+                        PreferredPhone = volunteer.PreferredPhone,
+                        AlternativePhone = volunteer.AlternativePhone,
+                        Address = volunteer.Address,
+                        TownCity = volunteer.TownCity,
+                        PostCode = volunteer.PostCode,
+                        StatusId = volunteer.StatusId,
+                        BranchId = volunteer.BranchId,
+                        RoleId = volunteer.RoleId,
+                        IsAssignedUserAccount = volunteer.IsAssignedUserAccount
+                    };
+                    if (volunteerEC != null)
+                    {
+                        vEvm.EFirstName = volunteerEC.FirstName;
+                        vEvm.ELastName = volunteerEC.LastName;
+                        vEvm.EPhoneNumber = volunteerEC.PhoneNumber;
+                        vEvm.ERelationship = volunteerEC.Relationship;
+                        
+                    }
+                    //  volunteer.
+                   
+                    return View(vEvm);
                 }
             }
             //
-            return View(volunteer);
+            return RedirectToAction("Index");
+
         }
 
         // POST: Volunteers/Edit/5
@@ -173,9 +204,9 @@ namespace bellyful_proj_v._0._3.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> VolunteerEdit(int id, [Bind("VolunteerId,FirstName,LastName,Dob,Email,PreferredPhone,AlternativePhone,Address,TownCity,PostCode,StatusId,BranchId,RoleId")] Volunteer volunteer)
+        public async Task<IActionResult> VolunteerEdit(int volunteerId, VolunteerEditViewModel vVM)
         {
-            if (id != volunteer.VolunteerId)
+            if (volunteerId != vVM.VolunteerId)
             {
                 return NotFound();
             }
@@ -184,12 +215,52 @@ namespace bellyful_proj_v._0._3.Controllers
             {
                 try
                 {
-                    _context.Update(volunteer);
+                    //vVM 转为  volunteer 和 EVolunteerContact
+                    //如果 EVolunteerContact 查找不存在，创建
+                    // _context.Update(vVM);
+                    var vol = await _context.Volunteer.FindAsync(vVM.VolunteerId);
+                    if (vol != null)
+                    {
+                        vol.VolunteerId = vVM.VolunteerId;
+                        vol.FirstName = vVM.FirstName;
+                        vol.LastName = vVM.LastName;
+                        vol.Dob = vVM.Dob;
+                        vol.Email = vVM.Email;
+                        vol.PreferredPhone = vVM.PreferredPhone;
+                        vol.AlternativePhone = vVM.AlternativePhone;
+                        vol.Address = vVM.Address;
+                        vol.TownCity = vVM.TownCity;
+                        vol.PostCode = vVM.PostCode;
+                        vol.StatusId = vVM.StatusId;
+                        vol.BranchId = vVM.BranchId;
+                        vol.RoleId = vVM.RoleId;
+                        vol.IsAssignedUserAccount = vVM.IsAssignedUserAccount;
+                    }
+                    var evol = await _context.VolunteerEmergencyContact.FindAsync(vVM.VolunteerId);
+                    if (evol != null)
+                    {
+                        evol.FirstName = vVM.EFirstName;
+                        evol.LastName = vVM.ELastName;
+                        evol.PhoneNumber = vVM.EPhoneNumber;
+                        evol.Relationship = vVM.ERelationship;
+                    }
+                    else
+                    {
+                        _context.Add(new VolunteerEmergencyContact
+                        {
+                            VolunteerId = vVM.VolunteerId,
+                            FirstName = vVM.EFirstName,
+                            LastName = vVM.ELastName,
+                            PhoneNumber = vVM.EPhoneNumber,
+                            Relationship = vVM.ERelationship
+                        });
+                    }
+                    
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!VolunteerExists(volunteer.VolunteerId))
+                    if (!VolunteerExists(vVM.VolunteerId))
                     {
                         return NotFound();
                     }
@@ -198,19 +269,23 @@ namespace bellyful_proj_v._0._3.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                vVM.StatusMessage = "Your Volunteer Info has been saved !";
+                return View(vVM);
             }
-            ViewData["BranchId"] = new SelectList(_context.Branch, "BranchId", "Name", volunteer.BranchId);
-           // ViewData["RoleId"] = new SelectList(_context.VolunteerRole, "RoleId", "RoleName", volunteer.RoleId);
-         //   ViewData["StatusId"] = new SelectList(_context.VolunteerStatus, "StatusId", "Content", volunteer.StatusId);
-            return View(volunteer);
+           
+            ViewData["BranchId"] = new SelectList(_context.Branch, "BranchId", "Name", vVM.BranchId);
+            // ViewData["RoleId"] = new SelectList(_context.VolunteerRole, "RoleId", "RoleName", volunteer.RoleId);
+            //   ViewData["StatusId"] = new SelectList(_context.VolunteerStatus, "StatusId", "Content", volunteer.StatusId);
+            vVM.StatusMessage = "Oops, Something went wrong ! ";
+            return View(vVM);
+
         }
 
 
 
         //=============================VolunteerEdit
 
-            
+
         // GET: Volunteers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
