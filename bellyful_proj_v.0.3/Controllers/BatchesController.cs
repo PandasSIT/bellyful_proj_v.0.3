@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using bellyful_proj_v._0._3.Models;
+using bellyful_proj_v._0._3.ViewModels.BatchVM;
 
 namespace bellyful_proj_v._0._3.Controllers
 {
@@ -58,17 +59,24 @@ namespace bellyful_proj_v._0._3.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("BatchId,AddAmount,ProductionDate,MealTypeId")] Batch batch)
+        public async Task<IActionResult> Create( BatchCreateViewModel batchCVM)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(batch);
+
+                _context.Add(new Batch
+                {
+                   // BatchId = batchCVM.BatchId,
+                    MealTypeId = batchCVM.MealTypeId,
+                    AddAmount = batchCVM.AddAmount
+                });
                 await _context.SaveChangesAsync();
                 ViewData["MealTypeId"] = new SelectList(_context.MealType, "MealTypeId", "MealTypeName");
-                return View();
+                batchCVM.StatusMessage = string.Format("Batch Added! Amount: {0}", batchCVM.AddAmount); 
+                return View(batchCVM);
             }
-            ViewData["MealTypeId"] = new SelectList(_context.MealType, "MealTypeId", "MealTypeName", batch.MealTypeId);
-            return View(batch);
+            ViewData["MealTypeId"] = new SelectList(_context.MealType, "MealTypeId", "MealTypeName", batchCVM.MealTypeId);
+            return View(batchCVM);
         }
 
         // GET: Batches/Edit/5

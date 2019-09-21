@@ -10,15 +10,15 @@ namespace bellyful_proj_v._0._3.ViewModels.VolunteerVM
     public class VolunteerEditViewModel
     {
         public int VolunteerId { get; set; }
-        [Required]
+        [Required,Display(Name="First Name")]
         public string FirstName { get; set; }
-        [Required]
+        [Required, Display(Name = "Last Name")]
         public string LastName { get; set; }
-        [Required]
+        [Required, Display(Name = "Date of Birth")]
         public DateTime Dob { get; set; }
         [Required]
         public string Email { get; set; }
-        [Required, DataType(DataType.PhoneNumber)]
+        [Required, DataType(DataType.PhoneNumber), Display(Name = "Preferred Phone Nunber")]
         public string PreferredPhone { get; set; }
         public string AlternativePhone { get; set; }
         [Required]
@@ -26,8 +26,12 @@ namespace bellyful_proj_v._0._3.ViewModels.VolunteerVM
         [Required]
         public string TownCity { get; set; }
         public string PostCode { get; set; }
+        [Display(Name = "Current Status")]
         public int? StatusId { get; set; }
+        [Display(Name = "Branch Belonged")]
+
         public int? BranchId { get; set; }
+        [Display(Name = "Current Role")]
         public int? RoleId { get; set; }
         [Required]
         public bool? IsAssignedUserAccount { get; set; }

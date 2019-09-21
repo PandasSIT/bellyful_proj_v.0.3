@@ -14,7 +14,7 @@
         {//不在同一天
 
 
-            if (DateTime.Now.Day - dateTime.Value.Day ==1)
+            if (DateTime.Now.Day - dateTime.Value.Day == 1)
             {
                 return string.Format("yday {0}", dateTime.Value.ToString("HH:mm tt", new CultureInfo("en-US")));
             }
@@ -47,11 +47,16 @@
   1小时以上: XX:XX PM
   昨天的时间： yday + XX:XX PM
   超过昨天 ： day/month/year + XX:XX PM
+
+订单排序：
+Delivering > Assigned > Pushed > Create > Completed > Cancelled
+同状态按照 DeliveedTime > PickedUpTime > AssignedTime > PlacedTime 排序
 </pre>
 
 
 <p>
     <a asp-action="Create" class="btn btn-primary">Create New</a>
+    <a asp-action="PushAll">Push All</a>
 </p>
 <table class="table">
     <thead class="thead-dark">
@@ -89,61 +94,47 @@
                 <td data-label="No.">
                     @order.OrderId
                 </td>
-
-                @switch (order.StatusId)
-                {
-                    case 3:// Created ;
-                        <td>
+                <td data-label=@Html.DisplayNameFor(model => model.Status)>
+                    @switch (order.StatusId)
+                    {
+                        case 3:// Created ;
                             <span style="background-color: rgb(153, 204, 15); border-radius:15px; padding: 7px"> @order.Status</span>
-                        </td>
-                        break;
-                    case 4:// Pushed ;
-                        <td>
+                            break;
+                        case 4:// Pushed ;
                             <span style="background-color: rgb(153, 204, 255); border-radius:15px; padding: 7px"> @order.Status</span>
-                        </td>
-                        break;
-                    case 5://Assigned
-                        <td>
+                            break;
+                        case 5://Assigned
                             <span style="background-color: rgb(241,238,103); border-radius:15px; padding: 7px"> @order.Status</span>
-                        </td>
-                        break;
-                    case 6:// Delivering
-                        <td>
+                            break;
+                        case 6:// Delivering
                             <span style="  background-color: rgb(241,126,97); border-radius:15px; padding: 7px"> @order.Status</span>
-                        </td>
-                        break;
-                    case 2:// Completed
-                        <td>
-                            <span style="background-color:  rgb(87, 255, 255); border-radius:15px; padding: 7px"> @order.Status</span>
-                        </td>
-                        break;
-                    case 1:// Cancelled
-                        <td>
-                            <span style="background-color:   rgb(133, 133, 133); border-radius:15px; padding: 7px"> @order.Status</span>
-                        </td>
-                        break;
-                    default:
-                        <td>
+                            break;
+                        case 2:// Completed
+                            <span style="background-color:  rgb(181, 245, 253); color: grey; border-radius:15px; padding: 7px"> @order.Status</span>
+                            break;
+                        case 1:// Cancelled
+                            <span style="background-color:   grey;   border-radius:15px; padding: 7px"> @order.Status</span>
+                            break;
+                        default:
                             @order.Status
-                        </td>
-                        break;
-                }
-
-                <td>
+                            break;
+                    }
+                </td>
+                <td data-label=@Html.DisplayNameFor(model => model.RIdName)>
                     @order.RIdName
                 </td>
 
                 @if (order.VIdName == null)
                 {
-                    <td> Null </td> }
+                    <td data-label=@Html.DisplayNameFor(model => model.VIdName)> Null </td> }
                 else
                 {
-                    <td>   @order.VIdName</td>}
+                    <td data-label=@Html.DisplayNameFor(model => model.VIdName)>   @order.VIdName</td>}
 
-                <td> @GetTime(order.PlacedTime)</td>
-                <td> @GetTime(order.AssignedTime)</td>
-                <td> @GetTime(order.PickedUpTime)</td>
-                <td> @GetTime(order.DeliveredTime)</td>
+                <td data-label=@Html.DisplayNameFor(model => model.PlacedTime) > @GetTime(order.PlacedTime)</td>
+                <td data-label=@Html.DisplayNameFor(model => model.AssignedTime) > @GetTime(order.AssignedTime)</td>
+                <td data-label=@Html.DisplayNameFor(model => model.PickedUpTime) > @GetTime(order.PickedUpTime)</td>
+                <td data-label=@Html.DisplayNameFor(model => model.DeliveredTime) > @GetTime(order.DeliveredTime)</td>
                 <td>
                     @if (order.StatusId == 3)
                     {

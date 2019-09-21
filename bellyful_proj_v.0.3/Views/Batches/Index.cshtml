@@ -44,33 +44,39 @@
 
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.AddAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductionDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MealType)
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BatchId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AddAmount)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductionDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MealType)
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AddAmount)
-                </td>
-                <td> @GetTime(item.ProductionDate)</td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BatchId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddAmount)
+            </td>
+            <td> @GetTime(item.ProductionDate)</td>
 
-                <td>
-                    @Html.DisplayFor(modelItem => item.MealType.MealTypeName)
-                </td>
-                <td></td>
-            </tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MealType.MealTypeName)
+            </td>
+            <td></td>
+        </tr>
         }
     </tbody>
 </table>

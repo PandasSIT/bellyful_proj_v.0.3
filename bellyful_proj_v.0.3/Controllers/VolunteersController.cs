@@ -62,7 +62,7 @@ namespace bellyful_proj_v._0._3.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VolunteerId,FirstName,LastName,Dob,Email,PreferredPhone,AlternativePhone,Address,TownCity,PostCode,StatusId,BranchId,RoleId")] Volunteer volunteer)
+        public async Task<IActionResult> Create([Bind("VolunteerId,FirstName,LastName,Dob,Email,PreferredPhone,AlternativePhone,Address,TownCity,PostCode,StatusId,BranchId,RoleId,IsAssignedUserAccount")] Volunteer volunteer)
         {
             if (ModelState.IsValid)
             {
@@ -100,7 +100,7 @@ namespace bellyful_proj_v._0._3.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VolunteerId,FirstName,LastName,Dob,Email,PreferredPhone,AlternativePhone,Address,TownCity,PostCode,StatusId,BranchId,RoleId")] Volunteer volunteer)
+        public async Task<IActionResult> Edit(int id, [Bind("VolunteerId,FirstName,LastName,Dob,Email,PreferredPhone,AlternativePhone,Address,TownCity,PostCode,StatusId,BranchId,RoleId,IsAssignedUserAccount")] Volunteer volunteer)
         {
             if (id != volunteer.VolunteerId)
             {
@@ -270,12 +270,15 @@ namespace bellyful_proj_v._0._3.Controllers
                     }
                 }
                 vVM.StatusMessage = "Your Volunteer Info has been saved !";
+                ViewData["BranchId"] = new SelectList(_context.Branch, "BranchId", "Name", vVM.BranchId);
+                ViewData["RoleId"] = new SelectList(_context.VolunteerRole, "RoleId", "RoleName", vVM.RoleId);
+                ViewData["StatusId"] = new SelectList(_context.VolunteerStatus, "StatusId", "Content", vVM.StatusId);
                 return View(vVM);
             }
            
             ViewData["BranchId"] = new SelectList(_context.Branch, "BranchId", "Name", vVM.BranchId);
-            // ViewData["RoleId"] = new SelectList(_context.VolunteerRole, "RoleId", "RoleName", volunteer.RoleId);
-            //   ViewData["StatusId"] = new SelectList(_context.VolunteerStatus, "StatusId", "Content", volunteer.StatusId);
+             ViewData["RoleId"] = new SelectList(_context.VolunteerRole, "RoleId", "RoleName", vVM.RoleId);
+               ViewData["StatusId"] = new SelectList(_context.VolunteerStatus, "StatusId", "Content", vVM.StatusId);
             vVM.StatusMessage = "Oops, Something went wrong ! ";
             return View(vVM);
 

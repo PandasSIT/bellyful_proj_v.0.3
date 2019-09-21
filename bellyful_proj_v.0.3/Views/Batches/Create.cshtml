@@ -1,10 +1,10 @@
-﻿@model bellyful_proj_v._0._3.Models.Batch
+﻿@model bellyful_proj_v._0._3.ViewModels.BatchVM.BatchCreateViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Add a new Batch</h1>
+<h2>Add a new Batch</h2>
 
 <hr />
 
@@ -14,6 +14,7 @@
 </pre>
 
 <hr />
+<partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
         <div class="col-md-4">
             <form asp-action="Create">
@@ -23,14 +24,14 @@
                     <input asp-for="AddAmount" class="form-control" />
                     <span asp-validation-for="AddAmount" class="text-danger"></span>
                 </div>
-                
-                
                 <div class="form-group">
                     <label asp-for="MealTypeId" class="control-label"></label>
                     <select asp-for="MealTypeId" class="form-control" asp-items="ViewBag.MealTypeId"></select>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
+                    <input type="submit" value="Add" class="btn btn-primary" />
+                    <br /> <br />
+                    <a asp-action="Index">Back to Batch List</a>
                 </div>
             </form>
         </div>
@@ -40,6 +41,6 @@
 
 
 <div>
-        <a asp-action="Index">Back to List</a>
+       
     </div>
 

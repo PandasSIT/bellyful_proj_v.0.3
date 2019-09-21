@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using bellyful_proj_v._0._3.Models;
 using bellyful_proj_v._0._3.ViewModels;
+using bellyful_proj_v._0._3.ViewModels.OrderVm;
 using Microsoft.AspNetCore.Identity;
 
 namespace bellyful_proj_v._0._3.Controllers
@@ -101,37 +102,41 @@ namespace bellyful_proj_v._0._3.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("OrderId,StatusId,VolunteerId,RecipientId,CreatedDatetime,AssignDatetime,PickupDatetime,DeliveredDatetime")] Order order)
+        public async Task<IActionResult> Create(OrderCreateViewModel orderCVM)
         {
             if (ModelState.IsValid)
             {
 
                 //_context.Add(order);
-                var name = new SqlParameter("@OrderId", order.RecipientId);
+                
                 //_context.Database.ExecuteSqlCommand("sp_Add_Recipient @RName", name);
 
                 try
                 {
                     //await _context.SaveChangesAsync();
-                    await _context.Database.ExecuteSqlCommandAsync("INSERT INTO [order] ([recipient_id]) VALUES ( @OrderId  ); ", name);
+                    await _context.Database.ExecuteSqlCommandAsync("INSERT INTO [order] ([recipient_id]) VALUES ( @OrderId  ); ", new SqlParameter("@OrderId", orderCVM.RecipientId));
                 }
                 catch (Exception)
                 {
-                    ModelState.AddModelError("", "Out of Instock!!");
-                    ViewData["RecipientId"] = new SelectList(await _context.GetRecipientsForSelection(), "RId", "IdFullName", order.RecipientId);
-                    ViewData["StatusId"] = new SelectList(_context.OrderStatus, "StatusId", "Content", order.StatusId);
-                 //   ViewData["VolunteerId"] = new SelectList(await _context.GetVolunteersForSelection(null), "VId", "IdFullName", order.VolunteerId);
-                    return View(order);
+                   // ModelState.AddModelError("", "Out of Instock!!");
+                    ViewData["RecipientId"] = new SelectList(await _context.GetRecipientsForSelection(), "RId", "IdFullName", orderCVM.RecipientId);
+                    // ViewData["StatusId"] = new SelectList(_context.OrderStatus, "StatusId", "Content", orderCVM.StatusId);
+                    //   ViewData["VolunteerId"] = new SelectList(await _context.GetVolunteersForSelection(null), "VId", "IdFullName", order.VolunteerId);
+                    orderCVM.StatusMessage = "Oops, Out of Instock!! ";
+
+                    return View(orderCVM);
                 }
 
                 //return RedirectToAction(nameof(Index));
                 ViewData["RecipientId"] = new SelectList(await _context.GetRecipientsForSelection(), "RId", "IdFullName");
-                return View();
+                orderCVM.StatusMessage = string.Format("Order for Recipient: {0} is Created!",  _context.Recipient.FindAsync(orderCVM.RecipientId).Result.FirstName);
+                return View(orderCVM);
             }
-            ViewData["RecipientId"] = new SelectList(await _context.GetRecipientsForSelection(), "RId", "IdFullName", order.RecipientId);
-            ViewData["StatusId"] = new SelectList(_context.OrderStatus, "StatusId", "Content", order.StatusId);
-        //    ViewData["VolunteerId"] = new SelectList(await _context.GetVolunteersForSelection(null), "VId", "IdFullName", order.VolunteerId);
-            return View(order);
+            ViewData["RecipientId"] = new SelectList(await _context.GetRecipientsForSelection(), "RId", "IdFullName", orderCVM.RecipientId);
+            //  ViewData["StatusId"] = new SelectList(_context.OrderStatus, "StatusId", "Content", order.StatusId);
+            //    ViewData["VolunteerId"] = new SelectList(await _context.GetVolunteersForSelection(null), "VId", "IdFullName", order.VolunteerId);
+            orderCVM.StatusMessage = "Oops, Something went wrong ! ";
+            return View(orderCVM);
         }
 
 
@@ -144,6 +149,20 @@ namespace bellyful_proj_v._0._3.Controllers
             try
             {
                 _context.Database.ExecuteSqlCommand("sp_PushOrderWithP @OrderId ", new SqlParameter("@OrderId", orderId));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return RedirectToAction("Index");
+        }//Cancel
+        public IActionResult PushAll()
+        {
+            try
+            {
+                _context.Database.ExecuteSqlCommand("sp_PushAllOrders");
             }
             catch (Exception)
             {

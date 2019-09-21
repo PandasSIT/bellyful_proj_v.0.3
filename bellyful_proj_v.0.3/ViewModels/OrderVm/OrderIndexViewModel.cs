@@ -31,7 +31,29 @@ namespace bellyful_proj_v._0._3.ViewModels
 
         public int CompareTo(OrderIndexViewModel other)
         {
-                return other.StatusId -StatusId  ;
+            int i = other.StatusId - StatusId;
+            if (i==0)
+            {
+                var timespan = other.DeliveredTime- DeliveredTime ;
+                if (timespan !=null)
+                {
+                    i = (int)timespan.Value.TotalSeconds;
+                }else if (other.PickedUpTime - PickedUpTime != null)
+                {
+                    i = (int)(other.PickedUpTime - PickedUpTime).Value.TotalSeconds;
+                }
+                else if (other.AssignedTime - AssignedTime != null)
+                {
+                    i = (int)(other.AssignedTime - AssignedTime).Value.TotalSeconds;
+                }
+                else if (other.PlacedTime - PlacedTime != null)
+                {
+                    i = (int)(other.PlacedTime - PlacedTime).Value.TotalSeconds;
+                }
+
+            }
+
+            return i;
         }
     }
 }
