@@ -69,10 +69,11 @@
             <td> @GetTime(order.PlacedTime)</td>
           
             <td>
-                <a  
+                <a class="fas fa-calendar-check " 
                    asp-action="TakeOrder" asp-route-OrderId="@order.OrderId" 
                    asp-route-Name="@User.Identity.Name"
-                   onclick="return confirm('Are you Sure to take this ORDER?')">Take</a>
+                   onclick="return confirm('Are you Sure to take this ORDER?')"></a> 
+
             </td>
         </tr>
         }

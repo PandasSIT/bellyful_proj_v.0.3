@@ -56,7 +56,6 @@ namespace bellyful_proj_v._0._3.Controllers
                     ordersVMs.Add(vm);
                 }
             }
-            ordersVMs.Sort();
             return View(ordersVMs);
         }
 

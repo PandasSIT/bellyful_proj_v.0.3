@@ -47,6 +47,16 @@
     <Folder Include="wwwroot\lib\bellyful\css\" />
     <Folder Include="wwwroot\lib\bellyful\demo\" />
     <Folder Include="wwwroot\lib\bellyful\js\demo\" />
+    <Folder Include="wwwroot\lib\bellyful\scss\" />
+    <Folder Include="wwwroot\lib\bellyful\vendor\bootstrap\scss\utilities\" />
+    <Folder Include="wwwroot\lib\bellyful\vendor\bootstrap\scss\vendor\" />
+    <Folder Include="wwwroot\lib\bellyful\vendor\chart.js\" />
+    <Folder Include="wwwroot\lib\bellyful\vendor\datatables\" />
+    <Folder Include="wwwroot\lib\bellyful\vendor\fontawesome-free\css\" />
+    <Folder Include="wwwroot\lib\bellyful\vendor\fontawesome-free\js\" />
+    <Folder Include="wwwroot\lib\bellyful\vendor\fontawesome-free\less\" />
+    <Folder Include="wwwroot\lib\bellyful\vendor\fontawesome-free\scss\" />
+    <Folder Include="wwwroot\lib\bellyful\vendor\fontawesome-free\sprites\" />
     <Folder Include="wwwroot\lib\bellyful\vendor\fontawesome-free\svgs\brands\" />
     <Folder Include="wwwroot\lib\bellyful\vendor\fontawesome-free\svgs\regular\" />
     <Folder Include="wwwroot\lib\bellyful\vendor\fontawesome-free\svgs\solid\" />
