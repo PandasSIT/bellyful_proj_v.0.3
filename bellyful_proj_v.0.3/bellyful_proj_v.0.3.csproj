@@ -44,6 +44,7 @@
     <Folder Include="Views\VolunteerRoles\" />
     <Folder Include="Views\VolunteerStatus\" />
     <Folder Include="Views\VolunteerTrainingInfoes\" />
+    <Folder Include="wwwroot\imgs\" />
     <Folder Include="wwwroot\lib\bellyful\css\" />
     <Folder Include="wwwroot\lib\bellyful\demo\" />
     <Folder Include="wwwroot\lib\bellyful\js\demo\" />
