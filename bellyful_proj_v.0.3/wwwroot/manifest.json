@@ -1,6 +1,6 @@
 {
-  "short_name": "Bellyfull",
-  "name": "Bellyfull Workflow",
+  "short_name": "Bellyful",
+  "name": "Bellyful Workflow",
   "icons": [
     {
       "src": "/imgs/BF_Heart-logo-192.png",
@@ -15,7 +15,7 @@
   ],
   "start_url": "/",
   "background_color": "#ffffff",
-  "display": "standalone",
+  "display": "fullscreen",
   "scope": "/maps/",
   "theme_color": "#ffccdd"
 }
