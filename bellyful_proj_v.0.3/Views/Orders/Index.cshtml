@@ -18,7 +18,7 @@
             {
                 return string.Format("yday {0}", dateTime.Value.ToString("HH:mm tt", new CultureInfo("en-US")));
             }
-            return string.Format("{0}", dateTime.Value.ToString("dd/MM/yy HH:mm", new CultureInfo("en-US")));
+            return string.Format("{0}", dateTime.Value.ToString("dd/MM HH:mm", new CultureInfo("en-US")));
 
         }
         else
@@ -58,11 +58,12 @@ Delivering > Assigned > Pushed > Create > Completed > Cancelled
     <a asp-action="Create" class="btn btn-primary">Create New</a>
     <a asp-action="PushAll">Push All</a>
 </p>
-<table class="table">
+
+<table  id="bellyful-order" class="cell-border nowrap hover table" style="width:100%" >
     <thead class="thead-dark">
         <tr>
 
-            <th scope="col">No.</th>
+            <th >@Html.DisplayNameFor(model => model.OrderId)</th>
             <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
@@ -131,10 +132,10 @@ Delivering > Assigned > Pushed > Create > Completed > Cancelled
                 {
                     <td data-label=@Html.DisplayNameFor(model => model.VIdName)>   @order.VIdName</td>}
 
-                <td data-label=@Html.DisplayNameFor(model => model.PlacedTime) > @GetTime(order.PlacedTime)</td>
-                <td data-label=@Html.DisplayNameFor(model => model.AssignedTime) > @GetTime(order.AssignedTime)</td>
-                <td data-label=@Html.DisplayNameFor(model => model.PickedUpTime) > @GetTime(order.PickedUpTime)</td>
-                <td data-label=@Html.DisplayNameFor(model => model.DeliveredTime) > @GetTime(order.DeliveredTime)</td>
+                <td data-label=@Html.DisplayNameFor(model => model.PlacedTime)> @GetTime(order.PlacedTime)</td>
+                <td data-label=@Html.DisplayNameFor(model => model.AssignedTime)> @GetTime(order.AssignedTime)</td>
+                <td data-label=@Html.DisplayNameFor(model => model.PickedUpTime)> @GetTime(order.PickedUpTime)</td>
+                <td data-label=@Html.DisplayNameFor(model => model.DeliveredTime)> @GetTime(order.DeliveredTime)</td>
                 <td>
                     @if (order.StatusId == 3)
                     {
@@ -150,3 +151,16 @@ Delivering > Assigned > Pushed > Create > Completed > Cancelled
         }
     </tbody>
 </table>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $('#bellyful-order').DataTable({
+                paging: false,
+                 scrollY: 800,
+                info: false,
+                "order": []
+            });
+        });
+    </script>
+
+}

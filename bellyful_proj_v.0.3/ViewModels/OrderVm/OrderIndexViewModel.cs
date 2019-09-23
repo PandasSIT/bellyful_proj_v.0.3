@@ -9,19 +9,22 @@ namespace bellyful_proj_v._0._3.ViewModels
 {
     public class OrderIndexViewModel:IComparable<OrderIndexViewModel>
     {
-
+        [Display(Name = "No.")]
         public int OrderId { get; set; }
         public string Status { get; set; }
         public int StatusId { get; set; }
         [Display(Name = "Recipient")]
         public string RIdName { get; set; }
 
-        [Display(Name = "Deliveary Man")]
+        [Display(Name = "Delivery Man")]
         public string VIdName { get; set; }
-        
+        [Display(Name = "Placed")]
         public DateTime? PlacedTime { get; set; }
+        [Display(Name = "Assigned")]
         public DateTime? AssignedTime { get; set; }
+        [Display(Name = "PickedUp")]
         public DateTime? PickedUpTime { get; set; }
+        [Display(Name = "Delivered")]
         public DateTime? DeliveredTime { get; set; }
         [Display(Name = "Address")]
         public string TheRecipientAddress { get; set; }
