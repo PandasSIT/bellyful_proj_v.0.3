@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using bellyful_proj_v._0._3.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
@@ -19,15 +21,18 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<ExternalLoginModel> _logger;
+        private readonly bellyful_v03Context _context;
 
         public ExternalLoginModel(
             SignInManager<ApplicationUser> signInManager,
             UserManager<ApplicationUser> userManager,
-            ILogger<ExternalLoginModel> logger)
+            ILogger<ExternalLoginModel> logger,
+            bellyful_v03Context context)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
+            _context = context;
         }
 
         [BindProperty]
@@ -45,6 +50,11 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+
+            //新增 注册为管理层
+            [Display(Name = "Regisit as Management?")]
+            public bool IsManagement { get; set; }
+
         }
 
         public IActionResult OnGetAsync()
@@ -119,11 +129,39 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+                        if (!Input.IsManagement)
+                        {   //志愿者
+                            var volunteer = await _context.Volunteer.Where(v => v.Email == Input.Email).FirstOrDefaultAsync();
+                            if (volunteer !=null)
+                            {
+                                user.VolunteerId = volunteer.VolunteerId;
+                                volunteer.IsAssignedUserAccount = true;
+                                await _userManager.UpdateAsync(user);
+                                await _context.SaveChangesAsync();
+                            }
+                            else
+                            {
+                                _context.Database.ExecuteSqlCommand("sp_Add_Volunteer @VEamil ", new SqlParameter("@VEamil", Input.Email));
+                                volunteer = await _context.Volunteer.Where(v => v.Email == Input.Email).FirstOrDefaultAsync();
+                                user.VolunteerId = volunteer.VolunteerId;
+                                await _userManager.UpdateAsync(user);
+                            }
+
+
+                            //添加志愿者
+                            //取得志愿者邮箱
+                        }
+                        var resultAddToRole = await _userManager.AddToRoleAsync(user, "Guest");
+                        if (resultAddToRole.Succeeded)
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: true);
+                            _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+                            return LocalRedirect(returnUrl);
+                        }
                         return LocalRedirect(returnUrl);
                     }
                 }

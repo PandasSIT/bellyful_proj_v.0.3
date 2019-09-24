@@ -674,7 +674,7 @@ namespace bellyful_proj_v._0._3.Models
                     {
                         return v.FirstName + " " +v.LastName;
                     }
-                    throw new ApplicationException("标记错误");
+                  //  throw new ApplicationException("标记错误");
                 }
                 throw new ApplicationException("标记空值");
             }

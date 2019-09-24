@@ -88,17 +88,24 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
                 {
                     if (!Input.IsManagement)
                     {   //志愿者
-                        _context.Database.ExecuteSqlCommand("sp_Add_Volunteer @VEamil ", new SqlParameter("@VEamil", Input.Email));
-                       var volunteer = await _context.Volunteer.Where(v => v.Email == Input.Email).FirstOrDefaultAsync();
-                       user.VolunteerId = volunteer.VolunteerId;
-                       await  _userManager.UpdateAsync(user);
-                        //添加志愿者
-                        //取得志愿者邮箱
+                        var volunteer = await _context.Volunteer.Where(v => v.Email == Input.Email).FirstOrDefaultAsync();
+                        if (volunteer != null)
+                        {
+                            user.VolunteerId = volunteer.VolunteerId;
+                            volunteer.IsAssignedUserAccount = true;
+                            await _userManager.UpdateAsync(user);
+                            await _context.SaveChangesAsync();
+                        }
+                        else
+                        {
+                            _context.Database.ExecuteSqlCommand("sp_Add_Volunteer @VEamil ", new SqlParameter("@VEamil", Input.Email));
+                            volunteer = await _context.Volunteer.Where(v => v.Email == Input.Email).FirstOrDefaultAsync();
+                            user.VolunteerId = volunteer.VolunteerId;
+                            await _userManager.UpdateAsync(user);
+                        }
+
 
                     }
-
-
-
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -111,8 +118,11 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
                     var resultAddToRole =   await _userManager.AddToRoleAsync(user, "Guest");
-                    
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    if (resultAddToRole.Succeeded)
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect(returnUrl);
+                    }
                     return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)
