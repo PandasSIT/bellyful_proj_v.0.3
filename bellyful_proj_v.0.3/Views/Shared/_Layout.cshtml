@@ -8,6 +8,12 @@
     <link rel="manifest" href="/manifest.json">
 
     <script src="https://kit.fontawesome.com/7c5e1ab886.js" crossorigin="anonymous"></script>
+    @*<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
+                integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+                crossorigin="anonymous"></script>
+        <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js"
+                integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+                crossorigin="anonymous"></script>*@
     @*introduce font aweome*@
 
     <title>@ViewData["Title"] - bellyful_App_V0.3</title>
@@ -20,16 +26,7 @@
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
 
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-        @*<!-- Custom fonts for this template-->
-            <link href="~/lib/bellyful/vendor/fontawesome-free/css/all.css" rel="stylesheet" type="text/css">
 
-
-            <!-- Custom styles for this template -->
-
-            <link href="~/lib/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-            <link href="~/lib/bellyful/css/sb-admin.css" rel="stylesheet">
-
-            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />*@
 
 
     </environment>
@@ -53,128 +50,370 @@
 
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/css/bootstrap-social.css" />
+    <link rel="stylesheet" href="~/css/siderbar.css" /> @*style4*@
 
     <script>
         var counter = 1;
     </script>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">bellyful_proj_V0.3</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    <div class="wrapper">
+
+
+
+
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <a asp-area="" asp-controller="Home" asp-action="Index">
+                    <h3>Bellyful Workflow</h3>
+                    <strong>BW</strong>
+                </a>
+            </div>
+
+            <ul class="list-unstyled components">
+
+                <li >
+                    <a asp-controller="Orders" asp-action="Index">
+                        <i class="fas fa-copy"></i>
+                        Order
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#VSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-address-card"></i>
+                        Volunteer
+                    </a>
+                    <ul class="collapse list-unstyled" id="VSubmenu">
+                        <li>
+                            <a asp-controller="Volunteers" asp-action="Index">List</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li>
+                            <a asp-controller="VolunteerEmergencyContacts" asp-action="Index">Emergency Contact</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="AppUser" asp-action="Index">User Manage</a>
+                        <li>
+                            <a asp-controller="VolunteerTrainingInfoes" asp-action="Index">Training Info</a>
+                        </li>
+                        <li>
+                            <a asp-controller="VolunteerPoliceInfoes" asp-action="Index">Police Info</a>
                         </li>
                     </ul>
-                </div>
-            </div>
+                </li>
+
+                <li>
+                    <a href="#RSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-door-open"></i>
+                        Recipient
+                    </a>
+                    <ul class="collapse list-unstyled" id="RSubmenu">
+                        <li>
+                            <a asp-controller="Recipients" asp-action="Index">List</a>
+                        </li>
+                        <li>
+                            <a asp-controller="ReferralReasons" asp-action="Index">Referral Reasons</a>
+                        </li>
+                        <li>
+                            <a asp-controller="DietaryRequirements" asp-action="Index">Dietary Requirement</a>
+                        </li>
+                        
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#MSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-mug-hot"></i>
+                        Meal
+                    </a>
+                    <ul class="collapse list-unstyled" id="MSubmenu">
+                        <li>
+                            <a asp-controller="MealInstocks" asp-action="Index">In-stock</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Batches" asp-action="Index">Batches</a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <a asp-controller="Referrers" asp-action="Index">
+                        <i class="fas fa-user-nurse"></i>
+                        Referrer
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#OSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-users-cog"></i>
+                        Settings
+                    </a>
+                    <ul class="collapse list-unstyled" id="OSubmenu">
+                        <li>
+                            <a asp-controller="VolunteerRoles" asp-action="Index">VolunteerRoles</a>
+                        </li>
+                        <li>
+                            <a asp-controller="VolunteerStatus" asp-action="Index">VolunteerStatus</a>
+                        </li>
+                        <li>
+                            <a asp-controller="ReferrerRoles" asp-action="Index">ReferrerRoles</a>
+                        </li>
+                        <li>
+                            <a asp-controller="Branches" asp-action="Index">Branches</a>
+                        </li>
+                        <li>
+                            <a asp-controller="MealTypes" asp-action="Index">MealTypes</a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+                
+
+
+
+
+                <li>
+                    <a href="#">
+                        <i class="fas fa-question"></i>
+                        FAQ
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-paper-plane"></i>
+                        Contact
+                    </a>
+                </li>
+            </ul>
+
+            <ul class="list-unstyled CTAs">
+                <li>
+                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
+                </li>
+                <li>
+                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
+                </li>
+            </ul>
         </nav>
-    </header>
-    <div class="container">
-        <partial name="_CookieConsentPartial" />
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2019 - bellyful_proj_v._0._3 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                        <span>Toggle Sidebar</span>
+                    </button>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+                            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-justify"></i>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Page</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <h2>Collapsible Sidebar Using Bootstrap 4</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+            </p>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+            </p>
+
+            <div class="line"></div>
+
+            <h2>Lorem Ipsum Dolor</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+            </p>
+
+            <div class="line"></div>
+
+            <h2>Lorem Ipsum Dolor</h2>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+            </p>
+
+            <div class="line"></div>
+
+            <h3>Lorem Ipsum Dolor</h3>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+            </p>
         </div>
-    </footer>
 
-<environment include="Development">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
-            asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-            asp-fallback-test="window.jQuery"
-            crossorigin="anonymous"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
-            asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
-            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-            crossorigin="anonymous"
-            integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
-    </script>
-    
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+        @*=============*@
 
-    
+      
 
-    @*<!-- Bootstrap core JavaScript-->
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="~/lib/jquery-easing/jquery.easing.min.js"></script>
+        <div class="container">
 
-    <!-- Page level plugin JavaScript-->
-    <script src="~/lib/chart.js/Chart.min.js"></script>
-    <script src="~/lib/datatables/jquery.dataTables.js"></script>
-    <script src="~/lib/datatables/dataTables.bootstrap4.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="~/lib/bellyful/js/sb-admin.min.js"></script>
-
-    <!-- Demo scripts for this page-->
-    <script src="~/lib/bellyful/js/demo/datatables-demo.js"></script>
-    <script src="~/lib/bellyful/js/demo/chart-area-demo.js"></script>*@
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <partial name="_LoginPartial" />
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="AppUser" asp-action="Index">User Manage</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
 
+        <div class="container">
+            <partial name="_CookieConsentPartial" />
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
 
-</environment>
-    <environment exclude="Development">
-        @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
-        </script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
-        </script>*@
-        
-        
-        
-        <!-- Bootstrap core JavaScript-->
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-        <!-- Core plugin JavaScript-->
-        <script src="~/lib/jquery-easing/jquery.easing.min.js"></script>
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2019 - bellyful_proj_v._0._3 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
 
-        <!-- Page level plugin JavaScript-->
-        <script src="~/lib/chart.js/Chart.min.js"></script>
-        <script src="~/lib/datatables/jquery.dataTables.js"></script>
-        <script src="~/lib/datatables/dataTables.bootstrap4.js"></script>
-        
-        <!-- Custom scripts for all pages-->
-        <script src="~/lib/bellyful/js/sb-admin.min.js"></script>
+        <environment include="Development">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+            </script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
+            </script>
 
-        <!-- Demo scripts for this page-->
-        <script src="~/lib/bellyful/js/demo/datatables-demo.js"></script>
-        <script src="~/lib/bellyful/js/demo/chart-area-demo.js"></script>
+            <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 
 
-    </environment>
-    <script src="~/js/site.js" asp-append-version="true"></script>
 
-    @RenderSection("Scripts", required: false)
+            @*<!-- Bootstrap core JavaScript-->
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+            <!-- Core plugin JavaScript-->
+            <script src="~/lib/jquery-easing/jquery.easing.min.js"></script>
+
+            <!-- Page level plugin JavaScript-->
+            <script src="~/lib/chart.js/Chart.min.js"></script>
+            <script src="~/lib/datatables/jquery.dataTables.js"></script>
+            <script src="~/lib/datatables/dataTables.bootstrap4.js"></script>
+
+            <!-- Custom scripts for all pages-->
+            <script src="~/lib/bellyful/js/sb-admin.min.js"></script>
+
+            <!-- Demo scripts for this page-->
+            <script src="~/lib/bellyful/js/demo/datatables-demo.js"></script>
+            <script src="~/lib/bellyful/js/demo/chart-area-demo.js"></script>*@
+
+
+
+        </environment>
+        <environment exclude="Development">
+            @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+            </script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
+            </script>*@
+
+
+
+            <!-- Bootstrap core JavaScript-->
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+            <!-- Core plugin JavaScript-->
+            <script src="~/lib/jquery-easing/jquery.easing.min.js"></script>
+
+            <!-- Page level plugin JavaScript-->
+            <script src="~/lib/chart.js/Chart.min.js"></script>
+            <script src="~/lib/datatables/jquery.dataTables.js"></script>
+            <script src="~/lib/datatables/dataTables.bootstrap4.js"></script>
+
+            <!-- Custom scripts for all pages-->
+            <script src="~/lib/bellyful/js/sb-admin.min.js"></script>
+
+            <!-- Demo scripts for this page-->
+            <script src="~/lib/bellyful/js/demo/datatables-demo.js"></script>
+            <script src="~/lib/bellyful/js/demo/chart-area-demo.js"></script>
+
+
+        </environment>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
+        @RenderSection("Scripts", required: false)
+    </div>
 </body>
 </html>

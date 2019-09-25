@@ -67,6 +67,7 @@ namespace bellyful_proj_v._0._3
                         Configuration.GetSection("Authentication:Google");
                   //  options.SignInScheme = "Localhost";
                     options.ClientId = googleAuthNSection["ClientId"];
+                    options.CallbackPath = new PathString("/signin-google");
                     options.ClientSecret = googleAuthNSection["ClientSecret"];
                     //options.BackchannelHttpHandler = new HttpClientHandler()
                     //{
