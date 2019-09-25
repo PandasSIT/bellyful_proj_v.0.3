@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
@@ -63,9 +65,13 @@ namespace bellyful_proj_v._0._3
                 {
                     IConfigurationSection googleAuthNSection =
                         Configuration.GetSection("Authentication:Google");
-
+                  //  options.SignInScheme = "Localhost";
                     options.ClientId = googleAuthNSection["ClientId"];
                     options.ClientSecret = googleAuthNSection["ClientSecret"];
+                    //options.BackchannelHttpHandler = new HttpClientHandler()
+                    //{
+                    //    Proxy = new WebProxy("http://1883afff.ngrok.io/signin-google")
+                    //};
                 });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
