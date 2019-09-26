@@ -34,9 +34,8 @@
         }
     }
 }
-<h1>Orders</h1>
 
-<pre style="color: gray">
+@*<pre style="color: gray">
  1. 下订单会自动扣除库存(任意类别餐库存为0，则无法下订单);
  2. Push 订单会记录Push时间，覆盖掉PlacedTime
  3. 取消订单会返回库存。
@@ -51,12 +50,12 @@
 订单排序：
 Delivering > Assigned > Pushed > Create > Completed > Cancelled
 同状态按照 DeliveedTime > PickedUpTime > AssignedTime > PlacedTime 排序
-</pre>
+</pre>*@
 
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Create New</a>
-    <a asp-action="PushAll">Push All</a>
+    <a asp-action="Create" class="btn btn-primary">Create New </a>
+    <a asp-action="PushAll"> Push All</a>
 </p>
 
 <table  id="bellyful-order" class="cell-border nowrap hover table" style="width:100%" >

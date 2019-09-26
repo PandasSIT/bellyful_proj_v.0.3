@@ -1,23 +1,74 @@
 ﻿
-<h4> Hi: Chef Manager! </h4>
-<h6>Today is @DateTime.Today.DayOfYear th day of 2019</h6>
 
-<hr />
+@*Volunteer*@
+<li>
+    <a href="#VSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fas fa-address-card"></i>
+        Volunteer
+    </a>
+    <ul class="collapse list-unstyled" id="VSubmenu">
+        <li>
+            <a asp-controller="Volunteers" asp-action="Index">List</a>
+        </li>
+        <li>
+            <a asp-controller="VolunteerEmergencyContacts" asp-action="Index">Emergency Contact</a>
+        </li>
+        <li>
+            <a asp-controller="VolunteerTrainingInfoes" asp-action="Index">Training Info</a>
+        </li>
+        <li>
+            <a asp-controller="VolunteerPoliceInfoes" asp-action="Index">Police Info</a>
+        </li>
+    </ul>
+</li>
 
-<div class="row">
 
 
-    <div class="col-md-2">
-        <div class="btn-group-vertical">
-            <a class="btn btn-success" asp-controller="Orders" asp-action="Index">Orders</a>
-        </div>
-    </div>
 
-    <div class="col-md-2">
-        <div class="btn-group-vertical">
-            <a class="btn btn-info" asp-controller="MealInstocks" asp-action="Index">MealInstocks</a>
-            <a class="btn btn-info" asp-controller="MealTypes" asp-action="Index">Meal Type</a>
-            <a class="btn btn-info" asp-controller="Batches" asp-action="Index">Batches</a>
-        </div>
-    </div>
-</div>
+
+@*Meal*@
+<li>
+    <a href="#MSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fas fa-mug-hot"></i>
+        Meal
+    </a>
+    <ul class="collapse list-unstyled" id="MSubmenu">
+        <li>
+            <a asp-controller="MealInstocks" asp-action="Index">In-stock</a>
+        </li>
+        <li>
+            <a asp-controller="Batches" asp-action="Index">Batches</a>
+        </li>
+    </ul>
+</li>
+
+
+
+
+@*Settings*@
+<li>
+    <a href="#OSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fas fa-users-cog"></i>
+        Settings
+    </a>
+    <ul class="collapse list-unstyled" id="OSubmenu">
+        <li>
+            <a asp-controller="AppUser" asp-action="Index">Users</a>
+        </li>
+        <li>
+            <a asp-controller="VolunteerRoles" asp-action="Index">V_Roles</a>
+        </li>
+        <li>
+            <a asp-controller="VolunteerStatus" asp-action="Index">V_Status</a>
+        </li>
+        <li>
+            <a asp-controller="ReferrerRoles" asp-action="Index">R_Roles</a>
+        </li>
+        <li>
+            <a asp-controller="Branches" asp-action="Index">Branch</a>
+        </li>
+        <li>
+            <a asp-controller="MealTypes" asp-action="Index">MealType</a>
+        </li>
+    </ul>
+</li>

@@ -2,7 +2,9 @@
 @using bellyful_proj_v._0._3.Models
 @model IEnumerable<AppUserIndexViewMode>
 
-
+@{ 
+     ViewData["Title"] = "User Management";
+}
 <a asp-action="CreateAppUser" class="btn btn-primary">Add New AppUser</a>
 <br>
 <br>

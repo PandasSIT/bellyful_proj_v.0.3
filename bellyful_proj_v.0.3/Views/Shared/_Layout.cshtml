@@ -16,7 +16,7 @@
                 crossorigin="anonymous"></script>*@
     @*introduce font aweome*@
 
-    <title>@ViewData["Title"] - bellyful_App_V0.3</title>
+    <title>@ViewData["Title"] - BellyfulWorkflow</title>
 
     <environment include="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -49,7 +49,7 @@
 
 
     </environment>
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/bellyful.css" />
     <link rel="stylesheet" href="~/css/siderbar.css" /> @*style4*@
 
     <script>
@@ -58,8 +58,6 @@
 </head>
 <body>
     <div class="wrapper">
-
-
 
 
         <!-- Sidebar  -->
@@ -72,144 +70,42 @@
             </div>
 
             <ul class="list-unstyled components">
-
-                <li >
-                    <a asp-controller="Orders" asp-action="Index">
-                        <i class="fas fa-copy"></i>
-                        Order
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#VSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-address-card"></i>
-                        Volunteer
-                    </a>
-                    <ul class="collapse list-unstyled" id="VSubmenu">
-                        <li>
-                            <a asp-controller="Volunteers" asp-action="Index">List</a>
-                        </li>
-                        <li>
-                            <a asp-controller="VolunteerEmergencyContacts" asp-action="Index">Emergency Contact</a>
-                        </li>
-                        <li>
-                            <a asp-controller="VolunteerTrainingInfoes" asp-action="Index">Training Info</a>
-                        </li>
-                        <li>
-                            <a asp-controller="VolunteerPoliceInfoes" asp-action="Index">Police Info</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="#RSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-door-open"></i>
-                        Recipient
-                    </a>
-                    <ul class="collapse list-unstyled" id="RSubmenu">
-                        <li>
-                            <a asp-controller="Recipients" asp-action="Index">List</a>
-                        </li>
-                        <li>
-                            <a asp-controller="ReferralReasons" asp-action="Index">Referral Reasons</a>
-                        </li>
-                        <li>
-                            <a asp-controller="DietaryRequirements" asp-action="Index">Dietary Requirement</a>
-                        </li>
-                        
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="#MSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-mug-hot"></i>
-                        Meal
-                    </a>
-                    <ul class="collapse list-unstyled" id="MSubmenu">
-                        <li>
-                            <a asp-controller="MealInstocks" asp-action="Index">In-stock</a>
-                        </li>
-                        <li>
-                            <a asp-controller="Batches" asp-action="Index">Batches</a>
-                        </li>
-                    </ul>
-                </li>
-                
-                <li>
-                    <a asp-controller="Referrers" asp-action="Index">
-                        <i class="fas fa-user-nurse"></i>
-                        Referrer
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#OSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                        <i class="fas fa-users-cog"></i>
-                        Settings
-                    </a>
-                    <ul class="collapse list-unstyled" id="OSubmenu">
-                        <li>
-                            <a asp-controller="VolunteerRoles" asp-action="Index">VolunteerRoles</a>
-                        </li>
-                        <li>
-                            <a asp-controller="VolunteerStatus" asp-action="Index">VolunteerStatus</a>
-                        </li>
-                        <li>
-                            <a asp-controller="ReferrerRoles" asp-action="Index">ReferrerRoles</a>
-                        </li>
-                        <li>
-                            <a asp-controller="Branches" asp-action="Index">Branches</a>
-                        </li>
-                        <li>
-                            <a asp-controller="MealTypes" asp-action="Index">MealTypes</a>
-                        </li>
-                    </ul>
-                </li>
-
-
-
-                
-
-
-
-
-                <li>
-                    <a href="#">
-                        <i class="fas fa-question"></i>
-                        FAQ
-                    </a>
-                </li>
+                @if (@User.IsInRole("L1_Admin") || @User.IsInRole("L2_Manager"))
+                {
+                    <partial name="_L1L2HomePartial" />
+                }
+                else if (@User.IsInRole("L3_ChefManager"))
+                {
+                    <partial name="_L3HomePartial" />
+                }
+                else if (@User.IsInRole("L4_DeliverMan"))
+                {
+                    <partial name="_L4HomePartial" />
+                }
+                else if (@User.IsInRole("L5_GeneralStaff"))
+                {
+                    <partial name="_L5HomePartial" />
+                }
+            </ul>
+            <ul class="list-unstyled CTAs">
                 <li>
                     <a href="#">
                         <i class="fas fa-paper-plane"></i>
                         Contact
                     </a>
                 </li>
-            </ul>
 
-            <ul class="list-unstyled CTAs">
-                <li>
-                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-                </li>
-                <li>
-                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
-                </li>
+                @*<li>
+                    <a class="btn btn-danger" asp-controller="Batches" asp-action="Create">Reset Data</a>
+        <br />
+        <pre style="color: gray">Reset Steps:
+         1. 点击后将清空订单，库存，批次三类数据
+         2. 清空数据后，需要首先添加库存;
+         3. 添加订单会自动扣除库存(任意类别餐库存为0，则无法创建订单);
+        </pre>
+                </li>*@
             </ul>
         </nav>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         <!-- Page Content  -->
         <div id="content">
@@ -219,95 +115,50 @@
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
-                        <span>Toggle Sidebar</span>
+                        @*<span>Sidebar</span>*@
                     </button>
+                    <h4 style="margin-bottom: 0px;   margin-left: 9px;">@ViewData["Title"]</h4>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
+                        <i class="fas fa-user"></i>
+                        <span></span>
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
+                            <partial name="_LoginPartial" />
                         </ul>
                     </div>
                 </div>
             </nav>
 
-            <h2>Collapsible Sidebar Using Bootstrap 4</h2>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim id est laborum.
-            </p>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim id est laborum.
-            </p>
+            <partial name="_CookieConsentPartial" />
+            <main role="main" class="pb-3">
+                
+                    @RenderBody()
 
-            <div class="line"></div>
 
-            <h2>Lorem Ipsum Dolor</h2>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim id est laborum.
-            </p>
+                    &copy; 2019 - Bellyful Invercargill - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+               
 
-            <div class="line"></div>
+            </main>
+            
 
-            <h2>Lorem Ipsum Dolor</h2>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim id est laborum.
-            </p>
-
-            <div class="line"></div>
-
-            <h3>Lorem Ipsum Dolor</h3>
-            <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-                deserunt mollit anim id est laborum.
-            </p>
         </div>
-
+        
         @*=============*@
 
-      
 
-        <div class="container">
+
+        @*<div class="container">
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                <partial name="_LoginPartial" />
+
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -320,21 +171,11 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </div>*@
 
 
-        <div class="container">
-            <partial name="_CookieConsentPartial" />
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
-        </div>
-
-        <footer class="border-top footer text-muted">
-            <div class="container">
-                &copy; 2019 - bellyful_proj_v._0._3 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
-        </footer>
+      
+        
 
         <environment include="Development">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"

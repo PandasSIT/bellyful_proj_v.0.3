@@ -1,18 +1,40 @@
-﻿<h4> Dear Delivery Man : </h4>
-<h6>Today is @DateTime.Today.DayOfYear th day of 2019</h6>
-
-<hr />
+﻿@*Orders*@
 
 
-<div class="row">
+    <li>
+        
+        <a asp-controller="OrdersForVolunteer" asp-action="MyOrdersIndex" asp-route-Name="@User.Identity.Name">
+            <i class="fas fa-tasks"></i> My Order
+        </a>
+
+    </li>
+
+<li>
+    
+    <a asp-controller="OrdersForVolunteer" asp-action="PushedOrdersIndex" asp-route-Name="@User.Identity.Name">
+        <i class="fas fa-copy"></i>  New Order
+    </a>
+
+</li>
 
 
 
-    <div class="col-md-3">
-        <div class="btn-group-vertical">
+@*Meal*@
+<li>
+    <a href="#MSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fas fa-mug-hot"></i>
+        Meal
+    </a>
+    <ul class="collapse list-unstyled" id="MSubmenu">
+        <li>
+            <a asp-controller="MealInstocks" asp-action="Index">In-stock</a>
+        </li>
+        <li>
+            <a asp-controller="Batches" asp-action="Index">Check Date</a>
+        </li>
+    </ul>
+</li>
 
-            <a class="btn btn-lg btn-success" asp-controller="OrdersForVolunteer" asp-action="PushedOrdersIndex" asp-route-Name="@User.Identity.Name">Unassigned Orders</a>
-            <a class="btn btn-lg btn-success" asp-controller="OrdersForVolunteer" asp-action="MyOrdersIndex" asp-route-Name="@User.Identity.Name">My Orders</a>
-        </div>
-    </div>
-</div>
+
+
+

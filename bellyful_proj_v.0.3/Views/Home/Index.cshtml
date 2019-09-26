@@ -2,31 +2,10 @@
 @using System
 @using Microsoft.CodeAnalysis.CSharp.Syntax
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Dash Board Haven't done yet";
 }
 
-@if (@User.IsInRole("L1_Admin") || @User.IsInRole("L2_Manager"))
-{
-    <partial name="_L1L2HomePartial" />
-}
-else if (@User.IsInRole("L3_ChefManager"))
-{
-    <partial name="_L3HomePartial" />
-}
-else if (@User.IsInRole("L4_DeliverMan"))
-{
-    <partial name="_L4HomePartial" />
-    @*<form asp asp-action="MyOrderIndex"  asp-route-Name="@User.Identity.Name"  method="post">
-            <button type="submit" class="btn btn-success">My Order  @User.Identity.Name</button>
-        </form>*@
-
-
-}
-
-
-else if (@User.IsInRole("L5_GeneralStaff"))
-{<partial name="_L5HomePartial" />}
-else
+@if (@User.IsInRole("Guest"))
 {
     <h2>Dear Guest: </h2>
     <h4> Please contact your Manager to Assign you a App User Role !</h4>

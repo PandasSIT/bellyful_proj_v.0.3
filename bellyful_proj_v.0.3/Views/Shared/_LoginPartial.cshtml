@@ -3,8 +3,8 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject RoleManager<IdentityRole> RoleManager
-<ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
+
+    @if (SignInManager.IsSignedIn(User))//µÇÂ¼×´Ì¬
     {
     <li class="nav-item">
 
@@ -24,10 +24,6 @@
                 }
             }//get role name for particular Login User
         }
-
-
-
-
     </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
@@ -35,7 +31,7 @@
             </form>
         </li>
     }
-    else
+    else//Î´µÇÂ¼×´Ì¬
     {
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
@@ -44,4 +40,3 @@
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
         </li>
     }
-</ul>

@@ -1,21 +1,25 @@
-﻿<h4> Dear Bellyful Staff ! </h4>
-<h6>Today is @DateTime.Today.DayOfYear th day of 2019</h6>
-
-<hr />
+﻿@*Orders*@
 
 
-<div class="row">
 
 
-    <div class="col-md-3">
-        <div class="btn-group-vertical">
-            <a class="btn btn-info" asp-controller="MealInstocks" asp-action="Index">MealInstocks</a>
-            <a class="btn btn-info" asp-controller="Batches" asp-action="Index">Batches</a>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="btn-group-vertical">
-            <a class="btn btn-success" asp-controller="Orders" asp-action="Index">Orders</a>
-        </div>
-    </div>
-</div>
+
+@*Meal*@
+<li>
+    <a href="#MSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fas fa-mug-hot"></i>
+        Meal
+    </a>
+    <ul class="collapse list-unstyled" id="MSubmenu">
+        <li>
+            <a asp-controller="MealInstocks" asp-action="Index">In-stock</a>
+        </li>
+        <li>
+            <a asp-controller="Batches" asp-action="Index">Check Date</a>
+        </li>
+    </ul>
+</li>
+
+
+
+
