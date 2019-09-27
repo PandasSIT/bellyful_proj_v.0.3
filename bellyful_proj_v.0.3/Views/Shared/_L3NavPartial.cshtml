@@ -1,13 +1,4 @@
-﻿@*Orders*@
-<li>
-    <a asp-controller="Orders" asp-action="Index">
-        <i class="fas fa-copy"></i>
-        Order
-    </a>
-</li>
-
-
-@*Volunteer*@
+﻿@*Volunteer*@
 <li>
     <a href="#VSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
         <i class="fas fa-address-card"></i>
@@ -31,25 +22,6 @@
 
 
 
-@*Recipient*@
-<li>
-    <a href="#RSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-        <i class="fas fa-door-open"></i>
-        Recipient
-    </a>
-    <ul class="collapse list-unstyled" id="RSubmenu">
-        <li>
-            <a asp-controller="Recipients" asp-action="Index">List</a>
-        </li>
-        <li>
-            <a asp-controller="ReferralReasons" asp-action="Index">Referral Reasons</a>
-        </li>
-        <li>
-            <a asp-controller="DietaryRequirements" asp-action="Index">Dietary Requirement</a>
-        </li>
-
-    </ul>
-</li>
 
 
 @*Meal*@
@@ -60,7 +32,7 @@
     </a>
     <ul class="collapse list-unstyled" id="MSubmenu">
         <li>
-            <a asp-controller="MealInstocks" asp-action="Index">In-stock</a>
+            <a asp-controller="MealInstocks" asp-action="Index">Instock</a>
         </li>
         <li>
             <a asp-controller="Batches" asp-action="Index">Batches</a>
@@ -68,14 +40,6 @@
     </ul>
 </li>
 
-
-@*Referrer*@
-<li>
-    <a asp-controller="Referrers" asp-action="Index">
-        <i class="fas fa-user-nurse"></i>
-        Referrer
-    </a>
-</li>
 
 
 @*Settings*@
@@ -89,13 +53,13 @@
             <a asp-controller="AppUser" asp-action="Index">Users</a>
         </li>
         <li>
-            <a asp-controller="VolunteerRoles" asp-action="Index">V_Roles</a>
+            <a asp-controller="VolunteerRoles" asp-action="Index">V.Roles</a>
         </li>
         <li>
-            <a asp-controller="VolunteerStatus" asp-action="Index">V_Status</a>
+            <a asp-controller="VolunteerStatus" asp-action="Index">V.Status</a>
         </li>
         <li>
-            <a asp-controller="ReferrerRoles" asp-action="Index">R_Roles</a>
+            <a asp-controller="ReferrerRoles" asp-action="Index">R.Roles</a>
         </li>
         <li>
             <a asp-controller="Branches" asp-action="Index">Branch</a>

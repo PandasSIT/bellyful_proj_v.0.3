@@ -10,9 +10,10 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace bellyful_proj_v._0._3.Controllers
 {
-    [Authorize]
+    
     public class HomeController : Controller
     {
+        [Authorize]
         public IActionResult Index()
         {
             return View();
@@ -29,6 +30,10 @@ namespace bellyful_proj_v._0._3.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-      
+        public IActionResult Contact() {
+            return View();
+        }
+
+
     }
 }

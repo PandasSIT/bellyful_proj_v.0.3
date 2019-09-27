@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-md-3"></div>
-    <div class="col-md-6">
+    <div class="col-md-5">
         <h1>@ViewData["Title"]</h1>
         <section>
             <form id="account" method="post">
@@ -42,7 +42,6 @@
                
             </form>
         </section>
-        
         <section>
 
            
@@ -63,12 +62,15 @@
                             <p>
                                 @foreach (var provider in Model.ExternalLogins)
                                 {
-                                    <button type="submit" class="btn  btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
-                                        <div style="display: inline-block; margin-right: 5px;">
-                                            <i class="fab fa-google"></i>
-                                        </div>
-                                        Log in with @provider.DisplayName
-                                    </button>
+                                <button  onclick="ggLoding()" type="submit" class="btn  btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                    <div id="ggIcon"  style="display: inline-block; margin-right: 5px;">
+                                        <i class="fab fa-google"></i>
+                                    </div>
+                                    <span style="display: none; margin-bottom:3px;"id="spinner"class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    Log in via @provider.DisplayName
+                                </button>
+
+                               
                                 }
                             </p>
                         </div>
@@ -91,44 +93,14 @@
 </div>
 
 
-@*<div class="container">
-    <div class="card card-login mx-auto mt-5">
-        <div class="card-header">Login</div>
-        <div class="card-body">
-            <form>
-                <div class="form-group">
-                    <div class="form-label-group">
-                        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="required"
-                               autofocus="autofocus">
-                        <label for="inputEmail">Email address</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-label-group">
-                        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="required">
-                        <label for="inputPassword">Password</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="custom-checkbox">
-                        <label>
-                            <input type="checkbox" value="remember-me">
-                            Remember Password
-                        </label>
-                    </div>
-                </div>
-                <a class="btn btn-primary btn-block" href="index.html">Login</a>
-            </form>
-            <div class="text-center">
-                <a class="d-block small mt-3" href="register.html">Register an Account</a>
-                <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
-            </div>
-        </div>
-    </div>
-</div>*@
-
 
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+         function ggLoding() {
+            document.getElementById("ggIcon").style.display = "none";
+             document.getElementById("spinner").style.display = "inline-block";
+    }
+    </script>
 }

@@ -72,38 +72,41 @@
             <ul class="list-unstyled components">
                 @if (@User.IsInRole("L1_Admin") || @User.IsInRole("L2_Manager"))
                 {
-                    <partial name="_L1L2HomePartial" />
+                    <partial name="_L1L2NavPartial" />
                 }
                 else if (@User.IsInRole("L3_ChefManager"))
                 {
-                    <partial name="_L3HomePartial" />
+                    <partial name="_L3NavPartial" />
                 }
                 else if (@User.IsInRole("L4_DeliverMan"))
                 {
-                    <partial name="_L4HomePartial" />
+                    <partial name="_L4NavPartial" />
                 }
                 else if (@User.IsInRole("L5_GeneralStaff"))
                 {
-                    <partial name="_L5HomePartial" />
+                    <partial name="_L5NavPartial" />
                 }
-            </ul>
-            <ul class="list-unstyled CTAs">
                 <li>
-                    <a href="#">
+                    <a asp-controller="Home" asp-action="Contact">
                         <i class="fas fa-paper-plane"></i>
                         Contact
                     </a>
                 </li>
+            </ul>
+            <ul class="list-unstyled CTAs">
 
-                @*<li>
-                    <a class="btn btn-danger" asp-controller="Batches" asp-action="Create">Reset Data</a>
-        <br />
-        <pre style="color: gray">Reset Steps:
-         1. 点击后将清空订单，库存，批次三类数据
-         2. 清空数据后，需要首先添加库存;
-         3. 添加订单会自动扣除库存(任意类别餐库存为0，则无法创建订单);
-        </pre>
-                </li>*@
+                @*
+        <li>
+            <a class="btn btn-danger" asp-controller="Batches" asp-action="Create">Reset Data</a>
+        </li>
+
+            <br />
+            <pre style="color: gray">Reset Steps:
+             1. 点击后将清空订单，库存，批次三类数据
+             2. 清空数据后，需要首先添加库存;
+             3. 添加订单会自动扣除库存(任意类别餐库存为0，则无法创建订单);
+            </pre>
+                *@
             </ul>
         </nav>
 
@@ -112,7 +115,6 @@
 
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
-
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
                         @*<span>Sidebar</span>*@
@@ -135,47 +137,40 @@
 
             <partial name="_CookieConsentPartial" />
             <main role="main" class="pb-3">
-                
-                    @RenderBody()
-
-
-                    &copy; 2019 - Bellyful Invercargill - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-               
-
+                @RenderBody()
+                &copy; 2019 - Bellyful Invercargill - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </main>
-            
-
         </div>
-        
+
         @*=============*@
 
 
 
         @*<div class="container">
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
 
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="AppUser" asp-action="Index">User Manage</a>
-                    </li>
-                </ul>
-            </div>
-        </div>*@
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="AppUser" asp-action="Index">User Manage</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>*@
 
 
-      
-        
+
+
 
         <environment include="Development">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
@@ -196,39 +191,39 @@
 
 
             @*<!-- Bootstrap core JavaScript-->
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-            <!-- Core plugin JavaScript-->
-            <script src="~/lib/jquery-easing/jquery.easing.min.js"></script>
+                <script src="~/lib/jquery/dist/jquery.js"></script>
+                <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+                <!-- Core plugin JavaScript-->
+                <script src="~/lib/jquery-easing/jquery.easing.min.js"></script>
 
-            <!-- Page level plugin JavaScript-->
-            <script src="~/lib/chart.js/Chart.min.js"></script>
-            <script src="~/lib/datatables/jquery.dataTables.js"></script>
-            <script src="~/lib/datatables/dataTables.bootstrap4.js"></script>
+                <!-- Page level plugin JavaScript-->
+                <script src="~/lib/chart.js/Chart.min.js"></script>
+                <script src="~/lib/datatables/jquery.dataTables.js"></script>
+                <script src="~/lib/datatables/dataTables.bootstrap4.js"></script>
 
-            <!-- Custom scripts for all pages-->
-            <script src="~/lib/bellyful/js/sb-admin.min.js"></script>
+                <!-- Custom scripts for all pages-->
+                <script src="~/lib/bellyful/js/sb-admin.min.js"></script>
 
-            <!-- Demo scripts for this page-->
-            <script src="~/lib/bellyful/js/demo/datatables-demo.js"></script>
-            <script src="~/lib/bellyful/js/demo/chart-area-demo.js"></script>*@
+                <!-- Demo scripts for this page-->
+                <script src="~/lib/bellyful/js/demo/datatables-demo.js"></script>
+                <script src="~/lib/bellyful/js/demo/chart-area-demo.js"></script>*@
 
 
 
         </environment>
         <environment exclude="Development">
             @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
-                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                    asp-fallback-test="window.jQuery"
-                    crossorigin="anonymous"
-                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
-            </script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
-                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
-                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                    crossorigin="anonymous"
-                    integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
-            </script>*@
+                        asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                        asp-fallback-test="window.jQuery"
+                        crossorigin="anonymous"
+                        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+                </script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+                        asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                        asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                        crossorigin="anonymous"
+                        integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
+                </script>*@
 
 
 
