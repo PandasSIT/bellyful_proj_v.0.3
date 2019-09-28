@@ -3,7 +3,7 @@
 
 
 @{
-    ViewData["Title"] = "Orders";
+    ViewData["Title"] = "Order";
     TimeSpan timeSpan = TimeSpan.Zero;
 
     string GetTime(DateTime? dateTime)
@@ -36,131 +36,192 @@
 }
 
 @*<pre style="color: gray">
- 1. 下订单会自动扣除库存(任意类别餐库存为0，则无法下订单);
- 2. Push 订单会记录Push时间，覆盖掉PlacedTime
- 3. 取消订单会返回库存。
- 4. 只有状态为：Created 和 Pushed 的订单可以取消。
+     1. 下订单会自动扣除库存(任意类别餐库存为0，则无法下订单);
+     2. Push 订单会记录Push时间，覆盖掉PlacedTime
+     3. 取消订单会返回库存。
+     4. 只有状态为：Created 和 Pushed 的订单可以取消。
 
-日期显示：
-  1小时以前：x mins ago
-  1小时以上: XX:XX PM
-  昨天的时间： yday + XX:XX PM
-  超过昨天 ： day/month/year + XX:XX PM
+    日期显示：
+      1小时以前：x mins ago
+      1小时以上: XX:XX PM
+      昨天的时间： yday + XX:XX PM
+      超过昨天 ： day/month/year + XX:XX PM
 
-订单排序：
-Delivering > Assigned > Pushed > Create > Completed > Cancelled
-同状态按照 DeliveedTime > PickedUpTime > AssignedTime > PlacedTime 排序
-</pre>*@
+    订单排序：
+    Delivering > Assigned > Pushed > Create > Completed > Cancelled
+    同状态按照 DeliveedTime > PickedUpTime > AssignedTime > PlacedTime 排序
+    </pre>*@
 
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Create New </a>
-    <a asp-action="PushAll"> Push All</a>
+    <a asp-action="Create" class="btn btn-primary">New </a>
+    <a asp-action="PushAll">Push All</a>
 </p>
 
-<table  id="bellyful-order" class="cell-border nowrap hover table" style="width:100%" >
+<table id="bellyful-order" class="hover table" style="width:100%">
     <thead class="thead-dark">
         <tr>
 
-            <th >@Html.DisplayNameFor(model => model.OrderId)</th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.RIdName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VIdName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PlacedTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AssignedTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PickedUpTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DeliveredTime)
-            </th>
-            <th></th>
+            <th>No</th>
+            <th>Status</th>
+            <th> @Html.DisplayNameFor(model => model.RIdName)</th>
+            <th>  @Html.DisplayNameFor(model => model.VIdName) </th>
+            <th>   @Html.DisplayNameFor(model => model.PlacedTime)  </th>
+            <th>  @Html.DisplayNameFor(model => model.AssignedTime)  </th>
+            <th>  @Html.DisplayNameFor(model => model.PickedUpTime)</th>
+            <th>  @Html.DisplayNameFor(model => model.DeliveredTime) </th>
+            <th> Action</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var order in Model)
         {
-            <tr>
-                <td data-label="No.">
-                    @order.OrderId
-                </td>
-                <td data-label=@Html.DisplayNameFor(model => model.Status)>
-                    @switch (order.StatusId)
-                    {
-                        case 3:// Created ;
-                            <span style="background-color: rgb(153, 204, 15); border-radius:15px; padding: 7px"> @order.Status</span>
-                            break;
-                        case 4:// Pushed ;
-                            <span style="background-color: rgb(153, 204, 255); border-radius:15px; padding: 7px"> @order.Status</span>
-                            break;
-                        case 5://Assigned
-                            <span style="background-color: rgb(241,238,103); border-radius:15px; padding: 7px"> @order.Status</span>
-                            break;
-                        case 6:// Delivering
-                            <span style="  background-color: rgb(241,126,97); border-radius:15px; padding: 7px"> @order.Status</span>
-                            break;
-                        case 2:// Completed
-                            <span style="background-color:  rgb(181, 245, 253); color: grey; border-radius:15px; padding: 7px"> @order.Status</span>
-                            break;
-                        case 1:// Cancelled
-                            <span style="background-color:   grey;   border-radius:15px; padding: 7px"> @order.Status</span>
-                            break;
-                        default:
-                            @order.Status
-                            break;
-                    }
-                </td>
-                <td data-label=@Html.DisplayNameFor(model => model.RIdName)>
-                    @order.RIdName
-                </td>
+            @if (order.StatusId == 2 || order.StatusId == 1)
+            {
+                <tr class="text-black-50">
+                    <td data-label="Order No.">
+                        @order.OrderId
+                    </td>
+                    <td data-label=Status>
+                        @switch (order.StatusId)
+                        {
+                           
+                            case 2:// Completed
+                        <span style="background-color:  rgb(211, 255, 253); color: grey; border-radius:15px; padding:1px 7px">Completed</span>
+                                break;
+                            case 1:// Cancelled
+                    <span style="background-color:   rgb(222, 222, 222);   border-radius:15px; padding:1px 7px">Cancelled</span>
+                                break;
+                            default:
+                                break;
+                        }
+                    </td>
+                    <td data-label=@Html.DisplayNameFor(model => model.RIdName)>
+                        @order.RIdName
+                    </td>
 
-                @if (order.VIdName == null)
-                {
-                    <td data-label=@Html.DisplayNameFor(model => model.VIdName)> Null </td> }
-                else
-                {
-                    <td data-label=@Html.DisplayNameFor(model => model.VIdName)>   @order.VIdName</td>}
+                    @if (order.VIdName == null)
+                    {
+                        <td data-label=@Html.DisplayNameFor(model => model.VIdName)> Null </td>
+                    }
+                    else
+                    {
+                        <td data-label=@Html.DisplayNameFor(model => model.VIdName)>   @order.VIdName</td>
+                    }
 
-                <td data-label=@Html.DisplayNameFor(model => model.PlacedTime)> @GetTime(order.PlacedTime)</td>
-                <td data-label=@Html.DisplayNameFor(model => model.AssignedTime)> @GetTime(order.AssignedTime)</td>
-                <td data-label=@Html.DisplayNameFor(model => model.PickedUpTime)> @GetTime(order.PickedUpTime)</td>
-                <td data-label=@Html.DisplayNameFor(model => model.DeliveredTime)> @GetTime(order.DeliveredTime)</td>
-                <td>
-                    @if (order.StatusId == 3)
+                    <td data-label=@Html.DisplayNameFor(model => model.PlacedTime)> @GetTime(order.PlacedTime)</td>
+                    <td data-label=@Html.DisplayNameFor(model => model.AssignedTime)> @GetTime(order.AssignedTime)</td>
+                    <td data-label=@Html.DisplayNameFor(model => model.PickedUpTime)> @GetTime(order.PickedUpTime)</td>
+                    <td data-label=@Html.DisplayNameFor(model => model.DeliveredTime)> @GetTime(order.DeliveredTime)</td>
+                    <td>
+                   
+                    </td>
+                </tr>
+            }
+            else
+            {
+                <tr >
+                    <td data-label="Order No.">
+                        @order.OrderId
+                    </td>
+                    <td data-label="Status">
+                        @switch (order.StatusId)
+                        {
+                            case 3:// Created ;
+                        <span style="background-color: rgb(153, 204, 15); border-radius:15px; padding:1px 7px">Created</span>
+                                break;
+                            case 4:// Pushed ;
+                    <span style="background-color: rgb(153, 204, 255); border-radius:15px; padding:1px 7px">Pushed</span>
+                                break;
+                            case 5://Assigned
+                                <span style="background-color: rgb(241,238,103); border-radius:15px; padding:1px 7px">Taken</span>
+                                break;
+                            case 6:// Delivering
+                    <span style="  background-color: rgb(241,126,97); border-radius:15px; padding:1px 7px">Delivering</span>
+                                break;
+                            default:
+                                break;
+                        }
+                    </td>
+                    <td data-label=@Html.DisplayNameFor(model => model.RIdName)>
+                        @order.RIdName
+                    </td>
+
+                    @if (order.VIdName == null)
                     {
-                        <a asp-action="Push" asp-route-OrderId="@order.OrderId">Push</a>
-                        <span> | </span>
+                        <td data-label=@Html.DisplayNameFor(model => model.VIdName)> Null </td>
                     }
-                    @if (order.StatusId == 3 || order.StatusId == 4)
+                    else
                     {
-                        <a asp-action="Cancel" asp-route-OrderId="@order.OrderId">Cancel</a>
+                        <td data-label=@Html.DisplayNameFor(model => model.VIdName)>   @order.VIdName</td>
                     }
-                </td>
-            </tr>
+
+                    <td data-label=@Html.DisplayNameFor(model => model.PlacedTime)> @GetTime(order.PlacedTime)</td>
+                    <td data-label=@Html.DisplayNameFor(model => model.AssignedTime)> @GetTime(order.AssignedTime)</td>
+                    <td data-label=@Html.DisplayNameFor(model => model.PickedUpTime)> @GetTime(order.PickedUpTime)</td>
+                    <td data-label=@Html.DisplayNameFor(model => model.DeliveredTime)> @GetTime(order.DeliveredTime)</td>
+                    <td>
+                        @if (order.StatusId == 3)
+                        {
+                            <a style="background-color:lightblue;" class="btn text-black-50" asp-action="Push" asp-route-OrderId="@order.OrderId">Push</a>
+                            
+                        }
+                        @if (order.StatusId == 3 || order.StatusId == 4)
+                        {
+                            <a style="background-color:lightpink;" class="btn text-black-50" asp-action="Cancel" asp-route-OrderId="@order.OrderId"><i class="fas fa-times"></i></a>
+                        }
+                    </td>
+                </tr>
+            }
+
         }
     </tbody>
 </table>
 @section Scripts{
     <script>
         $(document).ready(function () {
-            $('#bellyful-order').DataTable({
-                paging: false,
-                 scrollY: 555,
-                info: false,
-                //"ordering": false,
-                "order": []
-            });
+
+           var height= window.screen.height
+
+            if (height > 1050) {
+                $('#bellyful-order').DataTable({
+                    paging: false,
+                    scrollY: 680,
+                    info: false,
+                    //"ordering": false,
+                    "order": [],
+                    //stateSave: true
+                });
+            }else if (height > 930) {
+                $('#bellyful-order').DataTable({
+                    paging: false,
+                    scrollY: 580,
+                    info: false,
+                    //"ordering": false,
+                    "order": [],
+                  ///  stateSave: true
+                });
+            } 
+            else if (height > 735) {
+                $('#bellyful-order').DataTable({
+                    paging: false,
+                    scrollY: 490,
+                    info: false,
+                    //"ordering": false,
+                    "order": [],
+                  ///  stateSave: true
+                });
+            } else {
+                
+                $('#bellyful-order').DataTable({
+                    paging: false,
+                    scrollY: 450,
+                    info: false,
+                    //"ordering": false,
+                    "order": [],
+                 //   stateSave: true
+                });
+            }
         });
     </script>
-
 }

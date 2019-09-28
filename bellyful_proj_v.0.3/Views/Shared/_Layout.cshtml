@@ -49,7 +49,7 @@
 
 
     </environment>
-    <link rel="stylesheet" href="~/css/bellyful.css" />
+    <link rel="stylesheet" href="~/css/bellyfull.css" />
     <link rel="stylesheet" href="~/css/siderbar.css" /> @*style4*@
 
     <script>
@@ -63,7 +63,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <a asp-area="" asp-controller="Home" asp-action="Index">
+                <a asp-controller="Home" asp-action="Index">
                     <h3>Bellyful Workflow</h3>
                     <strong>BW</strong>
                 </a>
@@ -96,16 +96,16 @@
             <ul class="list-unstyled CTAs">
 
                 @*
-        <li>
-            <a class="btn btn-danger" asp-controller="Batches" asp-action="Create">Reset Data</a>
-        </li>
+                    <li>
+                        <a class="btn btn-danger" asp-controller="Batches" asp-action="Create">Reset Data</a>
+                    </li>
 
-            <br />
-            <pre style="color: gray">Reset Steps:
-             1. 点击后将清空订单，库存，批次三类数据
-             2. 清空数据后，需要首先添加库存;
-             3. 添加订单会自动扣除库存(任意类别餐库存为0，则无法创建订单);
-            </pre>
+                        <br />
+                        <pre style="color: gray">Reset Steps:
+                         1. 点击后将清空订单，库存，批次三类数据
+                         2. 清空数据后，需要首先添加库存;
+                         3. 添加订单会自动扣除库存(任意类别餐库存为0，则无法创建订单);
+                        </pre>
                 *@
             </ul>
         </nav>
@@ -120,11 +120,10 @@
                         @*<span>Sidebar</span>*@
                     </button>
                     <h4 style="margin-bottom: 0px;   margin-left: 9px;">@ViewData["Title"]</h4>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+                    <button class="text-white btn btn-info d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-user"></i>
-                        <span></span>
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -136,37 +135,17 @@
             </nav>
 
             <partial name="_CookieConsentPartial" />
-            <main role="main" class="pb-3">
+            <main role="main">
                 @RenderBody()
-                &copy; 2019 - Bellyful Invercargill - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+
+
+                <div class="footer">
+                    &copy; 2019 - Bellyful Invercargill - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                </div>
             </main>
         </div>
 
-        @*=============*@
 
-
-
-        @*<div class="container">
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="AppUser" asp-action="Index">User Manage</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>*@
 
 
 
@@ -247,9 +226,10 @@
 
 
         </environment>
+        @RenderSection("Scripts", required: false)
         <script src="~/js/site.js" asp-append-version="true"></script>
 
-        @RenderSection("Scripts", required: false)
+
     </div>
 </body>
 </html>

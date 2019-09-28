@@ -11,7 +11,7 @@ namespace bellyful_proj_v._0._3.ViewModels
     {
         [Display(Name = "No.")]
         public int OrderId { get; set; }
-        public string Status { get; set; }
+       // public string Status { get; set; }
         public int StatusId { get; set; }
         [Display(Name = "Recipient")]
         public string RIdName { get; set; }

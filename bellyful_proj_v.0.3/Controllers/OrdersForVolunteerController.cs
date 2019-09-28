@@ -102,10 +102,10 @@ namespace bellyful_proj_v._0._3.Controllers
                             vm.VIdName = ss;
                         }
                         
-                        if (o.StatusId != null)
-                        {
-                            vm.Status = _context.OrderStatus.FindAsync(o.StatusId.Value).Result.Content;
-                        }
+                        //if (o.StatusId != null)
+                        //{
+                        //    vm.Status = _context.OrderStatus.FindAsync(o.StatusId.Value).Result.Content;
+                        //}
 
                         ordersVMs.Add(vm);
                     }
