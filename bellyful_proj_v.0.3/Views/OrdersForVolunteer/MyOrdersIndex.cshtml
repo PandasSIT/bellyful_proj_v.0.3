@@ -186,6 +186,9 @@
         $(document).ready(function () {
 
            var height= window.screen.height
+            $('#bellyful-order').DataTable({
+                    stateSave: true
+            });
 
             if (height > 1050) {
                 $('#bellyful-order').DataTable({
@@ -216,7 +219,6 @@
                   ///  stateSave: true
                 });
             } else {
-
                 $('#bellyful-order').DataTable({
                     paging: false,
                     scrollY: 450,
@@ -226,6 +228,7 @@
                  //   stateSave: true
                 });
             }
+             
         });
     </script>
 }
