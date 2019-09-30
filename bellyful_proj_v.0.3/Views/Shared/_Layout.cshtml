@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <link rel="manifest" href="/manifest.json">
 
-    <script src="https://kit.fontawesome.com/7c5e1ab886.js" crossorigin="anonymous"></script>
+    @*<script src="https://kit.fontawesome.com/7c5e1ab886.js" crossorigin="anonymous"></script>*@
     @*<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
                 integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
                 crossorigin="anonymous"></script>
@@ -19,15 +19,21 @@
     <title>@ViewData["Title"] - BellyfulWorkflow</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
-              crossorigin="anonymous"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
+        @*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+        asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+        crossorigin="anonymous"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />*@
 
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+        @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">*@
 
+        <link rel="stylesheet" href="~/css/bootstrap.min.css" />
 
+        <link rel="stylesheet" href="~/css/jquery.dataTables.min.css" />
+        @*<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">*@
+        @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">*@
+        <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        @*============本地化===========*@
 
     </environment>
     <environment exclude="Development">
@@ -88,8 +94,7 @@
                 }
                 <li>
                     <a asp-controller="Home" asp-action="Contact">
-                        <i class="fas fa-paper-plane"></i>
-                        Contact
+                        <i class="fa fa-paper-plane"></i>Contact
                     </a>
                 </li>
             </ul>
@@ -116,14 +121,14 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
-                        <i class="fas fa-align-left"></i>
+                        <i class="fa fa-align-left fa-fw"></i>
                         @*<span>Sidebar</span>*@
                     </button>
                     <h4 style="margin-bottom: 0px;   margin-left: 9px;">@ViewData["Title"]</h4>
                     <button class="text-white btn btn-info d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
                             data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-user"></i>
+                        <i class="fa fa-user fa-fw"></i>
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -228,8 +233,6 @@
         </environment>
         @RenderSection("Scripts", required: false)
         <script src="~/js/site.js" asp-append-version="true"></script>
-
-
     </div>
 </body>
 </html>

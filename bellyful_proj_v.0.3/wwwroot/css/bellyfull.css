@@ -1,6 +1,14 @@
 ﻿/* Please see documentationttt at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+
+
+
+
+.action-btns {
+    width: 116px;
+    height: 39px;
+}
 .hoverLink {
     color: #17a2b8;
 }
@@ -8,7 +16,7 @@ for details on configuring this project to bundle and minify static web assets. 
     color:black;
 }
 
-#bellyful-order_filter {
+.dataTables_filter {
     position: absolute;
     top: -50px;
     left: 200px;
@@ -16,12 +24,12 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
     #bellyful-order_filter input {
-        width: 55%;
+        width: 45%;
     }
 
-#bellyful-order thead tr {
+/*#bellyful-order thead tr {
     display: none;
-}
+}*/
 
 
 
@@ -32,7 +40,7 @@ for details on configuring this project to bundle and minify static web assets. 
 }
 
 
-table th, table tr {
+/*table th, table tr {
     border: 0.5px solid #ddd;
     padding: 5px;
 }
@@ -41,10 +49,41 @@ table th,
 table td {
     padding: 10px;
     text-align: center;
+}*/
+table th,
+table td {
+    text-align: center;
 }
-
 .bellyful-order_wrapper .table .thead-dark th {
 }
+
+.footer {
+    text-align: center;
+    margin-top: 12px;
+    position: absolute;
+    bottom: 22px;
+}
+@media screen and (min-width:960px) {
+
+    .footer {
+        text-align: center;
+        margin-top: 12px;
+        position: absolute;
+        bottom: 22px;
+        left: 50%;
+    }
+    #content p {
+        margin-left: 12px;
+    }
+    .dataTables_scrollHeadInner,
+    .dataTables_scrollHeadInner > * {
+        width: 100% !important;
+    }
+
+
+}
+
+
 /* <= 568px */
 @media screen and (max-width: 35.5em) {
     table {
@@ -92,9 +131,9 @@ a.navbar-brand {
     word-break: break-all;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
+ Sticky footer styles
+-------------------------------------------------- 
+/*html {
     font-size: 14px;
 }
 
@@ -121,24 +160,13 @@ button.accept-policy {
     line-height: inherit;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
+Sticky footer styles
+--------------------------------------------------
 html {
     position: relative;
     min-height: 100%;
-}
+}*/
 
 
 
-.footer {
-    text-align: center;
-    margin-top: 12px;
-}
 
-.btn-group-vertical a:first-child {
-    border-bottom: 2px solid black;
-}
-
-.col-md-3, .col-md-2 {
-    margin: 5px
-}

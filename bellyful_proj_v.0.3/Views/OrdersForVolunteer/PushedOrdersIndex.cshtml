@@ -4,6 +4,7 @@
 
 @{
     ViewData["Title"] = "New Order";
+    string mutipAddress = null;
     TimeSpan timeSpan = TimeSpan.Zero;
 
     string GetTime(DateTime? dateTime)
@@ -34,60 +35,121 @@
         }
     }
 }
-
-
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">No.</th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.RIdName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TheRecipientAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TheRecipientDogOnProperty)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.PlacedTime)
-            </th>
-
-
-
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var order in Model)
+    <p>
+        @if (Model.Any(x => x.StatusId == 5))
         {
-            <tr>
-                <td>
-                    @order.OrderId
-                </td>
-                <td>
-                    @order.RIdName
-                </td>
-                <td>
-
-                    <a class="hoverLink" href="https://Maps.google.com/?q= @order.TheRecipientAddress">@order.TheRecipientAddress</a>
-
-                </td>
-                <td>
-                    @order.TheRecipientDogOnProperty
-                </td>
-                <td> @GetTime(order.PlacedTime)</td>
-
-                <td>
-                    <a title="Take this one"  class="btn btn-info text-black-50"
-                       asp-action="TakeOrder" asp-route-OrderId="@order.OrderId"
-                       asp-route-Name="@User.Identity.Name"
-                       onclick="return confirm('Are you Sure to take this ORDER?')"> <i style="color:white" class="fas fa-calendar-check "></i></a>
-
-                </td>
-            </tr>
+            <a class="btn btn-primy" asp-action="PickUpAllMeals" title="Pick up Meals for all your orders" asp-route-Name="@User.Identity.Name">Pick Up all</a>
+        }else
+        {
+            <a class="btn btn-primy">   </a>
         }
-    </tbody>
-</table>
+    </p>
+    <table id="bellyful-pushedorder" class="hover table display nowrap" style="width:100%">
+        <thead>
+            <tr>
+                <th>No.</th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.RIdName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TheRecipientAddress)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TheRecipientDogOnProperty)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.PlacedTime)
+                </th>
+
+
+
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>
+                        @order.OrderId
+                    </td>
+                    <td>
+                        @order.RIdName
+                    </td>
+                    <td>
+
+                        <a class="hoverLink" href="https://Maps.google.com/?q= @order.TheRecipientAddress">@order.TheRecipientAddress</a>
+                        @{mutipAddress += order.TheRecipientAddress + "/";}
+                    </td>
+                    <td>
+                        @order.TheRecipientDogOnProperty
+                    </td>
+                    <td> @GetTime(order.PlacedTime)</td>
+
+                    <td>
+                        <a title="Take this one" class="btn btn-info text-black-50"
+                           asp-action="TakeOrder" asp-route-OrderId="@order.OrderId"
+                           asp-route-Name="@User.Identity.Name"
+                           onclick="return confirm('Are you sure to take Order:@order.OrderId?')"> <i style="color:white" class="fa fa-calendar-check-o"></i></a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @if (mutipAddress != null)
+    {
+        <a style="position:relative;bottom:750px;left:650px" class="btn btn-primary" href="https://www.google.com/maps/dir\@mutipAddress" +> String Up on Map! </a>
+    }
+
+    @section Scripts{
+        <script>
+            $(document).ready(function () {
+
+
+                var height = window.screen.height
+
+                if (height > 1050) {
+                    $('#bellyful-pushedorder').DataTable({
+                        paging: false,
+                        scrollY: 650,
+                        info: false,
+                        //"ordering": false,
+                        "order": []
+                        //stateSave: true
+                    });
+                } else if (height > 930) {
+                    $('#bellyful-pushedorder').DataTable({
+                        paging: false,
+                        scrollY: 580,
+                        info: false,
+                        //"ordering": false,
+                        "order": [],
+                        ///  stateSave: true
+                    });
+                }
+                else if (height > 735) {
+                    $('#bellyful-pushedorder').DataTable({
+                        paging: false,
+                        scrollY: 490,
+                        info: false,
+                        //"ordering": false,
+                        "order": [],
+                        ///  stateSave: true
+                    });
+                } else {
+
+                    $('#bellyful-pushedorder').DataTable({
+                        paging: false,
+                        scrollY: 450,
+                        info: false,
+                        //"ordering": false,
+                        "order": [],
+                        //   stateSave: true
+                    });
+                }
+            });
+        </script>
+    }

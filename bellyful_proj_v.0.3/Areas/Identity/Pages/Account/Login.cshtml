@@ -56,13 +56,12 @@
                 else
                 {
                     <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
+                      
                                 @foreach (var provider in Model.ExternalLogins)
                                 {
                                 <button  onclick="ggLoding()" type="submit" class="btn  btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
                                     <div id="ggIcon"  style="display: inline-block; margin-right: 5px;">
-                                        <i class="fab fa-google"></i>
+                                        <i class="fa fa-google"></i>
                                     </div>
                                     <span style="display: none; margin-bottom:3px;"id="spinner"class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                     Log in via @provider.DisplayName
@@ -70,15 +69,16 @@
 
                                
                                 }
-                            </p>
-                        </div>
+                            
+                        
                     </form>
                 }
             }
+        <br /><br />
             <div class="form-group">
-                <p>
-                    <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                </p>
+               
+                    <a id="forgot-password " class="text-black-50" asp-page="./ForgotPassword">Forgot your password?</a>
+               
 
             </div>
         </section>
