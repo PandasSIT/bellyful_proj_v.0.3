@@ -1,0 +1,107 @@
+﻿@*Orders*@
+<li>
+    <a asp-controller="Orders" asp-action="Index">
+        <i class="fa fa-copy "></i>
+        Order
+    </a>
+</li>
+
+
+@*Volunteer*@
+<li>
+    <a href="#VSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fa fa-address-book-o "></i>
+        Volunteer
+    </a>
+    <ul class="collapse list-unstyled" id="VSubmenu">
+        <li>
+            <a asp-controller="Volunteers" asp-action="Index">List</a>
+        </li>
+        <li>
+            <a asp-controller="VolunteerEmergencyContacts" asp-action="Index">Emergency Contact</a>
+        </li>
+        <li>
+            <a asp-controller="VolunteerTrainingInfoes" asp-action="Index">Training Info</a>
+        </li>
+        <li>
+            <a asp-controller="VolunteerPoliceInfoes" asp-action="Index">Police Info</a>
+        </li>
+    </ul>
+</li>
+
+
+
+@*Recipient*@
+<li>
+    <a href="#RSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fa fa-group "></i>
+        Recipient
+    </a>
+    <ul class="collapse list-unstyled" id="RSubmenu">
+        <li>
+            <a asp-controller="Recipients" asp-action="Index">List</a>
+        </li>
+        <li>
+            <a asp-controller="ReferralReasons" asp-action="Index">Referral Reasons</a>
+        </li>
+        <li>
+            <a asp-controller="DietaryRequirements" asp-action="Index">Dietary Requirement</a>
+        </li>
+
+    </ul>
+</li>
+
+
+@*Meal*@
+<li>
+    <a href="#MSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fa fa-cutlery"></i>
+        Meal
+    </a>
+    <ul class="collapse list-unstyled" id="MSubmenu">
+        <li>
+            <a asp-controller="MealInstocks" asp-action="Index">Instock</a>
+        </li>
+        <li>
+            <a asp-controller="Batches" asp-action="Index">Batches</a>
+        </li>
+    </ul>
+</li>
+
+
+@*Referrer*@
+<li>
+    <a asp-controller="Referrers" asp-action="Index">
+        <i class="fa fa-user-md "></i>
+         Referrer
+    </a>
+</li>
+
+
+@*Settings*@
+<li>
+    <a href="#OSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fa fa-cogs "></i>
+        Settings
+    </a>
+    <ul class="collapse list-unstyled" id="OSubmenu">
+        <li>
+            <a asp-controller="AppUser" asp-action="Index">Users</a>
+        </li>
+        <li>
+            <a asp-controller="VolunteerRoles" asp-action="Index">V.Roles</a>
+        </li>
+        <li>
+            <a asp-controller="VolunteerStatus" asp-action="Index">V.Status</a>
+        </li>
+        <li>
+            <a asp-controller="ReferrerRoles" asp-action="Index">R.Roles</a>
+        </li>
+        <li>
+            <a asp-controller="Branches" asp-action="Index">Branch</a>
+        </li>
+        <li>
+            <a asp-controller="MealTypes" asp-action="Index">MealType</a>
+        </li>
+    </ul>
+</li>

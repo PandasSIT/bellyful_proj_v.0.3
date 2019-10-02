@@ -1,0 +1,71 @@
+﻿@*Volunteer*@
+<li>
+    <a href="#VSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fa fa-address-book-o"></i>
+        Volunteer
+    </a>
+    <ul class="collapse list-unstyled" id="VSubmenu">
+        <li>
+            <a asp-controller="Volunteers" asp-action="Index">List</a>
+        </li>
+        <li>
+            <a asp-controller="VolunteerEmergencyContacts" asp-action="Index">Emergency Contact</a>
+        </li>
+        <li>
+            <a asp-controller="VolunteerTrainingInfoes" asp-action="Index">Training Info</a>
+        </li>
+        <li>
+            <a asp-controller="VolunteerPoliceInfoes" asp-action="Index">Police Info</a>
+        </li>
+    </ul>
+</li>
+
+
+
+
+
+@*Meal*@
+<li>
+    <a href="#MSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fa fa-cutlery "></i>
+        Meal
+    </a>
+    <ul class="collapse list-unstyled" id="MSubmenu">
+        <li>
+            <a asp-controller="MealInstocks" asp-action="Index">Instock</a>
+        </li>
+        <li>
+            <a asp-controller="Batches" asp-action="Index">Batches</a>
+        </li>
+    </ul>
+</li>
+
+
+
+@*Settings*@
+<li>
+    <a href="#OSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <i class="fa fa-cogs "></i>
+        Settings
+    </a>
+    <ul class="collapse list-unstyled" id="OSubmenu">
+        <li>
+            <a asp-controller="AppUser" asp-action="Index">Users</a>
+        </li>
+        <li>
+            <a asp-controller="VolunteerRoles" asp-action="Index">V.Roles</a>
+        </li>
+        <li>
+            <a asp-controller="VolunteerStatus" asp-action="Index">V.Status</a>
+        </li>
+        <li>
+            <a asp-controller="ReferrerRoles" asp-action="Index">R.Roles</a>
+        </li>
+        <li>
+            <a asp-controller="Branches" asp-action="Index">Branch</a>
+        </li>
+        <li>
+            <a asp-controller="MealTypes" asp-action="Index">MealType</a>
+        </li>
+    </ul>
+</li>

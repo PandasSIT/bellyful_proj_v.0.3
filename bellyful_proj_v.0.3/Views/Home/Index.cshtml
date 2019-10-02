@@ -5,9 +5,31 @@
     ViewData["Title"] = "Dash Board";
 }
 
-@if (@User.IsInRole("Guest"))
+
+@if (@User.IsInRole("L1_Admin") || @User.IsInRole("L2_Manager"))
+{
+    <h2>Dear Admin: </h2>
+
+    //<partial name="_L1L2DashBoardPartial" />
+}
+else if (@User.IsInRole("L3_ChefManager"))
+{
+    <h2>Dear ChefManager: </h2>
+    // <partial name="_L3DashBoardPartial" />
+}
+else if (@User.IsInRole("L4_DeliverMan"))
+{
+    <h2>Dear DeliverMan: </h2>
+}
+else if (@User.IsInRole("L5_GeneralStaff"))
+{
+    <h2>Dear Bellyful staff: </h2>
+}
+else
 {
     <h2>Dear Guest: </h2>
-    <h4> Please contact your Manager to Assign you a App User Role !</h4>
+    <h4> Ple33ase contact your Manager to Assign you a App User Role !</h4>
 }
+
+
 <br />

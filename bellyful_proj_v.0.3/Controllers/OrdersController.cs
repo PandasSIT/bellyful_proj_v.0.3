@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Net;
+using System.Net.Mail;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -40,8 +42,8 @@ namespace bellyful_proj_v._0._3.Controllers
                     OrderId = o.OrderId
                 };
 
-                if (o.CreatedDatetime != null)vm.PlacedTime = o.CreatedDatetime;
-                if (o.AssignDatetime != null)vm.AssignedTime = o.AssignDatetime;
+                if (o.CreatedDatetime != null) vm.PlacedTime = o.CreatedDatetime;
+                if (o.AssignDatetime != null) vm.AssignedTime = o.AssignDatetime;
                 if (o.PickupDatetime != null) vm.PickedUpTime = o.PickupDatetime;
                 if (o.DeliveredDatetime != null) vm.DeliveredTime = o.DeliveredDatetime;
                 if (o.StatusId != null) vm.StatusId = o.StatusId.Value;
@@ -108,7 +110,7 @@ namespace bellyful_proj_v._0._3.Controllers
             {
 
                 //_context.Add(order);
-                
+
                 //_context.Database.ExecuteSqlCommand("sp_Add_Recipient @RName", name);
 
                 try
@@ -118,7 +120,7 @@ namespace bellyful_proj_v._0._3.Controllers
                 }
                 catch (Exception)
                 {
-                   // ModelState.AddModelError("", "Out of Instock!!");
+                    // ModelState.AddModelError("", "Out of Instock!!");
                     ViewData["RecipientId"] = new SelectList(await _context.GetRecipientsForSelection(), "RId", "IdFullName", orderCVM.RecipientId);
                     // ViewData["StatusId"] = new SelectList(_context.OrderStatus, "StatusId", "Content", orderCVM.StatusId);
                     //   ViewData["VolunteerId"] = new SelectList(await _context.GetVolunteersForSelection(null), "VId", "IdFullName", order.VolunteerId);
@@ -129,7 +131,7 @@ namespace bellyful_proj_v._0._3.Controllers
 
                 //return RedirectToAction(nameof(Index));
                 ViewData["RecipientId"] = new SelectList(await _context.GetRecipientsForSelection(), "RId", "IdFullName");
-                orderCVM.StatusMessage = string.Format("Order for Recipient: {0} is Created!",  _context.Recipient.FindAsync(orderCVM.RecipientId).Result.FirstName);
+                orderCVM.StatusMessage = string.Format("Order for Recipient: {0} is Created!", _context.Recipient.FindAsync(orderCVM.RecipientId).Result.FirstName);
                 return View(orderCVM);
             }
             ViewData["RecipientId"] = new SelectList(await _context.GetRecipientsForSelection(), "RId", "IdFullName", orderCVM.RecipientId);
@@ -140,12 +142,53 @@ namespace bellyful_proj_v._0._3.Controllers
         }
 
 
-        
-        
+
+
 
 
         public IActionResult Push(int orderId)
         {
+            //list.Where(a => !string.IsNullOrEmpty(a.user_type)).Select(a => a.id).ToArray();
+            //_context.Volunteer.Find(orderId.ToString);
+
+            // var volunteer =  _context.Volunteer.Where(v => v.StatusId == 1 && v.RoleId == 4).FirstOrDefaultAsync();
+            using (var client = new SmtpClient("smtp.gmail.com"))
+            {
+                string[] userEmails = _userManager.Users.Where(u => u.AppRoleId == 4).Select(u => u.Email).ToArray();
+                client.Port = 587;
+                //gmail帐户和密码
+                client.Credentials = new NetworkCredential("bellyful.inv@gmail.com", "z543z609z");
+                client.EnableSsl = true;
+
+
+                using (var message = new MailMessage())
+                {  //收件人
+                    for (int i = 0; i < userEmails.Length; i++)
+                    {
+
+                        message.To.Add(new MailAddress(userEmails[i], userEmails[i]));
+                    }
+                    //发件人
+                    message.From = new MailAddress("bellyful.inv@gmail.com", "Bellyful Invercargill");
+
+                    //抄送
+                    //message.CC.Add(new MailAddress("cc@email.com", "CC Name"));
+                    //密件抄送
+                    //  message.Bcc.Add(new MailAddress("bcc@email.com", "BCC Name"));
+
+                    message.Subject = string.Format("New mission <OrderId:{0}> is comming", orderId);
+                    message.Body = string.Format("<h2>New delivery mission<OrderId:{0}></h2><br />" +
+                        "<h3>Please Login your Bellyful App see the order details or You can <a href='http://1883afff.ngrok.io/OrdersForVolunteer/PushedOrdersIndex'>Click Here</a></h3> " +
+                        "<br /> <br /> <h3>Hopefully you will take this order </h3><br /> <br /> <br /> <br />" +
+                        " <h4>Best Regards</h4><br/><h4>Bellyful Invercargill</h4>", orderId);
+                    message.IsBodyHtml = true;
+                    //使用using，因为MailMessage实现了IDisposable接口。
+                    client.Send(message);
+
+                }
+            }
+
+
             try
             {
                 _context.Database.ExecuteSqlCommand("sp_PushOrderWithP @OrderId ", new SqlParameter("@OrderId", orderId));
@@ -190,7 +233,7 @@ namespace bellyful_proj_v._0._3.Controllers
 
         public IActionResult ResetAllOrderBatchInstock()
         {
-            
+
             try
             {
                 _context.Database.ExecuteSqlCommand("sp_ResetInstock_Order_Batch");
