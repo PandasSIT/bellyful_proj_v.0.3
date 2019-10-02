@@ -165,7 +165,6 @@ namespace bellyful_proj_v._0._3.Controllers
                 {  //收件人
                     for (int i = 0; i < userEmails.Length; i++)
                     {
-
                         message.To.Add(new MailAddress(userEmails[i], userEmails[i]));
                     }
                     //发件人
@@ -178,13 +177,12 @@ namespace bellyful_proj_v._0._3.Controllers
 
                     message.Subject = string.Format("New mission <OrderId:{0}> is comming", orderId);
                     message.Body = string.Format("<h2>New delivery mission<OrderId:{0}></h2><br />" +
-                        "<h3>Please Login your Bellyful App see the order details or You can <a href='http://1883afff.ngrok.io/OrdersForVolunteer/PushedOrdersIndex'>Click Here</a></h3> " +
-                        "<br /> <br /> <h3>Hopefully you will take this order </h3><br /> <br /> <br /> <br />" +
-                        " <h4>Best Regards</h4><br/><h4>Bellyful Invercargill</h4>", orderId);
+                        "<h3>Please Login your<a href='http://1883afff.ngrok.io/OrdersForVolunteer/PushedOrdersIndex'>Bellyful App</a> see the order details.</h3> " +
+                        "<br /> <h3>Hopefully you will take this order </h3><br />" +
+                        " <h4>Best Regards</h4><h4>Bellyful Invercargill</h4>", orderId);
                     message.IsBodyHtml = true;
                     //使用using，因为MailMessage实现了IDisposable接口。
                     client.Send(message);
-
                 }
             }
 
@@ -195,7 +193,6 @@ namespace bellyful_proj_v._0._3.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
 

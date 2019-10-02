@@ -60,8 +60,8 @@ table td {
 .footer {
     text-align: center;
     margin-top: 12px;
-    position: absolute;
-    bottom: 22px;
+    /*position: absolute;
+    bottom: 22px;*/
 }
 @media screen and (min-width:960px) {
 

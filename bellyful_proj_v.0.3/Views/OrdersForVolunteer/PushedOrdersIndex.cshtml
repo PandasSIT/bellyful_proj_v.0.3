@@ -36,13 +36,7 @@
     }
 }
     <p>
-        @if (Model.Any(x => x.StatusId == 5))
-        {
-            <a class="btn btn-primy" asp-action="PickUpAllMeals" title="Pick up Meals for all your orders" asp-route-Name="@User.Identity.Name">Pick Up all</a>
-        }else
-        {
-            <a class="btn btn-primy">   </a>
-        }
+         <a class="btn btn-primy"></a>
     </p>
     <table id="bellyful-pushedorder" class="hover table display nowrap" style="width:100%">
         <thead>
@@ -89,19 +83,19 @@
                     <td> @GetTime(order.PlacedTime)</td>
 
                     <td>
-                        <a title="Take this one" class="btn btn-info text-black-50"
+                        <a  title="Take this one" class="btn btn-info text-black-50"
                            asp-action="TakeOrder" asp-route-OrderId="@order.OrderId"
                            asp-route-Name="@User.Identity.Name"
-                           onclick="return confirm('Are you sure to take Order:@order.OrderId?')"> <i style="color:white" class="fa fa-calendar-check-o"></i></a>
+                           onclick="spinerLoading(this); return confirm('Are you sure to take Order:@order.OrderId?')"> <i style="color:white" class="fa fa-calendar-check-o"></i></a>
 
                     </td>
                 </tr>
-            }
+            } 
         </tbody>
     </table>
     @if (mutipAddress != null)
     {
-        <a style="position:relative;bottom:750px;left:650px" class="btn btn-primary" href="https://www.google.com/maps/dir\@mutipAddress" +> String Up on Map! </a>
+        <a onclick="spinerLoading(this)" style="position:relative;bottom:750px;left:650px" class="btn btn-primary" href="https://www.google.com/maps/dir\@mutipAddress" +> String Up on Map! </a>
     }
 
     @section Scripts{

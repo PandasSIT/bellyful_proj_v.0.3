@@ -54,26 +54,26 @@
 
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">New </a>
-    @if (Model.Any(x => x.StatusId == 3))
+    <a onclick="spinerLoading(this)" asp-action="Create" class="btn btn-primary">New </a>
+    @*@if (Model.Any(x => x.StatusId == 3))
     {
         <a asp-action="PushAll">Push All</a>
-    }
+    }*@
 
 </p>
 
 <table id="bellyful-order" class="hover table display nowrap">
     <thead>
         <tr>
-            <th>No</th>
+            <th>OrderId</th>
             <th>Status</th>
-            <th> @Html.DisplayNameFor(model => model.RIdName)</th>
-            <th>  @Html.DisplayNameFor(model => model.VIdName) </th>
-            <th>   @Html.DisplayNameFor(model => model.PlacedTime)  </th>
-            <th>  @Html.DisplayNameFor(model => model.AssignedTime)  </th>
-            <th>  @Html.DisplayNameFor(model => model.PickedUpTime)</th>
-            <th>  @Html.DisplayNameFor(model => model.DeliveredTime) </th>
-            <th> Action</th>
+            <th>@Html.DisplayNameFor(model => model.RIdName)</th>
+            <th>@Html.DisplayNameFor(model => model.VIdName)</th>
+            <th>@Html.DisplayNameFor(model => model.PlacedTime)</th>
+            <th>@Html.DisplayNameFor(model => model.AssignedTime)</th>
+            <th>@Html.DisplayNameFor(model => model.PickedUpTime)</th>
+            <th>@Html.DisplayNameFor(model => model.DeliveredTime) </th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -82,7 +82,7 @@
             @if (order.StatusId == 2 || order.StatusId == 1)
             {
                 <tr class="text-black-50">
-                    <td data-label="Order No.">
+                    <td data-label="Order Id.">
                         @order.OrderId
                     </td>
                     <td data-label=Status>
@@ -116,7 +116,7 @@
                     <td data-label=@Html.DisplayNameFor(model => model.AssignedTime)> @GetTime(order.AssignedTime)</td>
                     <td data-label=@Html.DisplayNameFor(model => model.PickedUpTime)> @GetTime(order.PickedUpTime)</td>
                     <td data-label=@Html.DisplayNameFor(model => model.DeliveredTime)> @GetTime(order.DeliveredTime)</td>
-                    <td>
+                    <td data-label="Action">
                         <div class="action-btns">-</div>
                     </td>
                 </tr>
@@ -168,12 +168,12 @@
 
                             @if (order.StatusId == 3)
                             {
-                                <a style="background-color:lightblue;" class="btn text-black-50" asp-action="Push" asp-route-OrderId="@order.OrderId"><b>Push</b></a>
+                                <a onclick="spinerLoading(this)" style="background-color:lightblue;" class="btn text-black-50" asp-action="Push" asp-route-OrderId="@order.OrderId"><b>Push</b></a>
 
                             }
                             @if (order.StatusId == 3 || order.StatusId == 4)
                             {
-                                <a style="background-color:lightpink;" class="btn text-black-50" asp-action="Cancel" asp-route-OrderId="@order.OrderId"><i class="fa fa-times"></i></a>
+                                <a onclick="spinerLoading(this)" style="background-color:lightpink;" class="btn text-black-50" asp-action="Cancel" asp-route-OrderId="@order.OrderId"><i  class="fa fa-times"></i></a>
                             }
                             else
                             {
@@ -190,6 +190,8 @@
 </table>
 @section Scripts{
     <script>
+       
+
         $(document).ready(function () {
 
 
