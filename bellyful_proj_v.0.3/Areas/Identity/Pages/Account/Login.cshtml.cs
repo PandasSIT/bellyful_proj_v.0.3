@@ -78,7 +78,8 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    // return LocalRedirect(returnUrl);
+                   return RedirectToRoute(new { controller = "Home", action = "Index", userEmail = Input.Email });
                 }
                 if (result.RequiresTwoFactor)
                 {

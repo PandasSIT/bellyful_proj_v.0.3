@@ -1,21 +1,200 @@
 ﻿@using System.Data
 @using System
 @using Microsoft.CodeAnalysis.CSharp.Syntax
+@model DashBoardViewModel
 @{
     ViewData["Title"] = "Dash Board";
 }
 
 
-@if (@User.IsInRole("L1_Admin") || @User.IsInRole("L2_Manager"))
+@if (@User.IsInRole("L1_Admin") || @User.IsInRole("L2_Manager")||@User.IsInRole("L3_ChefManager"))
 {
-    <h2>Dear Admin: </h2>
+    <div class="chart-container">
+        <canvas id="barChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="lineChart"></canvas>
+    </div>
+    <script>
+        Chart.defaults.global.defaultFontColor = 'Black';
+        Chart.defaults.global.defaultFontSize = 15;
+        var lineChartData = {
+            labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"],
+            datasets: [{
+                label: "Cooked Meals",
+                backgroundColor: "rgba(255,99,132,1)",
+                borderColor: "rgba(255,99,132,1)",
+                borderWidth: 2,
+                hoverBackgroundColor: "rgba(255,99,132,1)",
+                hoverBorderColor: "rgba(255,99,132,1)",
+                data: [0, 0, 0, 13, 36, 35, 50],
+                // yAxisID: 'y-axis-1',
+                fill: false,
+            }, {
+                label: "Orders deliveried",
+                backgroundColor: "rgba(23, 162, 184,0.8)",
+                borderColor: "rgba(23, 162, 184,0.8)",
+                borderWidth: 2,
+                hoverBackgroundColor: "rgba(23, 162, 184,0.8)",
+                hoverBorderColor: "rgba(23, 162, 184,0.8)",
+                data: [15, 55, 20, 21, 4, 15, 20], fill: false,
+                //yAxisID: 'y-axis-2',
+            }]
+        };
 
-    //<partial name="_L1L2DashBoardPartial" />
-}
-else if (@User.IsInRole("L3_ChefManager"))
-{
-    <h2>Dear ChefManager: </h2>
-    // <partial name="_L3DashBoardPartial" />
+        var barChartData = {
+            labels: ["Total Numbers So Far"],
+            datasets: [{
+                label: "Meals",
+                backgroundColor: "rgba(255, 102, 102,0.3)",
+                borderColor: "rgba(255,99,132,1)",
+                borderWidth: 2,
+                hoverBackgroundColor: "rgba(255, 102, 102,0.6)",
+                hoverBorderColor: "rgba(255,99,132,1)",
+                data: [@Model.TotalMeal],
+                // yAxisID: 'y-axis-1',
+
+            }, {
+                label: "Orders",
+                backgroundColor: "rgba(102, 140, 255,0.3)",
+                borderColor: "rgba(88,99,132,1)",
+                borderWidth: 2,
+                hoverBackgroundColor: "rgba(102, 140, 255,0.6)",
+                hoverBorderColor: "rgba(88,99,132,1)",
+                data: [222],
+                // yAxisID: 'y-axis-1',
+
+            }, {
+                label: "Recipients",
+                backgroundColor: "rgba(23, 162, 184,0.2)",
+                borderColor: "rgba(23, 162, 184,0.8)",
+                borderWidth: 2,
+                hoverBackgroundColor: "rgba(23, 162, 184,0.4)",
+                hoverBorderColor: "rgba(23, 162, 184,0.8)",
+                data: [333],
+                // yAxisID: 'y-axis-1',
+
+            }, {
+                label: "DeliveryHours",
+                backgroundColor: "rgba(155,199,132,0.3)",
+                borderColor: "rgba(155,199,132,1)",
+                borderWidth: 2,
+                hoverBackgroundColor: "rgba(155,199,132,0.6)",
+                hoverBorderColor: "rgba(155,199,132,1)",
+                data: [133.4],
+                // yAxisID: 'y-axis-1',
+
+            },]
+        };
+        //lineChartOptions
+        var lineChartOptions = {
+            title: {
+                display: true,
+                text: '2019~2020 Bellyful Invercargill Branch'
+            },
+            responsive: true,
+            hoverMode: 'index',
+            stacked: false,
+            maintainAspectRatio: false,
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        // labelString: 'Month'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Amount'
+                    }
+                }]
+            },
+            hover: {
+                animationDuration: 0 // 防止鼠标移上去，数字闪烁
+            },
+            "animation": {
+                "duration": 1,
+                "onComplete": function () {
+                    var chartInstance = this.chart,
+                        ctx = chartInstance.ctx;
+
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'bottom';
+
+                    this.data.datasets.forEach(function (dataset, i) {
+                        var meta = chartInstance.controller.getDatasetMeta(i);
+                        meta.data.forEach(function (bar, index) {
+                            var data = dataset.data[index];
+                            ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                        });
+                    });
+                }
+            },
+        };
+        var barChartOptions = {
+            title: {
+                display: true,
+                text: '2019~2020 Bellyful Invercargill Branch'
+            },
+            responsive: true,
+            hoverMode: 'index',
+            stacked: false,
+            maintainAspectRatio: false,
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        // labelString: 'Month'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    // scaleLabel: {
+                    //     display: true,
+                    //     labelString: 'Amount'
+                    // }
+                }]
+            },
+            hover: {
+                animationDuration: 0 // 防止鼠标移上去，数字闪烁
+            },
+            "animation": {
+                "duration": 1,
+                "onComplete": function () {
+                    var chartInstance = this.chart,
+                        ctx = chartInstance.ctx;
+                    //Chart.defaults.global.defaultFontColor = 'Black';
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'bottom';
+
+                    this.data.datasets.forEach(function (dataset, i) {
+                        var meta = chartInstance.controller.getDatasetMeta(i);
+                        meta.data.forEach(function (bar, index) {
+                            var data = dataset.data[index];
+                            ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                        });
+                    });
+                }
+            },
+        };
+
+
+
+        Chart.Line('lineChart', {
+            options: lineChartOptions,
+            data: lineChartData
+        });
+        Chart.Bar('barChart', {
+            options: barChartOptions,
+            data: barChartData
+        });
+    </script>
 }
 else if (@User.IsInRole("L4_DeliverMan"))
 {
@@ -24,11 +203,12 @@ else if (@User.IsInRole("L4_DeliverMan"))
 else if (@User.IsInRole("L5_GeneralStaff"))
 {
     <h2>Dear Bellyful staff: </h2>
+    <h4> Here is Bellyful Workflow System</h4>
 }
 else
 {
     <h2>Dear Guest: </h2>
-    <h4> Ple33ase contact your Manager to Assign you a App User Role !</h4>
+    <h4> Please contact your Manager to Assign you a App User Role !</h4>
 }
 
 

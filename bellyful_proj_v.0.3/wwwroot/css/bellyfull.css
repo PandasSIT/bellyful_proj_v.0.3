@@ -3,7 +3,12 @@ for details on configuring this project to bundle and minify static web assets. 
 
 
 
-
+.chart-container {
+    position: relative;
+    margin: auto;
+    height: 40vh;
+    width: 40vw;
+}
 
 .action-btns {
     width: 116px;
@@ -27,9 +32,9 @@ for details on configuring this project to bundle and minify static web assets. 
         width: 45%;
     }
 
-/*#bellyful-order thead tr {
+#bellyful-order thead tr {
     display: none;
-}*/
+}
 
 
 
@@ -79,7 +84,7 @@ table td {
     .dataTables_scrollHeadInner > * {
         width: 100% !important;
     }
-
+   
 
 }
 
@@ -122,6 +127,14 @@ table td {
                 float: left;
                 font-weight: bold;
             }
+    .chart-container {
+        position: relative;
+        margin: auto;
+        height: 35vh;
+        width: 88%;
+    }
+
+
 }
 
 

@@ -168,7 +168,7 @@ namespace bellyful_proj_v._0._3.Controllers
                     {
                         throw;
                     }
-                    return RedirectToAction("index");
+                    return RedirectToAction("Index");
                 }
             }//如果验证没通过 ， 直接返回
             ViewData["Volunteers"] = new SelectList(await _context.GetVolunteersForSelection(-1), "VId", "IdFullName",appUserCreateViewModel.VolunteerId);

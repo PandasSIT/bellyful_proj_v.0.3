@@ -146,7 +146,7 @@ namespace bellyful_proj_v._0._3.Controllers
 
 
 
-        public IActionResult Push(int orderId)
+        public  IActionResult Push(int orderId)
         {
             //list.Where(a => !string.IsNullOrEmpty(a.user_type)).Select(a => a.id).ToArray();
             //_context.Volunteer.Find(orderId.ToString);
@@ -196,7 +196,7 @@ namespace bellyful_proj_v._0._3.Controllers
                 throw;
             }
 
-            return RedirectToAction("Index");
+            return  RedirectToAction("Index");
         }//Cancel
         public IActionResult PushAll()
         {

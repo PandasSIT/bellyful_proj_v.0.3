@@ -20,10 +20,10 @@
 
     <environment include="Development">
         @*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-        asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
-        crossorigin="anonymous"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />*@
+            asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+            asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+            crossorigin="anonymous"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />*@
 
         @*<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">*@
 
@@ -34,6 +34,9 @@
         @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">*@
         <link href="~/font-awesome/css/font-awesome.css" rel="stylesheet" />
         @*============本地化===========*@
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" rel="stylesheet" />
+
 
     </environment>
     <environment exclude="Development">
@@ -57,7 +60,8 @@
     </environment>
     <link rel="stylesheet" href="~/css/bellyfull.css" />
     <link rel="stylesheet" href="~/css/siderbar.css" /> @*style4*@
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" asp-append-version="true"></script>
     <script>
         var counter = 1;
     </script>
@@ -69,7 +73,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <a asp-controller="Home" asp-action="Index">
+                <a asp-controller="Home" asp-action="Index" asp-route-userEmail="@User.Identity.Name">
                     <h3>Bellyful Workflow</h3>
                     <strong>BW</strong>
                 </a>
@@ -101,16 +105,16 @@
             <ul class="list-unstyled CTAs">
 
                 @*
-                    <li>
-                        <a class="btn btn-danger" asp-controller="Batches" asp-action="Create">Reset Data</a>
-                    </li>
+                <li>
+                    <a class="btn btn-danger" asp-controller="Batches" asp-action="Create">Reset Data</a>
+                </li>
 
-                        <br />
-                        <pre style="color: gray">Reset Steps:
-                         1. 点击后将清空订单，库存，批次三类数据
-                         2. 清空数据后，需要首先添加库存;
-                         3. 添加订单会自动扣除库存(任意类别餐库存为0，则无法创建订单);
-                        </pre>
+                    <br />
+                    <pre style="color: gray">Reset Steps:
+                     1. 点击后将清空订单，库存，批次三类数据
+                     2. 清空数据后，需要首先添加库存;
+                     3. 添加订单会自动扣除库存(任意类别餐库存为0，则无法创建订单);
+                    </pre>
                 *@
             </ul>
         </nav>
@@ -169,39 +173,39 @@
 
 
             @*<!-- Bootstrap core JavaScript-->
-                <script src="~/lib/jquery/dist/jquery.js"></script>
-                <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-                <!-- Core plugin JavaScript-->
-                <script src="~/lib/jquery-easing/jquery.easing.min.js"></script>
+            <script src="~/lib/jquery/dist/jquery.js"></script>
+            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+            <!-- Core plugin JavaScript-->
+            <script src="~/lib/jquery-easing/jquery.easing.min.js"></script>
 
-                <!-- Page level plugin JavaScript-->
-                <script src="~/lib/chart.js/Chart.min.js"></script>
-                <script src="~/lib/datatables/jquery.dataTables.js"></script>
-                <script src="~/lib/datatables/dataTables.bootstrap4.js"></script>
+            <!-- Page level plugin JavaScript-->
+            <script src="~/lib/chart.js/Chart.min.js"></script>
+            <script src="~/lib/datatables/jquery.dataTables.js"></script>
+            <script src="~/lib/datatables/dataTables.bootstrap4.js"></script>
 
-                <!-- Custom scripts for all pages-->
-                <script src="~/lib/bellyful/js/sb-admin.min.js"></script>
+            <!-- Custom scripts for all pages-->
+            <script src="~/lib/bellyful/js/sb-admin.min.js"></script>
 
-                <!-- Demo scripts for this page-->
-                <script src="~/lib/bellyful/js/demo/datatables-demo.js"></script>
-                <script src="~/lib/bellyful/js/demo/chart-area-demo.js"></script>*@
+            <!-- Demo scripts for this page-->
+            <script src="~/lib/bellyful/js/demo/datatables-demo.js"></script>
+            <script src="~/lib/bellyful/js/demo/chart-area-demo.js"></script>*@
 
 
 
         </environment>
         <environment exclude="Development">
             @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
-                        asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                        asp-fallback-test="window.jQuery"
-                        crossorigin="anonymous"
-                        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
-                </script>
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
-                        asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
-                        asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                        crossorigin="anonymous"
-                        integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
-                </script>*@
+                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                    asp-fallback-test="window.jQuery"
+                    crossorigin="anonymous"
+                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+            </script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                    crossorigin="anonymous"
+                    integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
+            </script>*@
 
 
 
@@ -226,7 +230,10 @@
 
         </environment>
         @RenderSection("Scripts", required: false)
+
+
         <script src="~/js/site.js" asp-append-version="true"></script>
+
     </div>
 </body>
 </html>
