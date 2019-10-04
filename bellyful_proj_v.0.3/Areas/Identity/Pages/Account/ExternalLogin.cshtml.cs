@@ -22,6 +22,7 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<ExternalLoginModel> _logger;
         private readonly bellyful_v03Context _context;
+        private  string UserEmail;
 
         public ExternalLoginModel(
             SignInManager<ApplicationUser> signInManager,
@@ -78,7 +79,7 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
                 ErrorMessage = $"Error from external provider: {remoteError}";
                 return RedirectToPage("./Login", new {ReturnUrl = returnUrl });
             }
-            var info = await _signInManager.GetExternalLoginInfoAsync();
+            ExternalLoginInfo info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
                 ErrorMessage = "Error loading external login information.";
@@ -90,7 +91,12 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
             if (result.Succeeded)
             {
                 _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
-                return LocalRedirect(returnUrl);
+              
+                //return LocalRedirect(returnUrl);
+                //var user = await _signInManager.
+                // string eail=  
+                //var ddd = "34";
+                return RedirectToRoute(new { controller = "Home", action = "Index"});
             }
             if (result.IsLockedOut)
             {
@@ -122,7 +128,7 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
                 ErrorMessage = "Error loading external login information during confirmation.";
                 return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
-
+          //  UserEmail = Input.Email;
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
@@ -160,6 +166,7 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
                         {
                             await _signInManager.SignInAsync(user, isPersistent: true);
                             _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+                            
                             return LocalRedirect(returnUrl);
                         }
                         return LocalRedirect(returnUrl);

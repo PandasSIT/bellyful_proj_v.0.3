@@ -3,12 +3,12 @@
   "name": "Bellyful Workflow",
   "icons": [
     {
-      "src": "/imgs/BF_Heart-logo-192.png",
+      "src": "/images/BF_Heart-logo-192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/imgs/BF_Heart-logo-512.png",
+      "src": "/images/BF_Heart-logo-512.png",
       "type": "image/png",
       "sizes": "512x512"
     }

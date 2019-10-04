@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white" />
+    <link rel="apple-touch-icon-precomposed" href="~/images/BF_Heart-logo-57.png" />
+    <link rel="apple-touch-startup-image" sizes="640x960" href="~/images/BF_Heart-logo-512.png" />
+    <!-- iPhone/iPod Touch 竖屏 640x960 (Retina) -->
     <link rel="manifest" href="/manifest.json">
 
     @*<script src="https://kit.fontawesome.com/7c5e1ab886.js" crossorigin="anonymous"></script>*@
@@ -67,9 +72,10 @@
     </script>
 </head>
 <body>
+    <div id="content-bg">
+        <div id="content-bg-inner"></div>
+    </div>
     <div class="wrapper">
-
-
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
@@ -98,23 +104,24 @@
                 }
                 <li>
                     <a asp-controller="Home" asp-action="Contact">
-                        <i class="fa fa-paper-plane"></i>Contact
+                        <i class="fa fa-paper-plane"></i>
+                        <span>Contact</span>
                     </a>
                 </li>
             </ul>
             <ul class="list-unstyled CTAs">
 
                 @*
-                <li>
-                    <a class="btn btn-danger" asp-controller="Batches" asp-action="Create">Reset Data</a>
-                </li>
+                    <li>
+                        <a class="btn btn-danger" asp-controller="Batches" asp-action="Create">Reset Data</a>
+                    </li>
 
-                    <br />
-                    <pre style="color: gray">Reset Steps:
-                     1. 点击后将清空订单，库存，批次三类数据
-                     2. 清空数据后，需要首先添加库存;
-                     3. 添加订单会自动扣除库存(任意类别餐库存为0，则无法创建订单);
-                    </pre>
+                        <br />
+                        <pre style="color: gray">Reset Steps:
+                         1. 点击后将清空订单，库存，批次三类数据
+                         2. 清空数据后，需要首先添加库存;
+                         3. 添加订单会自动扣除库存(任意类别餐库存为0，则无法创建订单);
+                        </pre>
                 *@
             </ul>
         </nav>
@@ -122,7 +129,7 @@
         <!-- Page Content  -->
         <div id="content">
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container-fluid">
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fa fa-align-left fa-fw"></i>
@@ -173,39 +180,39 @@
 
 
             @*<!-- Bootstrap core JavaScript-->
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-            <!-- Core plugin JavaScript-->
-            <script src="~/lib/jquery-easing/jquery.easing.min.js"></script>
+                <script src="~/lib/jquery/dist/jquery.js"></script>
+                <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+                <!-- Core plugin JavaScript-->
+                <script src="~/lib/jquery-easing/jquery.easing.min.js"></script>
 
-            <!-- Page level plugin JavaScript-->
-            <script src="~/lib/chart.js/Chart.min.js"></script>
-            <script src="~/lib/datatables/jquery.dataTables.js"></script>
-            <script src="~/lib/datatables/dataTables.bootstrap4.js"></script>
+                <!-- Page level plugin JavaScript-->
+                <script src="~/lib/chart.js/Chart.min.js"></script>
+                <script src="~/lib/datatables/jquery.dataTables.js"></script>
+                <script src="~/lib/datatables/dataTables.bootstrap4.js"></script>
 
-            <!-- Custom scripts for all pages-->
-            <script src="~/lib/bellyful/js/sb-admin.min.js"></script>
+                <!-- Custom scripts for all pages-->
+                <script src="~/lib/bellyful/js/sb-admin.min.js"></script>
 
-            <!-- Demo scripts for this page-->
-            <script src="~/lib/bellyful/js/demo/datatables-demo.js"></script>
-            <script src="~/lib/bellyful/js/demo/chart-area-demo.js"></script>*@
+                <!-- Demo scripts for this page-->
+                <script src="~/lib/bellyful/js/demo/datatables-demo.js"></script>
+                <script src="~/lib/bellyful/js/demo/chart-area-demo.js"></script>*@
 
 
 
         </environment>
         <environment exclude="Development">
             @*<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
-                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                    asp-fallback-test="window.jQuery"
-                    crossorigin="anonymous"
-                    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
-            </script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
-                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
-                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                    crossorigin="anonymous"
-                    integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
-            </script>*@
+                        asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                        asp-fallback-test="window.jQuery"
+                        crossorigin="anonymous"
+                        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+                </script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+                        asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                        asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                        crossorigin="anonymous"
+                        integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
+                </script>*@
 
 
 

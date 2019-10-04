@@ -34,6 +34,11 @@ namespace bellyful_proj_v._0._3.Controllers
         [Authorize]
         public async Task<IActionResult> Index(string userEmail)
         {
+            if (userEmail == null)
+            {
+                var m = new DashBoardViewModel();
+                return View(m);
+            }
 
             var user = await _userManager.FindByEmailAsync(userEmail);
             var dashboardViewModel = new DashBoardViewModel();
@@ -42,25 +47,20 @@ namespace bellyful_proj_v._0._3.Controllers
             {
                 if (user.AppRoleId == 4)
                 {
-                  
-
-
-
-
-
                     return View(dashboardViewModel);
                 }
-                else if (user.AppRoleId == 1 || user.AppRoleId == 2 || user.AppRoleId == 3) {
+                else if (user.AppRoleId == 1 || user.AppRoleId == 2 || user.AppRoleId == 3)
+                {
 
 
                     //batch number
                     // var bellyful_v03Context = _context.Batch;
                     var list = await _context.Batch.ToListAsync();
-                     dashboardViewModel.TotalMeal = list.Sum(x => x.AddAmount).ToString();
+                    dashboardViewModel.TotalMeal = list.Sum(x => x.AddAmount).ToString();
                     return View(dashboardViewModel);
                 }
             }
-           
+
             return View(dashboardViewModel);
 
         }

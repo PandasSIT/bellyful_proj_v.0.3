@@ -1,17 +1,87 @@
 ﻿/* Please see documentationttt at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+.table th {
+    border-top: none;
+}
+.alert-success {
+    background-color: rgba(212, 237, 218,0.5);
+}
+
+.dataTables_wrapper .dataTables_filter {
+    margin-top: 0em;
+}
+
+main>p>a {
+    margin-left:13px;
+}
+.container-fluid > button {
+    border: none;
+}
+#content-bg {
+    background-image: url("/images/bgRed.jpg");
+    background-repeat: no-repeat;
+    z-index:-1;
+    height:333px;
+    width:100%;
+    position:fixed;
+    margin-left:233px;
+}
+#content-bg-inner {
+    height: 333px;
+    background: rgba(255,255,255,.1);
+}
 
 
-.chart-container {
+.lineChart-container {
+    position: relative;
+    margin: auto;
+    height: 35vh;
+    width: 50vw;
+    background-color: rgba(255, 229, 229,0.8);
+    border-radius: 22px;
+    box-shadow: 5px 5px 15px #ccc;
+}
+.barChart-container {
+    position: relative;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    height: 35vh;
+    width: 50vw;
+    background-color: rgba(210, 244, 249,0.4);
+    border-radius: 22px;
+    box-shadow: 5px 5px 15px #ccc;
+}
+
+/*.lineChart-container {
     position: relative;
     margin: auto;
     height: 40vh;
     width: 40vw;
+    background-color: rgb(210, 244, 249);
+    border-radius: 5%;
+    box-shadow: 10px 10px 5px #888888;
 }
+.barChart-container {
+    position: relative;
+    margin-bottom: 5px;
+    height: 40vh;
+    width: 40vw;
+    background-color: rgba(255, 229, 229,0.3);
+    border-radius: 5%;
+    box-shadow: 10px 10px 5px #888888;
+}*/
+
+
+
+
+
+
+
 
 .action-btns {
-    width: 116px;
+    /*width: 116px;*/
     height: 39px;
 }
 .hoverLink {
@@ -30,13 +100,17 @@ for details on configuring this project to bundle and minify static web assets. 
 
     #bellyful-order_filter input {
         width: 45%;
+        background-color :rgba(255,255,255,0.6)
     }
 
 #bellyful-order thead tr {
     display: none;
+    
 }
 
-
+#bellyful-order {
+    width: 100% !important;
+}
 
 .googleIcon {
     display: inline-block;
@@ -55,12 +129,16 @@ table td {
     padding: 10px;
     text-align: center;
 }*/
-table th,
-table td {
+
+table td,
+table th{
     text-align: center;
+    
 }
-.bellyful-order_wrapper .table .thead-dark th {
-}
+
+
+    .bellyful-order_wrapper .table .thead-dark th {
+    }
 
 .footer {
     text-align: center;
@@ -91,6 +169,32 @@ table td {
 
 /* <= 568px */
 @media screen and (max-width: 35.5em) {
+
+    .dataTables_filter {
+        position: absolute;
+        top: -50px;
+        left: 25px;
+        color: grey;
+    }
+    #sidebar {
+      
+        box-shadow: 0px 0px 0px #FFF !important;
+    }
+    #content-bg {
+        background-image: url("/images/bgRed.jpg");
+        background-repeat: no-repeat;
+       
+        height: 333px;
+        width: 100%;
+        position: fixed;
+        margin-left: 0px;
+    }
+
+    #content-bg-inner {
+        height: 333px;
+        background: rgba(255,255,255,.1);
+    }
+
     table {
         border: 0;
     }
@@ -127,14 +231,25 @@ table td {
                 float: left;
                 font-weight: bold;
             }
-    .chart-container {
+    .barChart-container {
+        position: relative;
+        margin-bottom: 15px;
+        height: 35vh;
+        width: 95%;
+        background-color: rgba(210, 244, 249,0.4);
+        border-radius: 22px;
+        box-shadow: 5px 5px 15px #ccc;
+    }
+
+    .lineChart-container {
         position: relative;
         margin: auto;
         height: 35vh;
-        width: 88%;
+        width: 95%;
+        background-color: rgba(255, 229, 229,0.8);
+        border-radius: 22px;
+        box-shadow: 5px 5px 15px #ccc;
     }
-
-
 }
 
 
@@ -144,8 +259,7 @@ a.navbar-brand {
     word-break: break-all;
 }
 
- Sticky footer styles
--------------------------------------------------- 
+
 /*html {
     font-size: 14px;
 }

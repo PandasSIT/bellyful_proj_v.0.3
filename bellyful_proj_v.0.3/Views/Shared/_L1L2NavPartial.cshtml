@@ -1,9 +1,18 @@
 ﻿@*Orders*@
+
+
+<li>
+    <a asp-controller="Home" asp-action="Index" asp-route-userEmail=@User.Identity.Name>
+        <i class="fa fa-pie-chart "></i>
+        <span >DashBoard</span> 
+    </a>
+</li>
+
 <li>
     <a asp-controller="Orders" asp-action="Index">
         <i class="fa fa-copy "></i>
-        Order
-    </a>
+        <span>Order </span>
+</a>
 </li>
 
 
@@ -11,7 +20,7 @@
 <li>
     <a href="#VSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
         <i class="fa fa-address-book-o "></i>
-        Volunteer
+        <span>Volunteer</span>
     </a>
     <ul class="collapse list-unstyled" id="VSubmenu">
         <li>
@@ -35,7 +44,7 @@
 <li>
     <a href="#RSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
         <i class="fa fa-group "></i>
-        Recipient
+        <span>Recipient</span> 
     </a>
     <ul class="collapse list-unstyled" id="RSubmenu">
         <li>
@@ -56,7 +65,7 @@
 <li>
     <a href="#MSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
         <i class="fa fa-cutlery"></i>
-        Meal
+        <span>Meal</span>
     </a>
     <ul class="collapse list-unstyled" id="MSubmenu">
         <li>
@@ -73,7 +82,7 @@
 <li>
     <a asp-controller="Referrers" asp-action="Index">
         <i class="fa fa-user-md "></i>
-         Referrer
+        <span>Referrer</span> 
     </a>
 </li>
 
@@ -82,7 +91,7 @@
 <li>
     <a href="#OSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
         <i class="fa fa-cogs "></i>
-        Settings
+        <span>Settings</span>
     </a>
     <ul class="collapse list-unstyled" id="OSubmenu">
         <li>

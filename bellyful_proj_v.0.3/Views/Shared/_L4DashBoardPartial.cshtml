@@ -4,7 +4,7 @@
     <li>
         
         <a asp-controller="OrdersForVolunteer" asp-action="MyOrdersIndex" asp-route-Name="@User.Identity.Name">
-            <i class="fa fa-file-text-o "></i>My Order
+            <i class="fa fa-file-text-o "></i><span>My Order</span>
         </a>
 
     </li>
@@ -12,7 +12,7 @@
 <li>
     
     <a asp-controller="OrdersForVolunteer" asp-action="PushedOrdersIndex" asp-route-Name="@User.Identity.Name">
-        <i class="fa fa-file-o"></i>New Order
+        <i class="fa fa-file-o"></i><span>New Order</span>
     </a>
 
 </li>
@@ -22,7 +22,7 @@
 @*Meal*@
 <li>
     <a href="#MSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-        <i class="fa fa-cutlery "></i>Meal
+        <i class="fa fa-cutlery "></i><span>Meal</span>
     </a>
     <ul class="collapse list-unstyled" id="MSubmenu">
         <li>

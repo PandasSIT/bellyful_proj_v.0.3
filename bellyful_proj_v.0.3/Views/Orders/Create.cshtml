@@ -6,22 +6,36 @@
 
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-2"></div>
+    <div style="margin:22px 0px" class="col-md-8">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="RecipientId" class="control-label"></label>
+                <label asp-for="RecipientId" class="control-label">Please choose a Recipient</label>
                 <select asp-for="RecipientId" class="form-control" asp-items="ViewBag.RecipientId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Place Order" class="btn btn-primary" />
+                <input type="submit" value="Place Order" class="btn btn-info" />
             </div>
         </form>
+        <div class="col-md-2"></div>
+        <div>
+            <a asp-action="Index">Back to Order List</a>
+        </div>
     </div>
-</div>
-<div>
-    <a asp-action="Index">Back to List</a>
+    <div class="col-md-2"></div>
+
+
+    <div class="col-md-2"></div>
+    <div style="margin:22px 0px" class="col-md-8">
+        @await Component.InvokeAsync("MealInstock")
+    </div>
+    <div class="col-md-2"></div>
+
+
+
+
 </div>
 
-@await Component.InvokeAsync("MealInstock")
+

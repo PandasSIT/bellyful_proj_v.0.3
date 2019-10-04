@@ -5,13 +5,16 @@
     ViewData["Title"] = "Log in";
 }
 
-
+<br />
+<br />
+<br />
+<br />
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-5">
         <section>
             <form id="account" method="post">
-                
+
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Input.Email"></label>
@@ -37,12 +40,12 @@
                     <a onclick="spinerLoading(this)" class="btn btn-danger" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register</a>
 
                 </div>
-               
+
             </form>
         </section>
         <section>
 
-           
+
             @{
                 if ((Model.ExternalLogins?.Count ?? 0) == 0)
                 {
@@ -56,38 +59,38 @@
                 else
                 {
                     <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                      
-                                @foreach (var provider in Model.ExternalLogins)
-                                {
-                                <button  onclick="ggLoding()" type="submit" class="btn  btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
-                                    <div id="ggIcon"  style="display: inline-block; margin-right: 5px;">
-                                        <i class="fa fa-google"></i>
-                                    </div>
-                                    <span style="display: none; margin-bottom:3px;"id="spinner"class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                    Log in via @provider.DisplayName
-                                </button>
 
-                               
-                                }
-                            
-                        
+                        @foreach (var provider in Model.ExternalLogins)
+                        {
+                            <button onclick="ggLoding()" type="submit" class="btn  btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                <div id="ggIcon" style="display: inline-block; margin-right: 5px;">
+                                    <i class="fa fa-google"></i>
+                                </div>
+                                <span style="display: none; margin-bottom:3px;" id="spinner" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Log in via @provider.DisplayName
+                            </button>
+
+
+                        }
+
+
                     </form>
                 }
             }
-        <br /><br />
+            <br /><br />
             <div class="form-group">
-               
-                    <a id="forgot-password " class="text-black-50" asp-page="./ForgotPassword">Forgot your password?</a>
-               
+
+                <a id="forgot-password " class="text-black-50" asp-page="./ForgotPassword">Forgot your password?</a>
+
 
             </div>
         </section>
     </div>
 
     <div class="col-md-3">
-       
+
     </div>
-    
+
 </div>
 
 
@@ -96,9 +99,9 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     <script>
-         function ggLoding() {
+        function ggLoding() {
             document.getElementById("ggIcon").style.display = "none";
-             document.getElementById("spinner").style.display = "inline-block";
-    }
+            document.getElementById("spinner").style.display = "inline-block";
+        }
     </script>
 }

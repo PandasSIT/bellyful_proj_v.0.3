@@ -2,30 +2,35 @@
 @using bellyful_proj_v._0._3.Models
 @model IEnumerable<AppUserIndexViewMode>
 
-@{ 
-     ViewData["Title"] = "User Management";
+@{
+    ViewData["Title"] = "AppUser";
 }
-<a asp-action="CreateAppUser" class="btn btn-primary">Add New AppUser</a>
+
+
+<p>
+    <a onclick="spinerLoading(this)" asp-action="CreateAppUser" class="btn btn-info">New</a>
+</p>
+
+
 <br>
 <br>
 
-<pre style="color: gray">Role Permissions:
- 1. Admin and Manager : Access all the modules;
- 2. Chef Manager : Access Only Batch,MealInstock, Order modules;
- 3. Delivery Man : Can only see their own orders and MealInstock;
- 4. General Staff: Can only see the MealInstock;
- 5. Guest: Waiting to Assign a Role.
+@*<pre style="color: gray">Role Permissions:
+     1. Admin and Manager : Access all the modules;
+     2. Chef Manager : Access Only Batch,MealInstock, Order modules;
+     3. Delivery Man : Can only see their own orders and MealInstock;
+     4. General Staff: Can only see the MealInstock;
+     5. Guest: Waiting to Assign a Role.
 
-Role & VId:
-  An UserAccount can set Volunteer and Role or just leave empty  !
-</pre>
+    Role & VId:
+      An UserAccount can set Volunteer and Role or just leave empty  !
+    </pre>*@
 <br>
 <br>
-<table class="table">
-    <thead class="thead-dark">
+<table id="bellyful-appuser" class=" hover table nowrap ">
+    <thead>
         <tr>
             <th scope="col">No.</th>
-
             @*<th scope="col">   @Html.DisplayNameFor(model => model.Email)</th> 直接用实体类，无需用Html helper  *@
             <th scope="col">@Html.DisplayNameFor(model => model.Email)</th>
             <th scope="col">@Html.DisplayNameFor(model => model.Role)</th>
@@ -44,7 +49,8 @@ Role & VId:
                 <td>@user.Email</td>
                 <td>
                     @user.Role
-                </td>@*role*@
+                </td>
+                @*role*@
                 <td>@user.VIdName</td> @*VId*@
                 <td>
                     <form asp-action="EditUser" title="Edit AppUser" asp-route-id="@user.Id" class="d-inline" method="get">
@@ -59,3 +65,63 @@ Role & VId:
     </tbody>
 </table>
 
+
+
+
+@section Scripts{
+    <script>
+
+
+        $(document).ready(function () {
+
+
+            var height = window.screen.height
+
+            if (height > 1050) {
+                $('#bellyful-appuser').DataTable({
+             
+                    serverSide: false,
+                    paging: false,
+                    scrollY: 680,
+                    info: false,
+                    // "autoWidth": false,
+                    // "ordering": false,
+                    "order": [],
+                    //stateSave: true
+                });
+            } else if (height > 930) {
+                $('#bellyful-appuser').DataTable({
+                    serverSide: false,
+                    paging: false,
+                    scrollY: 580,
+                    info: false,
+                    "ordering": false,
+                    "order": [],
+                    ///  stateSave: true
+                });
+            }
+            else if (height > 735) {
+                $('#bellyful-appuser').DataTable({
+                    serverSide: false,
+                    paging: false,
+                    scrollY: 550,
+                    info: false,
+                    "ordering": false,
+                    "order": [],
+                    ///  stateSave: true
+                });
+            } else {
+
+                $('#bellyful-appuser').DataTable({
+                    serverSide: false,
+                    paging: false,
+                    scrollY: 450,
+                    info: false,
+                    "ordering": false,
+                    "order": [],
+                    //   stateSave: true
+                });
+            }
+        });
+    </script>
+}
