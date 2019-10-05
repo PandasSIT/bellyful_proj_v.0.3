@@ -53,7 +53,7 @@ namespace bellyful_proj_v._0._3.Controllers
         {
             ViewData["BranchId"] = new SelectList(_context.Branch, "BranchId", "Name");
             ViewData["DietaryRequirementId"] = new SelectList(_context.DietaryRequirement, "DietaryRequirementId", "DietaryName");
-            ViewData["ReferralReasonId"] = new SelectList(_context.ReferralReason, "ReferralReasonId", "ReferralReasonId");
+            ViewData["ReferralReasonId"] = new SelectList(_context.ReferralReason, "ReferralReasonId", "Content");
             ViewData["ReferrerId"] = new SelectList(_context.Referrer, "ReferrerId", "FirstName");
             return View();
         }
@@ -75,7 +75,7 @@ namespace bellyful_proj_v._0._3.Controllers
             }
             ViewData["BranchId"] = new SelectList(_context.Branch, "BranchId", "Name", recipient.BranchId);
             ViewData["DietaryRequirementId"] = new SelectList(_context.DietaryRequirement, "DietaryRequirementId", "DietaryName", recipient.DietaryRequirementId);
-            ViewData["ReferralReasonId"] = new SelectList(_context.ReferralReason, "ReferralReasonId", "ReferralReasonId", recipient.ReferralReasonId);
+            ViewData["ReferralReasonId"] = new SelectList(_context.ReferralReason, "ReferralReasonId", "Content", recipient.ReferralReasonId);
             ViewData["ReferrerId"] = new SelectList(_context.Referrer, "ReferrerId", "FirstName", recipient.ReferrerId);
             return View(recipient);
         }
@@ -95,7 +95,7 @@ namespace bellyful_proj_v._0._3.Controllers
             }
             ViewData["BranchId"] = new SelectList(_context.Branch, "BranchId", "Name", recipient.BranchId);
             ViewData["DietaryRequirementId"] = new SelectList(_context.DietaryRequirement, "DietaryRequirementId", "DietaryName", recipient.DietaryRequirementId);
-            ViewData["ReferralReasonId"] = new SelectList(_context.ReferralReason, "ReferralReasonId", "ReferralReasonId", recipient.ReferralReasonId);
+            ViewData["ReferralReasonId"] = new SelectList(_context.ReferralReason, "ReferralReasonId", "Content", recipient.ReferralReasonId);
             ViewData["ReferrerId"] = new SelectList(_context.Referrer, "ReferrerId", "FirstName", recipient.ReferrerId);
             return View(recipient);
         }
@@ -134,7 +134,7 @@ namespace bellyful_proj_v._0._3.Controllers
             }
             ViewData["BranchId"] = new SelectList(_context.Branch, "BranchId", "Name", recipient.BranchId);
             ViewData["DietaryRequirementId"] = new SelectList(_context.DietaryRequirement, "DietaryRequirementId", "DietaryName", recipient.DietaryRequirementId);
-            ViewData["ReferralReasonId"] = new SelectList(_context.ReferralReason, "ReferralReasonId", "ReferralReasonId", recipient.ReferralReasonId);
+            ViewData["ReferralReasonId"] = new SelectList(_context.ReferralReason, "ReferralReasonId", "Content", recipient.ReferralReasonId);
             ViewData["ReferrerId"] = new SelectList(_context.Referrer, "ReferrerId", "FirstName", recipient.ReferrerId);
             return View(recipient);
         }

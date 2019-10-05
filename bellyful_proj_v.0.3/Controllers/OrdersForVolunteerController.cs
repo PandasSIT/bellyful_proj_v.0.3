@@ -98,7 +98,7 @@ namespace bellyful_proj_v._0._3.Controllers
                         if (o.StatusId != null) vm.StatusId = o.StatusId.Value;
                         if (o.VolunteerId != null)
                         {
-                            var ss = await _context.GetVolunteerForIndex(o.VolunteerId.Value);
+                            var ss = await _context.GetVolunteerForIndex(o.VolunteerId.Value,1);
                             vm.VIdName = ss;
                         }
                         

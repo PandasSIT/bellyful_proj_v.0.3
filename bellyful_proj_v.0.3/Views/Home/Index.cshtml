@@ -7,7 +7,7 @@
 }
 
 
-@if (@User.IsInRole("L1_Admin") || @User.IsInRole("L2_Manager")||@User.IsInRole("L3_ChefManager"))
+@if (@User.IsInRole("L1_Admin") || @User.IsInRole("L2_Manager") || @User.IsInRole("L3_ChefManager"))
 {
     <div class="barChart-container">
         <canvas id="barChart"></canvas>
@@ -19,7 +19,7 @@
         Chart.defaults.global.defaultFontColor = 'Black';
         Chart.defaults.global.defaultFontSize = 15;
         var lineChartData = {
-            labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"],
+            labels: [ "Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
             datasets: [{
                 label: "Meals",
                 backgroundColor: "rgba(255,99,132,1)",
@@ -27,8 +27,14 @@
                 borderWidth: 2,
                 hoverBackgroundColor: "rgba(255,99,132,1)",
                 hoverBorderColor: "rgba(255,99,132,1)",
-                data: [0, 0, 0, 83, 68, 36, 50],
+                data: [@Model.MealsReportMonthly[Month.Jan] ,  @Model.MealsReportMonthly[Month.Feb] ,
+                    @Model.MealsReportMonthly[Month.Mar],@Model.MealsReportMonthly[Month.Apr],
+                    @Model.MealsReportMonthly[Month.May], @Model.MealsReportMonthly[Month.Jun],
+                    @Model.MealsReportMonthly[Month.Jul], @Model.MealsReportMonthly[Month.Aug],
+                    @Model.MealsReportMonthly[Month.Sep], @Model.MealsReportMonthly[Month.Oct],
+                    @Model.MealsReportMonthly[Month.Nov] ,  @Model.MealsReportMonthly[Month.Dec] ,],
                 // yAxisID: 'y-axis-1',
+
                 fill: false,
             }, {
                 label: "Deliveries",
@@ -37,7 +43,13 @@
                 borderWidth: 2,
                 hoverBackgroundColor: "rgba(23, 162, 184,0.8)",
                 hoverBorderColor: "rgba(23, 162, 184,0.8)",
-                data: [0, 0, 0, 23, 17, 8, 13], fill: false,
+                 data: [@Model.DeliveriesReportMonthly[Month.Jan] ,  @Model.DeliveriesReportMonthly[Month.Feb] ,
+                    @Model.DeliveriesReportMonthly[Month.Mar],@Model.DeliveriesReportMonthly[Month.Apr],
+                    @Model.DeliveriesReportMonthly[Month.May], @Model.DeliveriesReportMonthly[Month.Jun],
+                    @Model.DeliveriesReportMonthly[Month.Jul], @Model.DeliveriesReportMonthly[Month.Aug],
+                    @Model.DeliveriesReportMonthly[Month.Sep], @Model.DeliveriesReportMonthly[Month.Oct],
+                    @Model.DeliveriesReportMonthly[Month.Nov] ,  @Model.DeliveriesReportMonthly[Month.Dec] ,],
+                fill: false,
                 //yAxisID: 'y-axis-2',
             }]
         };
@@ -51,7 +63,7 @@
                 borderWidth: 2,
                 hoverBackgroundColor: "rgba(255, 102, 102,0.6)",
                 hoverBorderColor: "rgba(255,99,132,1)",
-                data: [920], //Model.TotalMeal
+                data: [@Model.TotalMeal], //Model.TotalMeal
                 // yAxisID: 'y-axis-1',
 
             }, {
@@ -61,7 +73,7 @@
                 borderWidth: 2,
                 hoverBackgroundColor: "rgba(102, 140, 255,0.6)",
                 hoverBorderColor: "rgba(88,99,132,1)",
-                data: [222],
+                data: [@Model.TotalOrder],
                 // yAxisID: 'y-axis-1',
 
             }, {
@@ -71,7 +83,7 @@
                 borderWidth: 2,
                 hoverBackgroundColor: "rgba(23, 162, 184,0.4)",
                 hoverBorderColor: "rgba(23, 162, 184,0.8)",
-                data: [333],
+                data: [@Model.TotalRecipient],
                 // yAxisID: 'y-axis-1',
 
             }, {
@@ -81,7 +93,7 @@
                 borderWidth: 2,
                 hoverBackgroundColor: "rgba(155,199,132,0.6)",
                 hoverBorderColor: "rgba(155,199,132,1)",
-                data: [133.4],
+                data: [@Model.TotalDeliveryHours],
                 // yAxisID: 'y-axis-1',
 
             },]
@@ -90,7 +102,7 @@
         var lineChartOptions = {
             title: {
                 display: true,
-                text: '2019~2020 Yearly Report'
+                text: '2019 Yearly Report'
             },
             responsive: true,
             hoverMode: 'index',
@@ -145,7 +157,7 @@
             stacked: false,
             maintainAspectRatio: false,
             scales: {
-                
+
                 xAxes: [{
                     display: true,
                     scaleLabel: {
@@ -199,7 +211,185 @@
 }
 else if (@User.IsInRole("L4_DeliverMan"))
 {
-    <h2>Dear DeliverMan: </h2>
+    <div class="barChart-container">
+        <canvas id="barChart"></canvas>
+    </div>
+    <div class="lineChart-container">
+        <canvas id="lineChart"></canvas>
+    </div>
+    <script>
+        Chart.defaults.global.defaultFontColor = 'Black';
+        Chart.defaults.global.defaultFontSize = 15;
+        var lineChartData = {
+            labels: [ "Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            datasets: [{
+                label: "DeliveryHours",
+                backgroundColor: "rgba(255,99,132,1)",
+                borderColor: "rgba(255,99,132,1)",
+                borderWidth: 2,
+                hoverBackgroundColor: "rgba(255,99,132,1)",
+                hoverBorderColor: "rgba(255,99,132,1)",
+                data: [@Model.DeliveryHrsReportMonthly[Month.Jan] ,  @Model.DeliveryHrsReportMonthly[Month.Feb] ,
+                    @Model.DeliveryHrsReportMonthly[Month.Mar], @Model.DeliveryHrsReportMonthly[Month.Apr],
+                    @Model.DeliveryHrsReportMonthly[Month.May], @Model.DeliveryHrsReportMonthly[Month.Jun],
+                    @Model.DeliveryHrsReportMonthly[Month.Jul], @Model.DeliveryHrsReportMonthly[Month.Aug],
+                    @Model.DeliveryHrsReportMonthly[Month.Sep], @Model.DeliveryHrsReportMonthly[Month.Oct],
+                    @Model.DeliveryHrsReportMonthly[Month.Nov] ,  @Model.DeliveryHrsReportMonthly[Month.Dec] ,],
+                // yAxisID: 'y-axis-1',
+
+                fill: false,
+            }, {
+                label: "Deliveries",
+                backgroundColor: "rgba(23, 162, 184,0.8)",
+                borderColor: "rgba(23, 162, 184,0.8)",
+                borderWidth: 2,
+                hoverBackgroundColor: "rgba(23, 162, 184,0.8)",
+                hoverBorderColor: "rgba(23, 162, 184,0.8)",
+                 data: [@Model.DeliveriesReportMonthly[Month.Jan] ,  @Model.DeliveriesReportMonthly[Month.Feb] ,
+                    @Model.DeliveriesReportMonthly[Month.Mar],@Model.DeliveriesReportMonthly[Month.Apr],
+                    @Model.DeliveriesReportMonthly[Month.May], @Model.DeliveriesReportMonthly[Month.Jun],
+                    @Model.DeliveriesReportMonthly[Month.Jul], @Model.DeliveriesReportMonthly[Month.Aug],
+                    @Model.DeliveriesReportMonthly[Month.Sep], @Model.DeliveriesReportMonthly[Month.Oct],
+                    @Model.DeliveriesReportMonthly[Month.Nov] ,  @Model.DeliveriesReportMonthly[Month.Dec] ,],
+                fill: false,
+                //yAxisID: 'y-axis-2',
+            }]
+        };
+
+        var barChartData = {
+            labels: ["Total Numbers So Far"],
+            datasets: [ {
+                label: "Orders",
+                backgroundColor: "rgba(102, 140, 255,0.3)",
+                borderColor: "rgba(88,99,132,1)",
+                borderWidth: 2,
+                hoverBackgroundColor: "rgba(102, 140, 255,0.6)",
+                hoverBorderColor: "rgba(88,99,132,1)",
+                data: [@Model.TotalOrder],
+                // yAxisID: 'y-axis-1',
+
+            }, {
+                label: "DeliveryHours",
+                backgroundColor: "rgba(155,199,132,0.3)",
+                borderColor: "rgba(155,199,132,1)",
+                borderWidth: 2,
+                hoverBackgroundColor: "rgba(155,199,132,0.6)",
+                hoverBorderColor: "rgba(155,199,132,1)",
+                data: [@Model.TotalDeliveryHours],
+                // yAxisID: 'y-axis-1',
+
+            },]
+        };
+        //lineChartOptions
+        var lineChartOptions = {
+            title: {
+                display: true,
+                text: '2019 Yearly Report'
+            },
+            responsive: true,
+            hoverMode: 'index',
+            stacked: false,
+            maintainAspectRatio: false,
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        // labelString: 'Month'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Amount'
+                    }
+                }]
+            },
+            hover: {
+                animationDuration: 0 // 防止鼠标移上去，数字闪烁
+            },
+            "animation": {
+                "duration": 1,
+                "onComplete": function () {
+                    var chartInstance = this.chart,
+                        ctx = chartInstance.ctx;
+
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'bottom';
+
+                    this.data.datasets.forEach(function (dataset, i) {
+                        var meta = chartInstance.controller.getDatasetMeta(i);
+                        meta.data.forEach(function (bar, index) {
+                            var data = dataset.data[index];
+                            ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                        });
+                    });
+                }
+            },
+        };
+        var barChartOptions = {
+            title: {
+                display: true,
+                text: 'My Data In Total So Far'
+            },
+            responsive: true,
+            hoverMode: 'index',
+            stacked: false,
+            maintainAspectRatio: false,
+            scales: {
+
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        // labelString: 'Month'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    // scaleLabel: {
+                    //     display: true,
+                    //     labelString: 'Amount'
+                    // }
+                }]
+            },
+            hover: {
+                animationDuration: 0 // 防止鼠标移上去，数字闪烁
+            },
+            "animation": {
+                "duration": 1,
+                "onComplete": function () {
+                    var chartInstance = this.chart,
+                        ctx = chartInstance.ctx;
+                    //Chart.defaults.global.defaultFontColor = 'Black';
+                    ctx.font = Chart.helpers.fontString(Chart.defaults.global.defaultFontSize, Chart.defaults.global.defaultFontStyle, Chart.defaults.global.defaultFontFamily);
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'bottom';
+
+                    this.data.datasets.forEach(function (dataset, i) {
+                        var meta = chartInstance.controller.getDatasetMeta(i);
+                        meta.data.forEach(function (bar, index) {
+                            var data = dataset.data[index];
+                            ctx.fillText(data, bar._model.x, bar._model.y - 5);
+                        });
+                    });
+                }
+            },
+        };
+
+
+
+        Chart.Line('lineChart', {
+            options: lineChartOptions,
+            data: lineChartData
+        });
+        Chart.Bar('barChart', {
+            options: barChartOptions,
+            data: barChartData
+        });
+    </script>
 }
 else if (@User.IsInRole("L5_GeneralStaff"))
 {

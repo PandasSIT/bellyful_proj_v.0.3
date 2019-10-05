@@ -1,6 +1,12 @@
 ﻿/* Please see documentationttt at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+
+.detailPageContent {
+    margin-left: 15%;
+}
+
+
 .table th {
     border-top: none;
 }
@@ -8,9 +14,6 @@ for details on configuring this project to bundle and minify static web assets. 
     background-color: rgba(212, 237, 218,0.5);
 }
 
-.dataTables_wrapper .dataTables_filter {
-    margin-top: 0em;
-}
 
 main>p>a {
     margin-left:13px;
@@ -91,16 +94,22 @@ main>p>a {
     color:black;
 }
 
+
+.dataTables_wrapper .dataTables_filter {
+    margin-top: 0em;
+}
+
+
 .dataTables_filter {
     position: absolute;
     top: -50px;
-    left: 200px;
+    left: 150px;
     color: grey;
 }
 
-    #bellyful-order_filter input {
-        width: 45%;
-        background-color :rgba(255,255,255,0.6)
+    .dataTables_filter input {
+        
+        background-color: rgba(255,255,255,0.6)
     }
 
 #bellyful-order thead tr {
@@ -148,13 +157,13 @@ table th{
 }
 @media screen and (min-width:960px) {
 
-    .footer {
+    /* .footer {
         text-align: center;
         margin-top: 12px;
         position: absolute;
         bottom: 22px;
         left: 50%;
-    }
+    }*/
     #content p {
         margin-left: 12px;
     }
@@ -170,12 +179,24 @@ table th{
 /* <= 568px */
 @media screen and (max-width: 35.5em) {
 
+    .detailPageContent {
+        margin-left:1%;
+    }
+
+
+
     .dataTables_filter {
         position: absolute;
         top: -50px;
-        left: 25px;
+        right: 25px;
         color: grey;
     }
+        .dataTables_filter input {
+            width:48%;
+            background-color: rgba(255,255,255,0.6)
+        }
+
+
     #sidebar {
       
         box-shadow: 0px 0px 0px #FFF !important;

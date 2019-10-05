@@ -12,8 +12,7 @@
 </p>
 
 
-<br>
-<br>
+
 
 @*<pre style="color: gray">Role Permissions:
      1. Admin and Manager : Access all the modules;
@@ -25,8 +24,7 @@
     Role & VId:
       An UserAccount can set Volunteer and Role or just leave empty  !
     </pre>*@
-<br>
-<br>
+
 <table id="bellyful-appuser" class=" hover table nowrap ">
     <thead>
         <tr>
@@ -43,21 +41,35 @@
         @foreach (var user in Model)
         {
             <tr>
-                <td>
+                <td data-label="No.">
                     <script>document.write(counter); counter++;</script>.
                 </td>
-                <td>@user.Email</td>
-                <td>
-                    @user.Role
-                </td>
-                @*role*@
-                <td>@user.VIdName</td> @*VId*@
-                <td>
+                <td data-label=@Html.DisplayNameFor(model => model.Email)><div> @user.Email</div> </td>
+
+                @if (@user.Role != null)
+                {
+                    <td data-label=@Html.DisplayNameFor(model => model.Role)> <div>@user.Role</div></td>
+                }
+                else
+                {
+                    <td data-label=@Html.DisplayNameFor(model => model.Role)> - </td>
+                }
+                @if (@user.VIdName != null)
+                {
+                    <td data-label=@Html.DisplayNameFor(model => model.VIdName)> <div>@user.VIdName</div></td>
+                }
+                else
+                {
+                    <td data-label=@Html.DisplayNameFor(model => model.VIdName)> - </td>
+                }
+                <td data-label="Operation">
                     <form asp-action="EditUser" title="Edit AppUser" asp-route-id="@user.Id" class="d-inline" method="get">
-                        <button type="submit" class="fas fa-edit"></button>
+
+
+                        <button type="submit" onclick="spinerLoading(this)" style="background-color:lightblue;" class="btn text-black-50">Edit</button>
                     </form>
                     <form asp-action="DeleteUser" title="Delete AppUser" asp-route-id="@user.Id" class="d-inline" method="post">
-                        <button type="submit" class="fas fa-times " onclick="return confirm('Are you Sure to delete this User?')"></button>
+                        <button type="submit" style="background-color:lightpink;" class="btn text-black-50" onclick="return confirm('Are you Sure to delete this User?')"><i class="fa fa-times"></i></button>
                     </form>
                 </td>
             </tr>
@@ -79,7 +91,7 @@
 
             if (height > 1050) {
                 $('#bellyful-appuser').DataTable({
-             
+
                     serverSide: false,
                     paging: false,
                     scrollY: 680,

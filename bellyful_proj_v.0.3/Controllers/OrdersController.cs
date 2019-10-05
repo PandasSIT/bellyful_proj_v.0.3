@@ -49,7 +49,7 @@ namespace bellyful_proj_v._0._3.Controllers
                 if (o.StatusId != null) vm.StatusId = o.StatusId.Value;
                 if (o.VolunteerId != null)
                 {
-                    var ss = await _context.GetVolunteerForIndex(o.VolunteerId.Value);
+                    var ss = await _context.GetVolunteerForIndex(o.VolunteerId.Value,1);//code 0 判定查值，1 一般查值
                     vm.VIdName = ss;
                 }
                 vm.RIdName = await _context.GetRecipientForIndex(o.RecipientId);

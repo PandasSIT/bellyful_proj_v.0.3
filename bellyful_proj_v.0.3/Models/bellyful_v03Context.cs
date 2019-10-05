@@ -662,22 +662,35 @@ namespace bellyful_proj_v._0._3.Models
             }).OrderBy(c => c.RId).ToListAsync();
         }
 
-        public async Task<string> GetVolunteerForIndex(int vid)
+        public async Task<string> GetVolunteerForIndex(int vid , int code)
         {
-            var v = await Volunteer.SingleOrDefaultAsync(i => i.VolunteerId == vid);
-            if (v != null)
+            if (code == 0)//判定查值
             {
-                if (v.IsAssignedUserAccount != null)
+                var v = await Volunteer.SingleOrDefaultAsync(i => i.VolunteerId == vid);
+                if (v != null)
                 {
-                    if (v.IsAssignedUserAccount.Value)
+                    if (v.IsAssignedUserAccount != null)
                     {
-                        return v.FirstName + " " +v.LastName;
+                        if (v.IsAssignedUserAccount.Value)return v.FirstName + " " + v.LastName;
+                        throw new ApplicationException("标记错误");
                     }
-                  //  throw new ApplicationException("标记错误");
+                    throw new ApplicationException("标记空值");
                 }
-                throw new ApplicationException("标记空值");
+                throw new ApplicationException("找不到志愿者");
             }
-            throw new ApplicationException("找不到志愿者");
+            else if (code == 1)
+            { //一般查值
+                var v = await Volunteer.SingleOrDefaultAsync(i => i.VolunteerId == vid);
+                if (v != null)
+                {
+                    if (v.IsAssignedUserAccount != null) return v.FirstName + " " + v.LastName;
+                   
+                    throw new ApplicationException("标记空值");
+                }
+                throw new ApplicationException("找不到志愿者");
+            }
+            throw new ApplicationException("请按需求提供CODE");
+
         }
 
 

@@ -22,7 +22,6 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<ExternalLoginModel> _logger;
         private readonly bellyful_v03Context _context;
-        private  string UserEmail;
 
         public ExternalLoginModel(
             SignInManager<ApplicationUser> signInManager,
@@ -91,12 +90,7 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
             if (result.Succeeded)
             {
                 _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
-              
-                //return LocalRedirect(returnUrl);
-                //var user = await _signInManager.
-                // string eail=  
-                //var ddd = "34";
-                return RedirectToRoute(new { controller = "Home", action = "Index"});
+                return RedirectToRoute(new { controller = "Home", action = "Index" , userEmail = info.Principal.Claims.ToList()[4].Value });
             }
             if (result.IsLockedOut)
             {

@@ -13,7 +13,34 @@ namespace bellyful_proj_v._0._3.ViewModels
         public string TotalRecipient { get; set; }
         public string TotalDeliveryHours { get; set; }
         public string TotalBatch { get; set; }
-        public Dictionary<Month, int> ReportMonthly { get; set; }
+        public Dictionary<Month, int?> MealsReportMonthly { get; set; }
+        public Dictionary<Month, int?> DeliveriesReportMonthly { get; set; }
+        public Dictionary<Month, double?> DeliveryHrsReportMonthly { get; set; }
+
+
+
+        public DashBoardViewModel()
+        {
+            MealsReportMonthly = new Dictionary<Month, int?>();
+            for (Month i = Month.Jan; i <= Month.Dec; i++)
+            {
+                MealsReportMonthly.Add(i, null);
+            }
+            
+
+            DeliveriesReportMonthly = new Dictionary<Month, int?>();
+            for (Month i = Month.Jan; i <= Month.Dec; i++)
+            {
+                DeliveriesReportMonthly.Add(i, null);
+            }
+
+            DeliveryHrsReportMonthly = new Dictionary<Month, double?>();
+            for (Month i = Month.Jan; i <= Month.Dec; i++)
+            {
+                DeliveryHrsReportMonthly.Add(i, null);
+            }
+
+        }
     }
     public enum Month
     {

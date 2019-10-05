@@ -51,7 +51,7 @@ namespace bellyful_proj_v._0._3.Controllers
                 };
                 if (user.VolunteerId != null)
                 {
-                    var ss = await _context.GetVolunteerForIndex(user.VolunteerId.Value);
+                    var ss = await _context.GetVolunteerForIndex(user.VolunteerId.Value,0); //判定查值
 
                     vm.VIdName = ss;
                 }
@@ -158,9 +158,15 @@ namespace bellyful_proj_v._0._3.Controllers
                         if (role != null)
                         {
                             var resultAddToRole = await _userManager.AddToRoleAsync(user, role.Name);//Add AppUser to role table
+
                             if (resultAddToRole.Succeeded)
                             {
                                 return RedirectToAction("Index");
+                            }
+                            else {
+                                var asd = await _userManager.GetRolesAsync(user);
+                                await _userManager.RemoveFromRolesAsync(user, asd);
+                                await _userManager.AddToRoleAsync(user, role.Name);
                             }
                         }
                     }

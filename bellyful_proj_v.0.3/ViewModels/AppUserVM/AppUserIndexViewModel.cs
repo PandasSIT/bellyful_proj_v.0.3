@@ -12,10 +12,10 @@ namespace bellyful_proj_v._0._3.ViewModels
     {
         public string Id { get; set; }
 
-        [Display(Name = "Email(Use to Login11)")]
+        [Display(Name = "Email(UserName)")]
         public string Email { get; set; }
 
-        [Display(Name = "App User Role")]
+        [Display(Name = "User Role")]
         public string Role { get; set; }
         
         [Display(Name = "Volunteer Name")]
