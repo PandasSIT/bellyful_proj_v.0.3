@@ -75,6 +75,7 @@ namespace bellyful_proj_v._0._3
                     //};
                 });
 
+            services.AddSingleton<IMyEmailSender, GoogleEmailSender>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 

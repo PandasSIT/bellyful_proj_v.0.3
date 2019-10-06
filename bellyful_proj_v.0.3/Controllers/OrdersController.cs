@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Net;
-using System.Net.Mail;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -18,13 +16,18 @@ namespace bellyful_proj_v._0._3.Controllers
     public class OrdersController : Controller
     {
         private readonly bellyful_v03Context _context;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMyEmailSender _googleEmailSender;
 
+        private readonly UserManager<ApplicationUser> _userManager;
+        string[] userEmails;
         public OrdersController(bellyful_v03Context context,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IMyEmailSender googleEmailSender)
         {
-            _context = context;
             _userManager = userManager;
+            _context = context;
+            _googleEmailSender = googleEmailSender;
+            userEmails = _userManager.Users.Where(u => u.AppRoleId == 4).Select(u => u.Email).ToArray();
         }
 
         // GET: Orders
@@ -49,7 +52,7 @@ namespace bellyful_proj_v._0._3.Controllers
                 if (o.StatusId != null) vm.StatusId = o.StatusId.Value;
                 if (o.VolunteerId != null)
                 {
-                    var ss = await _context.GetVolunteerForIndex(o.VolunteerId.Value,1);//code 0 判定查值，1 一般查值
+                    var ss = await _context.GetVolunteerForIndex(o.VolunteerId.Value, 1);//code 0 判定查值，1 一般查值
                     vm.VIdName = ss;
                 }
                 vm.RIdName = await _context.GetRecipientForIndex(o.RecipientId);
@@ -141,51 +144,13 @@ namespace bellyful_proj_v._0._3.Controllers
             return View(orderCVM);
         }
 
-
-
-
-
-
-        public  IActionResult Push(int orderId)
+        public IActionResult Push(int orderId)
         {
             //list.Where(a => !string.IsNullOrEmpty(a.user_type)).Select(a => a.id).ToArray();
             //_context.Volunteer.Find(orderId.ToString);
 
             // var volunteer =  _context.Volunteer.Where(v => v.StatusId == 1 && v.RoleId == 4).FirstOrDefaultAsync();
-            using (var client = new SmtpClient("smtp.gmail.com"))
-            {
-                string[] userEmails = _userManager.Users.Where(u => u.AppRoleId == 4).Select(u => u.Email).ToArray();
-                client.Port = 587;
-                //gmail帐户和密码
-                client.Credentials = new NetworkCredential("bellyful.inv@gmail.com", "z543z609z");
-                client.EnableSsl = true;
-
-
-                using (var message = new MailMessage())
-                {  //收件人
-                    for (int i = 0; i < userEmails.Length; i++)
-                    {
-                        message.To.Add(new MailAddress(userEmails[i], userEmails[i]));
-                    }
-                    //发件人
-                    message.From = new MailAddress("bellyful.inv@gmail.com", "Bellyful Invercargill");
-
-                    //抄送
-                    //message.CC.Add(new MailAddress("cc@email.com", "CC Name"));
-                    //密件抄送
-                    //  message.Bcc.Add(new MailAddress("bcc@email.com", "BCC Name"));
-
-                    message.Subject = string.Format("New mission <OrderId:{0}> is comming", orderId);
-                    message.Body = string.Format("<h2>New delivery mission<OrderId:{0}></h2><br />" +
-                        "<h3>Please Login your<a href='http://1883afff.ngrok.io/OrdersForVolunteer/PushedOrdersIndex'>Bellyful App</a> see the order details.</h3> " +
-                        "<br /> <h3>Hopefully you will take this order </h3><br />" +
-                        " <h4>Best Regards</h4><h4>Bellyful Invercargill</h4>", orderId);
-                    message.IsBodyHtml = true;
-                    //使用using，因为MailMessage实现了IDisposable接口。
-                    client.Send(message);
-                }
-            }
-
+            _googleEmailSender.SendEmailAsync(orderId.ToString(), userEmails);
 
             try
             {
@@ -196,7 +161,7 @@ namespace bellyful_proj_v._0._3.Controllers
                 throw;
             }
 
-            return  RedirectToAction("Index");
+            return RedirectToAction("Index");
         }//Cancel
         public IActionResult PushAll()
         {
