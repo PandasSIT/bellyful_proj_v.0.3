@@ -1,31 +1,43 @@
 ﻿@model IEnumerable<bellyful_proj_v._0._3.Models.MealInstock>
 
-
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.InstockAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MealType)
-            </th>
-            
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.InstockAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MealType.MealTypeName)
-            </td>
-       
-        </tr>
+@{ 
+      ViewData["Title"] = "MealInstock";
 }
-    </tbody>
-</table>
+    <div class="">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.InstockAmount)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MealType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MealType.ShelfLocation)
+                    </th>
 
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td data-label=@Html.DisplayNameFor(model => model.InstockAmount)>
+                        @Html.DisplayFor(modelItem => item.InstockAmount)
+                    </td>
+
+                    <td data-label=@Html.DisplayNameFor(model => model.MealType)>
+                        @Html.DisplayFor(modelItem => item.MealType.MealTypeName)
+                    </td>
+                    <td data-label=@Html.DisplayNameFor(model => model.MealType.ShelfLocation)>
+                        @Html.DisplayFor(modelItem => item.MealType.ShelfLocation)
+                    </td>
+                </tr>
+                    <br />
+                }
+            </tbody>
+        </table>
+
+    </div>
+    <br /><br /><br />

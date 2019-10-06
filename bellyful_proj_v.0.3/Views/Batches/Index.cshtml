@@ -4,7 +4,7 @@
 
 
 @{
-    ViewData["Title"] = "Batch Management";
+    ViewData["Title"] = "Batch";
     TimeSpan timeSpan = TimeSpan.Zero;
 
     string GetTime(DateTime? dateTime)
@@ -36,9 +36,9 @@
     }
 }
 
-<h1>Meal Batches</h1>
+
 <p>
-    <a asp-action="Create" class="btn btn-primary">Add a new Batch</a>
+    <a asp-action="Create" onclick="spinerLoading(this)" class="btn btn-info ">New</a>
 </p>
 
 
@@ -57,26 +57,27 @@
         <th>
             @Html.DisplayNameFor(model => model.MealType)
         </th>
-        <th></th>
     </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.BatchId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AddAmount)
-            </td>
-            <td> @GetTime(item.ProductionDate)</td>
+          
 
-            <td>
-                @Html.DisplayFor(modelItem => item.MealType.MealTypeName)
-            </td>
-            <td></td>
-        </tr>
+            <tr>
+
+                <td data-label=@Html.DisplayNameFor(model => model.BatchId)>
+                    @Html.DisplayFor(modelItem => item.BatchId)
+                </td>
+                <td data-label=@Html.DisplayNameFor(model => model.AddAmount)>
+                    @Html.DisplayFor(modelItem => item.AddAmount)
+                </td>
+                <td data-label=@Html.DisplayNameFor(model => model.ProductionDate)> @GetTime(item.ProductionDate)</td>
+
+                <td data-label=@Html.DisplayNameFor(model => model.MealType)>
+                    @Html.DisplayFor(modelItem => item.MealType.MealTypeName)
+                </td>
+            </tr>
         }
     </tbody>
 </table>

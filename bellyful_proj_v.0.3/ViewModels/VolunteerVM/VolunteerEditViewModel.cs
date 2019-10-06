@@ -14,7 +14,7 @@ namespace bellyful_proj_v._0._3.ViewModels.VolunteerVM
         public string FirstName { get; set; }
         [Required, Display(Name = "Last Name")]
         public string LastName { get; set; }
-        [Required, Display(Name = "Date of Birth")]
+        [Required, Display(Name = "Date of Birth"),DataType(DataType.Date)]
         public DateTime Dob { get; set; }
         [Required]
         public string Email { get; set; }

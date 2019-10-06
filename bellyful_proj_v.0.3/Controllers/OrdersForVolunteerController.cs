@@ -75,8 +75,6 @@ namespace bellyful_proj_v._0._3.Controllers
                 {
                     if (o.VolunteerId == appuser.VolunteerId)
                     {
-
-
                         var vm = new OrderIndexViewModel
                         {
                             OrderId = o.OrderId

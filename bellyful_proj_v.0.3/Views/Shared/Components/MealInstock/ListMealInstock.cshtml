@@ -5,7 +5,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h4>Current Meal Instock</h4>
+<h4 style="text-align:center">Current Meal Instock</h4>
 <table class="table">
     <thead>
         <tr>
@@ -15,6 +15,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.MealType)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MealType.ShelfLocation)
+            </th>
 
         </tr>
     </thead>
@@ -22,14 +25,18 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                <td data-label=@Html.DisplayNameFor(model => model.InstockAmount)>
                     @Html.DisplayFor(modelItem => item.InstockAmount)
                 </td>
-                <td>
+
+                <td data-label=@Html.DisplayNameFor(model => model.MealType)>
                     @Html.DisplayFor(modelItem => item.MealType.MealTypeName)
                 </td>
-
+                <td data-label=@Html.DisplayNameFor(model => model.MealType.ShelfLocation)>
+                    @Html.DisplayFor(modelItem => item.MealType.ShelfLocation)
+                </td>
             </tr>
+           
         }
     </tbody>
 </table>

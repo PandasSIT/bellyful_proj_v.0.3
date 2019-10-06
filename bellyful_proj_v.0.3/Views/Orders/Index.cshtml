@@ -1,6 +1,6 @@
 ﻿@using System.Globalization
-@model IEnumerable<bellyful_proj_v._0._3.ViewModels.OrderIndexViewModel>
-
+@*@model IEnumerable<bellyful_proj_v._0._3.ViewModels.OrderIndexViewModel>*@
+@model bellyful_proj_v._0._3.ViewModels.OrderVm.OrderIndexPageVM;
 
 @{
     ViewData["Title"] = "Order";
@@ -33,6 +33,9 @@
             return "1 min ago";
         }
     }
+
+    
+
 }
 
 @*<pre style="color: gray">
@@ -52,7 +55,7 @@
     同状态按照 DeliveedTime > PickedUpTime > AssignedTime > PlacedTime 排序
     </pre>*@
 
-
+<partial name="_StatusMessage" for="StatusMessage" />
 <p>
     <a onclick="spinerLoading(this)" asp-action="Create" class="btn btn-info">New </a>
     @*@if (Model.Any(x => x.StatusId == 3))
@@ -67,17 +70,17 @@
         <tr>
             <th>No</th>
             <th>Status</th>
-            <th>@Html.DisplayNameFor(model => model.RIdName)</th>
+            <th>@Html.DisplayNameFor(model => model.OrderVms[0].RIdName)</th>
             <th>DeliveryMan</th>
-            <th>@Html.DisplayNameFor(model => model.PlacedTime)</th>
-            <th>@Html.DisplayNameFor(model => model.AssignedTime)</th>
-            <th>@Html.DisplayNameFor(model => model.PickedUpTime)</th>
-            <th>@Html.DisplayNameFor(model => model.DeliveredTime)</th>
+            <th>@Html.DisplayNameFor(model => model.OrderVms[0].PlacedTime)</th>
+            <th>@Html.DisplayNameFor(model => model.OrderVms[0].AssignedTime)</th>
+            <th>@Html.DisplayNameFor(model => model.OrderVms[0].PickedUpTime)</th>
+            <th>@Html.DisplayNameFor(model => model.OrderVms[0].DeliveredTime)</th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var order in Model)
+        @foreach (var order in Model.OrderVms)
         {
             @if (order.StatusId == 2 || order.StatusId == 1)
             {
@@ -99,23 +102,23 @@
                                 break;
                         }
                     </td>
-                    <td data-label=@Html.DisplayNameFor(model => model.RIdName)>
+                    <td data-label=@Html.DisplayNameFor(model => model.OrderVms[0].RIdName)>
                         @order.RIdName
                     </td>
 
                     @if (order.VIdName == null)
                     {
-                        <td data-label=@Html.DisplayNameFor(model => model.VIdName)> Null </td>
+                        <td data-label=@Html.DisplayNameFor(model => model.OrderVms[0].VIdName)> Null </td>
                     }
                     else
                     {
-                        <td data-label=@Html.DisplayNameFor(model => model.VIdName)>   @order.VIdName</td>
+                        <td data-label=@Html.DisplayNameFor(model => model.OrderVms[0].VIdName)>   @order.VIdName</td>
                     }
 
-                    <td data-label=@Html.DisplayNameFor(model => model.PlacedTime)> @GetTime(order.PlacedTime)</td>
-                    <td data-label=@Html.DisplayNameFor(model => model.AssignedTime)> @GetTime(order.AssignedTime)</td>
-                    <td data-label=@Html.DisplayNameFor(model => model.PickedUpTime)> @GetTime(order.PickedUpTime)</td>
-                    <td data-label=@Html.DisplayNameFor(model => model.DeliveredTime)> @GetTime(order.DeliveredTime)</td>
+                    <td data-label=@Html.DisplayNameFor(model => model.OrderVms[0].PlacedTime)> @GetTime(order.PlacedTime)</td>
+                    <td data-label=@Html.DisplayNameFor(model => model.OrderVms[0].AssignedTime)> @GetTime(order.AssignedTime)</td>
+                    <td data-label=@Html.DisplayNameFor(model => model.OrderVms[0].PickedUpTime)> @GetTime(order.PickedUpTime)</td>
+                    <td data-label=@Html.DisplayNameFor(model => model.OrderVms[0].DeliveredTime)> @GetTime(order.DeliveredTime)</td>
                     <td data-label="Action">
                         <div class="action-btns">-</div>
                     </td>
@@ -146,23 +149,23 @@
                                 break;
                         }
                     </td>
-                    <td data-label=@Html.DisplayNameFor(model => model.RIdName)>
+                    <td data-label=@Html.DisplayNameFor(model => model.OrderVms[0].RIdName)>
                         @order.RIdName
                     </td>
 
                     @if (order.VIdName == null)
                     {
-                        <td data-label=@Html.DisplayNameFor(model => model.VIdName)> Null </td>
+                        <td data-label=@Html.DisplayNameFor(model => model.OrderVms[0].VIdName)> Null </td>
                     }
                     else
                     {
-                        <td data-label=@Html.DisplayNameFor(model => model.VIdName)>   @order.VIdName</td>
+                        <td data-label=@Html.DisplayNameFor(model => model.OrderVms[0].VIdName)>   @order.VIdName</td>
                     }
 
-                    <td data-label=@Html.DisplayNameFor(model => model.PlacedTime)> @GetTime(order.PlacedTime)</td>
-                    <td data-label=@Html.DisplayNameFor(model => model.AssignedTime)> @GetTime(order.AssignedTime)</td>
-                    <td data-label=@Html.DisplayNameFor(model => model.PickedUpTime)> @GetTime(order.PickedUpTime)</td>
-                    <td data-label=@Html.DisplayNameFor(model => model.DeliveredTime)> @GetTime(order.DeliveredTime)</td>
+                    <td data-label=@Html.DisplayNameFor(model => model.OrderVms[0].PlacedTime)> @GetTime(order.PlacedTime)</td>
+                    <td data-label=@Html.DisplayNameFor(model => model.OrderVms[0].AssignedTime)> @GetTime(order.AssignedTime)</td>
+                    <td data-label=@Html.DisplayNameFor(model => model.OrderVms[0].PickedUpTime)> @GetTime(order.PickedUpTime)</td>
+                    <td data-label=@Html.DisplayNameFor(model => model.OrderVms[0].DeliveredTime)> @GetTime(order.DeliveredTime)</td>
                     <td>
                         <div class="action-btns">
 
@@ -215,7 +218,7 @@
                         { "width": "12%", "targets": 5 },//6
                         { "width": "12%", "targets": 6 },//7
                         { "width": "13%", "targets": 7 },//8
-                         { "width": "13%", "targets": 8 }//9
+                        { "width": "13%", "targets": 8 }//9
 
 
 

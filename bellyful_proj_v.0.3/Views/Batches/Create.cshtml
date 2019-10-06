@@ -1,22 +1,23 @@
 ﻿@model bellyful_proj_v._0._3.ViewModels.BatchVM.BatchCreateViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "New Batch";
 }
 
-<h2>Add a new Batch</h2>
+<div class="detailPageContent">
+    @*<hr />
 
-<hr />
+        <pre style="color: gray">Tips:
+         1. 指定餐类及数量即可
+         2. 餐品生产日期为当前时间
+        </pre>
 
-<pre style="color: gray">Tips:
- 1. 指定餐类及数量即可
- 2. 餐品生产日期为当前时间
-</pre>
+        <hr />*@
+    <partial name="_StatusMessage" for="StatusMessage" />
 
-<hr />
-<partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-        <div class="col-md-4">
+    <br />
+    <div class="row">
+        <div class="col-md-7">
             <form asp-action="Create">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
@@ -28,19 +29,23 @@
                     <label asp-for="MealTypeId" class="control-label"></label>
                     <select asp-for="MealTypeId" class="form-control" asp-items="ViewBag.MealTypeId"></select>
                 </div>
+                <br />
                 <div class="form-group">
-                    <input type="submit" value="Add" class="btn btn-primary" />
-                    <br /> <br />
-                    <a asp-action="Index">Back to Batch List</a>
+                    <input type="submit" value="Add" onclick="spinerLoading(this)" style="background-color:lightpink;" class="btn text-black-50" />
+
+                    <a onclick="spinerLoading(this)" style="background-color:lightblue;" class="btn text-black-50" asp-action="Index">Back to Batch List</a>
                 </div>
             </form>
         </div>
     </div>
 
+</div>
+<br />
+<br />
 @await Component.InvokeAsync("MealInstock")
 
 
-<div>
-       
-    </div>
 
+
+<br />
+<br /> 

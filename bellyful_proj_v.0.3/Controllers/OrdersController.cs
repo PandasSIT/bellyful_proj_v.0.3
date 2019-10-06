@@ -31,12 +31,13 @@ namespace bellyful_proj_v._0._3.Controllers
         }
 
         // GET: Orders
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string statusMessage)
         {
             //  var bellyful_v03Context = _context.Order.Include(o => o.Recipient).Include(o => o.Status).Include(o => o.Volunteer);
             //  return View(await bellyful_v03Context.ToListAsync());
 
-            var ordersVMs = new List<OrderIndexViewModel>();
+            var orderIndexPageVm = new OrderIndexPageVM();
+            orderIndexPageVm.OrderVms = new List<OrderIndexViewModel>();
 
             foreach (var o in _context.Order)
             {
@@ -61,15 +62,18 @@ namespace bellyful_proj_v._0._3.Controllers
                 //    vm.Status = _context.OrderStatus.FindAsync(o.StatusId.Value).Result.Content;
                 //}
 
-                ordersVMs.Add(vm);
+                orderIndexPageVm.OrderVms.Add(vm);
 
             }
 
-            ordersVMs.Sort();
+            orderIndexPageVm.OrderVms.Sort();
 
+            if (statusMessage != null)
+            {
+                orderIndexPageVm.StatusMessage = statusMessage;
+            }
 
-            return View(ordersVMs);
-
+            return View(orderIndexPageVm);
 
 
         }
@@ -155,13 +159,14 @@ namespace bellyful_proj_v._0._3.Controllers
             try
             {
                 _context.Database.ExecuteSqlCommand("sp_PushOrderWithP @OrderId ", new SqlParameter("@OrderId", orderId));
+
             }
             catch (Exception)
             {
                 throw;
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { statusMessage = "Order Id: " + orderId.ToString() + " Pushed and Sended Email Grouply !"});
         }//Cancel
         public IActionResult PushAll()
         {
@@ -190,7 +195,7 @@ namespace bellyful_proj_v._0._3.Controllers
                 throw;
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index",new { statusMessage = "Order Id: " + orderId.ToString()+ " Canceled !! Instock already deducted !" });
         }//
 
         public IActionResult ResetAllOrderBatchInstock()

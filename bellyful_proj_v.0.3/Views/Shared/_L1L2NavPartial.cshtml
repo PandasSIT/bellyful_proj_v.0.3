@@ -94,23 +94,11 @@
         <span>Settings</span>
     </a>
     <ul class="collapse list-unstyled" id="OSubmenu">
-        <li>
-            <a asp-controller="AppUser" asp-action="Index">Users</a>
-        </li>
-        <li>
-            <a asp-controller="VolunteerRoles" asp-action="Index">V.Roles</a>
-        </li>
-        <li>
-            <a asp-controller="VolunteerStatus" asp-action="Index">V.Status</a>
-        </li>
-        <li>
-            <a asp-controller="ReferrerRoles" asp-action="Index">R.Roles</a>
-        </li>
-        <li>
-            <a asp-controller="Branches" asp-action="Index">Branch</a>
-        </li>
-        <li>
-            <a asp-controller="MealTypes" asp-action="Index">MealType</a>
-        </li>
+        <li> <a asp-controller="AppUser" asp-action="Index">AppUser</a></li>
+        @*<li><a asp-controller="VolunteerRoles" asp-action="Index">V.Roles</a></li>
+        <li><a asp-controller="VolunteerStatus" asp-action="Index">V.Status</a> </li>
+        <li> <a asp-controller="ReferrerRoles" asp-action="Index">R.Roles</a></li>*@
+        <li><a asp-controller="Branches" asp-action="Index">Branch</a></li>
+        <li><a asp-controller="MealTypes" asp-action="Index">MealType</a></li>
     </ul>
 </li>

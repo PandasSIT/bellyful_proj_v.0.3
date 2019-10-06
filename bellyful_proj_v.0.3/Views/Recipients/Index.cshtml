@@ -51,8 +51,9 @@
                 @Html.DisplayFor(modelItem => item.DietaryRequirement.DietaryName)
             </td>
             <td data-label=Actions>
-                <a onclick="spinerLoading(this)" style="background-color:lightblue;" class="btn text-black-50" asp-action="Details" asp-route-id="@item.RecipientId">Details</a>
+
                 <a onclick="spinerLoading(this)" style="background-color:lightpink;" class="btn text-black-50" asp-action="Edit" asp-route-id="@item.RecipientId">Edit</a>
+                <a onclick="spinerLoading(this)" style="background-color:lightblue;" class="btn text-black-50" asp-action="Details" asp-route-id="@item.RecipientId">Details</a>
 
                 @*<a asp-action="Delete" asp-route-id="@item.RecipientId">Delete</a>*@
             </td>

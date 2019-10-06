@@ -21,12 +21,13 @@ namespace bellyful_proj_v._0._3.Controllers
         }
 
         // GET: Volunteers
+        [Authorize(Roles = "L1_Admin, L2_Manager")]
         public async Task<IActionResult> Index()
         {
             var bellyful_v03Context = _context.Volunteer.Include(v => v.Branch).Include(v => v.Role).Include(v => v.Status);
             return View(await bellyful_v03Context.ToListAsync());
         }
-
+        [Authorize(Roles = "L1_Admin, L2_Manager")]
         // GET: Volunteers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -66,6 +67,7 @@ namespace bellyful_proj_v._0._3.Controllers
         {
             if (ModelState.IsValid)
             {
+                volunteer.IsAssignedUserAccount = false;
                 _context.Add(volunteer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

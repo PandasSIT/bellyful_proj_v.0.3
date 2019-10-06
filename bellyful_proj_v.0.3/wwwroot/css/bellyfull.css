@@ -2,6 +2,32 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 
+/*.table tr {
+    border-bottom: 2px lightpink solid;
+    border-top: 2px lightpink solid;
+}*/
+.nav-pills .nav-link.active {
+    color: #fff;
+    background-color: lightcoral;
+}
+
+.alert-danger {
+    background-color: orangered;
+    color: azure;
+}
+#status-message {
+    position: fixed;
+    left: 27%;
+    top: 3%;
+    width: 66%;
+        transition: all 1s;
+}
+
+h6 {
+    margin-top: 20px;
+    text-align:center;
+    margin-bottom:3px;
+}
 .detailPageContent {
     margin-left: 15%;
 }
@@ -10,9 +36,7 @@ for details on configuring this project to bundle and minify static web assets. 
 .table th {
     border-top: none;
 }
-.alert-success {
-    background-color: rgba(212, 237, 218,0.5);
-}
+
 
 
 main>p>a {
@@ -48,7 +72,7 @@ main>p>a {
 .barChart-container {
     position: relative;
     margin: auto;
-    margin-top: 30px;
+    
     margin-bottom: 40px;
     height: 35vh;
     width: 50vw;
@@ -146,8 +170,7 @@ table th{
 }
 
 
-    .bellyful-order_wrapper .table .thead-dark th {
-    }
+
 
 .footer {
     text-align: center;
@@ -178,6 +201,19 @@ table th{
 
 /* <= 568px */
 @media screen and (max-width: 35.5em) {
+    .alert-danger {
+        
+        color: azure;
+    }
+    #status-message {
+        z-index: 999;
+        position: fixed;
+        left: 5%;
+        top: 2%;
+        width: 90%;
+        opacity: 1;
+        transition: all 1s;
+    }
 
     .detailPageContent {
         margin-left:1%;

@@ -1,13 +1,11 @@
 ﻿@model IEnumerable<bellyful_proj_v._0._3.Models.ReferralReason>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "ReferralReason";
 }
 
-<h1>Index</h1>
-
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-info">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -19,17 +17,21 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Content)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ReferralReasonId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ReferralReasonId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ReferralReasonId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Content)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ReferralReasonId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ReferralReasonId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ReferralReasonId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<br />
+<br />
+<br />

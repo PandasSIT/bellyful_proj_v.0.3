@@ -37,7 +37,7 @@ namespace bellyful_proj_v._0._3.Areas.Identity.Pages.Account
             }
             else
             {
-                return Page();
+                return LocalRedirect("~/");
             }
         }
     }

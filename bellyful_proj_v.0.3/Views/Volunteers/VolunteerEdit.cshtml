@@ -1,109 +1,126 @@
 ﻿@model bellyful_proj_v._0._3.ViewModels.VolunteerVM.VolunteerEditViewModel
 
+@{
+    ViewData["Title"] = "Edit Your Info";
+}
 
-<h2>Your Info</h2>
 <hr />
-<partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="VolunteerEdit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="VolunteerId"/>
-            <div class="form-group">
-                <label asp-for="FirstName" class="col-form-label"></label>
-                <input asp-for="FirstName" class="form-control"/>
-                <span asp-validation-for="FirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="col-form-label"></label>
-                <input asp-for="LastName" class="form-control"/>
-                <span asp-validation-for="LastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Dob" class="col-form-label"></label>
-                <input asp-for="Dob" class="form-control"/>
-                <span asp-validation-for="Dob" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="col-form-label"></label>
-                <input readOnly="readOnly" asp-for="Email" class="form-control"/>
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PreferredPhone" class="col-form-label"></label>
-                <input asp-for="PreferredPhone" class="form-control"/>
-                <span asp-validation-for="PreferredPhone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AlternativePhone" class="col-form-label"></label>
-                <input asp-for="AlternativePhone" class="form-control"/>
-                <span asp-validation-for="AlternativePhone" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address" class="col-form-label"></label>
-                <input asp-for="Address" class="form-control"/>
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TownCity" class="col-form-label"></label>
-                <input asp-for="TownCity" class="form-control"/>
-                <span asp-validation-for="TownCity" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PostCode" class="col-form-label"></label>
-                <input asp-for="PostCode" class="form-control"/>
-                <span asp-validation-for="PostCode" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StatusId" class="col-form-label"></label>
-                <select  disabled asp-for="StatusId" class="form-control disabled" asp-items="ViewBag.StatusId"></select>
-                <span asp-validation-for="StatusId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="BranchId" class="col-form-label"></label>
-                <select disabled  asp-for="BranchId" class="form-control" asp-items="ViewBag.BranchId"></select>
-                <span asp-validation-for="BranchId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="RoleId" class="col-form-label"></label>
-                <select disabled asp-for="RoleId" class="form-control" asp-items="ViewBag.RoleId"></select>
-                <span asp-validation-for="RoleId" class="text-danger"></span>
-            </div>
-            <input type="hidden" asp-for="IsAssignedUserAccount"/>
-
-            <hr/>
-            <h4>Emergency Contact</h4>
-            <div class="form-group">
-                <label asp-for="EFirstName" class="col-form-label"></label>
-                <input asp-for="EFirstName" class="form-control"/>
-                <span asp-validation-for="EFirstName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ELastName" class="col-form-label"></label>
-                <input asp-for="ELastName" class="form-control"/>
-                <span asp-validation-for="ELastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EPhoneNumber" class="col-form-label"></label>
-                <input asp-for="EPhoneNumber" class="form-control"/>
-                <span asp-validation-for="EPhoneNumber" class="text-danger"></span>
-            </div>
+<div class="detailPageContent">
+    <partial name="_StatusMessage" for="StatusMessage" />
+    <div class="row">
+        <div class="col-md-10 float-left">
+            <form asp-action="VolunteerEdit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="VolunteerId" />
+                <div class=" form-group row">
+                    <div class=" col-md-4 ">
+                        <label asp-for="FirstName" class="col-form-label"></label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                    <div class=" col-md-4 ">
+                        <label asp-for="LastName" class="col-form-label"></label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                    <div class=" col-md-4 ">
+                        <label asp-for="Dob" class="col-form-label"></label>
+                        <input asp-for="Dob" class="form-control" />
+                        <span asp-validation-for="Dob" class="text-danger"></span>
+                    </div>
+                </div>
 
 
+                <div class="form-group row">
 
-            <div class="form-group">
-                <label asp-for="ERelationship" class="col-form-label"></label>
-                <input asp-for="ERelationship" class="form-control"/>
-                <span asp-validation-for="ERelationship" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary"/>
-            </div>
-        </form>
+                    <div class=" col-md-6 ">
+                        <label asp-for="Email" class="col-form-label"></label>
+                        <input readOnly="readOnly" asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class=" col-md-6 ">
+                        <label asp-for="PreferredPhone" class="col-form-label"></label>
+                        <input asp-for="PreferredPhone" class="form-control" />
+                        <span asp-validation-for="PreferredPhone" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class=" col-md-4 ">
+                        <label asp-for="Address" class="col-form-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class=" col-md-4 ">
+                        <label asp-for="TownCity" class="col-form-label"></label>
+                        <input asp-for="TownCity" class="form-control" />
+                        <span asp-validation-for="TownCity" class="text-danger"></span>
+                    </div>
+                    <div class=" col-md-4 ">
+                        <label asp-for="PostCode" class="col-form-label"></label>
+                        <input asp-for="PostCode" class="form-control" />
+                        <span asp-validation-for="PostCode" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                @*<div class="form-group">
+                        <label asp-for="StatusId" class="col-form-label"></label>
+                        <select disabled asp-for="StatusId" class="form-control disabled" asp-items="ViewBag.StatusId"></select>
+                        <span asp-validation-for="StatusId" class="text-danger"></span>
+                    </div>*@
+                <div class="form-group row">
+                    <div class=" col-md-6 ">
+                        <label asp-for="BranchId" class="col-form-label"></label>
+                        <select disabled asp-for="BranchId" class="form-control" asp-items="ViewBag.BranchId"></select>
+                        <span asp-validation-for="BranchId" class="text-danger"></span>
+                    </div>
+                </div>
+                @*<div class="form-group">
+                        <label asp-for="RoleId" class="col-form-label"></label>
+                        <select disabled asp-for="RoleId" class="form-control" asp-items="ViewBag.RoleId"></select>
+                        <span asp-validation-for="RoleId" class="text-danger"></span>
+                    </div>*@
+                <input type="hidden" asp-for="IsAssignedUserAccount" />
+
+                <hr />
+                <h4>Emergency Contact</h4>
+
+                <div class="form-group row">
+                    <div class=" col-md-6 ">
+                        <label asp-for="EFirstName" class="col-form-label"></label>
+                        <input asp-for="EFirstName" class="form-control" />
+                        <span asp-validation-for="EFirstName" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="ELastName" class="col-form-label"></label>
+                        <input asp-for="ELastName" class="form-control" />
+                        <span asp-validation-for="ELastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class=" col-md-6 ">
+                        <label asp-for="EPhoneNumber" class="col-form-label"></label>
+                        <input asp-for="EPhoneNumber" class="form-control" />
+                        <span asp-validation-for="EPhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="ERelationship" class="col-form-label"></label>
+                        <input asp-for="ERelationship" class="form-control" />
+                        <span asp-validation-for="ERelationship" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <input type="submit" value="Save" onclick="spinerLoading(this)" style="background-color:lightblue;" class="btn text-black-50" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <div>
+        <a asp-action="Index" onclick="spinerLoading(this)" style="background-color:lightpink;" class="btn text-black-50">Back to List</a>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

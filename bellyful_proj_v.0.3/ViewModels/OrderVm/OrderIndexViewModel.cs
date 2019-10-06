@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,7 +18,7 @@ namespace bellyful_proj_v._0._3.ViewModels
         [Display(Name = "Recipient")]
         public string RIdName { get; set; }
 
-        [Display(Name = "Delivery Man")]
+        [Display(Name = "Delivery By")]
         public string VIdName { get; set; }
         [Display(Name = "Placed")]
         public DateTime? PlacedTime { get; set; }
@@ -31,6 +33,8 @@ namespace bellyful_proj_v._0._3.ViewModels
 
         [Display(Name = "Dog On Property")]
         public bool TheRecipientDogOnProperty { get; set; }
+
+      
 
         public int CompareTo(OrderIndexViewModel other)
         {

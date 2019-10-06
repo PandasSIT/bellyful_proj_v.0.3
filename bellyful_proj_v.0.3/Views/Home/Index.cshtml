@@ -8,11 +8,13 @@
 
 
 @if (@User.IsInRole("L1_Admin") || @User.IsInRole("L2_Manager") || @User.IsInRole("L3_ChefManager"))
-{
+{<h6>Data In Total So Far</h6>
     <div class="barChart-container">
         <canvas id="barChart"></canvas>
     </div>
+    <h6>2019 Yearly Report</h6>
     <div class="lineChart-container">
+
         <canvas id="lineChart"></canvas>
     </div>
     <script>
@@ -100,10 +102,18 @@
         };
         //lineChartOptions
         var lineChartOptions = {
+             legend: {
+            display: true,
+                position: 'bottom',
+
+        },//ddddd
             title: {
                 display: true,
-                text: '2019 Yearly Report'
+             //     text: '2019 Yearly Report'
+
             },
+
+
             responsive: true,
             hoverMode: 'index',
             stacked: false,
@@ -148,10 +158,17 @@
             },
         };
         var barChartOptions = {
+               legend: {
+            display: true,
+                position: 'bottom',
+
+        },//ddddd
             title: {
                 display: true,
-                text: 'Data In Total So Far'
+             //     Data In Total So Far'
+
             },
+
             responsive: true,
             hoverMode: 'index',
             stacked: false,
@@ -211,9 +228,12 @@
 }
 else if (@User.IsInRole("L4_DeliverMan"))
 {
+    <h6>My Records So Far</h6>
+
     <div class="barChart-container">
         <canvas id="barChart"></canvas>
     </div>
+    <h6>2019 Yearly Report</h6>
     <div class="lineChart-container">
         <canvas id="lineChart"></canvas>
     </div>
@@ -282,9 +302,15 @@ else if (@User.IsInRole("L4_DeliverMan"))
         };
         //lineChartOptions
         var lineChartOptions = {
+            legend: {
+            display: true,
+                position: 'bottom',
+
+        },//ddddd
             title: {
                 display: true,
-                text: '2019 Yearly Report'
+             //   text: 'My Data In Total So Far',
+
             },
             responsive: true,
             hoverMode: 'index',
@@ -330,16 +356,22 @@ else if (@User.IsInRole("L4_DeliverMan"))
             },
         };
         var barChartOptions = {
+            legend: {
+            display: true,
+                position: 'bottom',
+
+        },//ddddd
             title: {
                 display: true,
-                text: 'My Data In Total So Far'
+             //   text: 'My Data In Total So Far',
+           //    position: 'bottom',
+
             },
             responsive: true,
             hoverMode: 'index',
             stacked: false,
             maintainAspectRatio: false,
             scales: {
-
                 xAxes: [{
                     display: true,
                     scaleLabel: {
@@ -387,7 +419,10 @@ else if (@User.IsInRole("L4_DeliverMan"))
         });
         Chart.Bar('barChart', {
             options: barChartOptions,
-            data: barChartData
+            data: barChartData,
+    //         options: {
+
+    //}
         });
     </script>
 }

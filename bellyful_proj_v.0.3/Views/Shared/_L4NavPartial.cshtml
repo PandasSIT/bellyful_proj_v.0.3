@@ -1,16 +1,23 @@
 ﻿@*Orders*@
 
 
-    <li>
-        
-        <a asp-controller="OrdersForVolunteer" asp-action="MyOrdersIndex" asp-route-Name="@User.Identity.Name">
-            <i class="fa fa-file-text-o "></i>My Order
-        </a>
-
-    </li>
+<li>
+    <a asp-controller="Home" asp-action="Index" asp-route-userEmail=@User.Identity.Name>
+        <i class="fa fa-pie-chart "></i>
+        <span>DashBoard</span>
+    </a>
+</li>
 
 <li>
-    
+
+    <a asp-controller="OrdersForVolunteer" asp-action="MyOrdersIndex" asp-route-Name="@User.Identity.Name">
+        <i class="fa fa-file-text-o "></i>My Order
+    </a>
+
+</li>
+
+<li>
+
     <a asp-controller="OrdersForVolunteer" asp-action="PushedOrdersIndex" asp-route-Name="@User.Identity.Name">
         <i class="fa fa-file-o"></i>New Order
     </a>
