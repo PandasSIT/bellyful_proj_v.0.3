@@ -2,6 +2,21 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 
+
+.btn-info {
+    
+    background-color: rgb(140,148,167);
+    border:none;
+}
+.btn-danger {
+    background-color: #b17a7d;
+    border: none;
+}
+/*.btn-primary {
+    background-color: rgb(143,144,76);
+    border: none;
+}*/
+
 /*.table tr {
     border-bottom: 2px lightpink solid;
     border-top: 2px lightpink solid;
@@ -46,7 +61,7 @@ main>p>a {
     border: none;
 }
 #content-bg {
-    background-image: url("/images/bgRed.jpg");
+    /*background-image: url("/images/bgRed.jpg");*/
     background-repeat: no-repeat;
     z-index:-1;
     height:333px;

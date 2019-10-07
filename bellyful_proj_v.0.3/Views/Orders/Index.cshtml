@@ -133,7 +133,7 @@
                     <td data-label="Status">
                         @switch (order.StatusId)
                         {
-                            case 3:// Created ;
+                            case 3:// Created   rgba(153, 204, 15,0.6);
                                 <span style="background-color: rgba(153, 204, 15,0.6); border-radius:15px; padding:1px 7px">Created</span>
                                 break;
                             case 4:// Pushed ;
@@ -171,12 +171,12 @@
 
                             @if (order.StatusId == 3)
                             {
-                                <a onclick="spinerLoading(this)" style="background-color:lightblue;" class="btn text-black-50" asp-action="Push" asp-route-OrderId="@order.OrderId"><b>Push</b></a>
+                                <a onclick="spinerLoading(this)" style="background-color:rgba(153, 204, 255,0.8);" class="btn text-black-50" asp-action="Push" asp-route-OrderId="@order.OrderId"><b>Push</b></a>
 
                             }
                             @if (order.StatusId == 3 || order.StatusId == 4)
                             {
-                                <a onclick="spinerLoading(this)" style="background-color:lightpink;" class="btn text-black-50" asp-action="Cancel" asp-route-OrderId="@order.OrderId"><i class="fa fa-times"></i></a>
+                                <a onclick="spinerLoading(this)" style="background-color:rgba(241,126,97,0.8);" class="btn text-black-50" asp-action="Cancel" asp-route-OrderId="@order.OrderId"><i class="fa fa-times"></i></a>
                             }
                             else
                             {
