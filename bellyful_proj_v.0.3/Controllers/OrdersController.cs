@@ -148,17 +148,17 @@ namespace bellyful_proj_v._0._3.Controllers
             return View(orderCVM);
         }
 
-        public IActionResult Push(int orderId)
+        public async Task<IActionResult> Push(int orderId)
         {
             //list.Where(a => !string.IsNullOrEmpty(a.user_type)).Select(a => a.id).ToArray();
             //_context.Volunteer.Find(orderId.ToString);
 
             // var volunteer =  _context.Volunteer.Where(v => v.StatusId == 1 && v.RoleId == 4).FirstOrDefaultAsync();
-            _googleEmailSender.SendEmailAsync(orderId.ToString(), userEmails);
+            await _googleEmailSender.SendEmailAsync(orderId.ToString(), userEmails);
 
             try
             {
-                _context.Database.ExecuteSqlCommand("sp_PushOrderWithP @OrderId ", new SqlParameter("@OrderId", orderId));
+                await _context.Database.ExecuteSqlCommandAsync("sp_PushOrderWithP @OrderId ", new SqlParameter("@OrderId", orderId));
 
             }
             catch (Exception)

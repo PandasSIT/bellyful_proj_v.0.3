@@ -83,7 +83,7 @@
                         <a title="Take this one" style="background-color:lightblue;" class="btn text-black-50" 
                            asp-action="TakeOrder" asp-route-OrderId="@order.OrderId"
                            asp-route-Name="@User.Identity.Name"
-                           onclick="spinerLoading(this); return confirm('Are you sure to take Order:@order.OrderId?')"> Take</a>
+                           onclick="return confirm('Are you sure to take this Order:@order.OrderId?')"> Take</a>
 
 
                     </td>

@@ -75,13 +75,13 @@ namespace bellyful_proj_v._0._3.Controllers
                               
                         if ((int)i <= DateTime.Now.Month)//小于等于当前月 给0
                         {
-                            dashboardViewModel.DeliveryHrsReportMonthly[i] = Math.Round(timeSpan.TotalMinutes / 60);
+                            dashboardViewModel.DeliveryHrsReportMonthly[i] = double.Parse((timeSpan.TotalMinutes / 60).ToString("0.##")) ;
                         }
                         else
                         {  //超过当前月 给空值
                             if (num != 0)
                             {
-                                dashboardViewModel.DeliveryHrsReportMonthly[i] = Math.Round(timeSpan.TotalMinutes / 60);
+                                dashboardViewModel.DeliveryHrsReportMonthly[i] = double.Parse((timeSpan.TotalMinutes / 60).ToString("0.##"));
                             }
                         }
                     }

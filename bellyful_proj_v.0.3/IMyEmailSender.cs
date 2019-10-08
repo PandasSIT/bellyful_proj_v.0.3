@@ -14,22 +14,11 @@ namespace bellyful_proj_v._0._3
 
     public class GoogleEmailSender : IMyEmailSender
     {
-        readonly SmtpClient _sender;
         string displayName;
 
-        public GoogleEmailSender()
-        {
-            _sender = new SmtpClient
-            {
-                Host = "smtp.gmail.com",
-                Port = 587,
-                Credentials = new NetworkCredential("bellyful.inv@gmail.com", "z543z609z"),
-                EnableSsl = true,
-            };
-        }
+      
 
-
-        public Task SendEmailAsync(string orderId , string [] userEmails)
+        public async Task SendEmailAsync(string orderId , string [] userEmails)
         {
             using (var message = new MailMessage())
             {  //收件人
@@ -53,12 +42,20 @@ namespace bellyful_proj_v._0._3
                     " <h4>Best Regards</h4><h4>Bellyful Invercargill</h4>", orderId);
                 message.IsBodyHtml = true;
                 //使用using，因为MailMessage实现了IDisposable接口。
-                _sender.Send(message);
 
+            
+                using (var _sender = new SmtpClient()
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    Credentials = new NetworkCredential("bellyful.inv@gmail.com", "z543z609z"),
+                    EnableSsl = true,
+                })
+                {
+                    await _sender.SendMailAsync(message);
+                }
             }
             
-
-            return Task.CompletedTask;
         }
     }
 }
