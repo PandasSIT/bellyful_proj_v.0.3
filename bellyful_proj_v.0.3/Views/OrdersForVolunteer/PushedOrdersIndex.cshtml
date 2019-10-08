@@ -56,9 +56,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.PlacedTime)
                 </th>
-
-
-
                 <th>Action</th>
             </tr>
         </thead>
@@ -66,27 +63,28 @@
             @foreach (var order in Model)
             {
                 <tr>
-                    <td>
+                    <td data-label=No.>
                         @order.OrderId
                     </td>
-                    <td>
+                    <td data-label=@Html.DisplayNameFor(model => model.RIdName)>
                         @order.RIdName
                     </td>
-                    <td>
+                    <td data-label=@Html.DisplayNameFor(model => model.TheRecipientAddress)>
 
                         <a class="hoverLink" href="https://Maps.google.com/?q= @order.TheRecipientAddress">@order.TheRecipientAddress</a>
                         @{mutipAddress += order.TheRecipientAddress + "/";}
                     </td>
-                    <td>
+                    <td data-label=@Html.DisplayNameFor(model => model.TheRecipientDogOnProperty)>
                         @order.TheRecipientDogOnProperty
                     </td>
-                    <td> @GetTime(order.PlacedTime)</td>
+                    <td data-label=@Html.DisplayNameFor(model => model.PlacedTime)> @GetTime(order.PlacedTime)</td>
 
-                    <td>
-                        <a  title="Take this one" class="btn btn-info text-black-50"
+                    <td data-lable=Action>
+                        <a title="Take this one" style="background-color:lightblue;" class="btn text-black-50" 
                            asp-action="TakeOrder" asp-route-OrderId="@order.OrderId"
                            asp-route-Name="@User.Identity.Name"
-                           onclick="spinerLoading(this); return confirm('Are you sure to take Order:@order.OrderId?')"> <i style="color:white" class="fa fa-calendar-check-o"></i></a>
+                           onclick="spinerLoading(this); return confirm('Are you sure to take Order:@order.OrderId?')"> Take</a>
+
 
                     </td>
                 </tr>

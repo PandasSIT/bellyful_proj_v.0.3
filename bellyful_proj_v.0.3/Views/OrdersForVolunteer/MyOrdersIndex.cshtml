@@ -39,7 +39,7 @@
 <p>
     @if (Model.Any(x => x.StatusId == 5))
     {
-        <a onclick="spinerLoading(this)" class="btn btn-primary" asp-action="PickUpAllMeals" title="Pick up Meals for all your orders" asp-route-Name="@User.Identity.Name">Pick Up all</a>
+        <a onclick="spinerLoading(this)" class="btn btn-info" asp-action="PickUpAllMeals" title="Pick up Meals for all your orders" asp-route-Name="@User.Identity.Name">Pick Up all</a>
     }
     else
     {
@@ -166,13 +166,13 @@
                     {
                         case 5:
                             <td data-label="Action">
-                                <a class="btn btn-primary" onclick="spinerLoading(this)" asp-action="PickupMeal" asp-route-OrderId="@order.OrderId"
+                                <a onclick="spinerLoading(this)" style="background-color:lightblue;" class="btn text-black-50" asp-action="PickupMeal" asp-route-OrderId="@order.OrderId"
                                    asp-route-Name="@User.Identity.Name">Pick Up</a>
                             </td>
                             break;
                         case 6:
                             <td data-label="Action">
-                                <a class="btn btn-primary" onclick="spinerLoading(this)" asp-action="Finish" asp-route-OrderId="@order.OrderId"
+                                <a onclick="spinerLoading(this)" style="background-color:lightblue;" class="btn text-black-50" asp-action="Finish" asp-route-OrderId="@order.OrderId"
                                    asp-route-Name="@User.Identity.Name">Finish</a>
                             </td>
                             break;
@@ -190,7 +190,7 @@
 
 @if (mutipAddress != null)
 {
-    <a style="position:relative;bottom:750px;left:650px" class="btn btn-primary" href="https://www.google.com/maps/dir\@mutipAddress" +> String Up on Map! </a>
+    <a style="position:absolute;top:88px;left:25px" class="btn btn-info" href="https://www.google.com/maps/dir\@mutipAddress" +> String Up! </a>
 }
 
 @section Scripts{
