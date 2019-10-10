@@ -3,6 +3,8 @@ for details on configuring this project to bundle and minify static web assets. 
 
 
 
+
+
 .btn-info {
     
     background-color: rgb(140,148,167);
@@ -194,7 +196,20 @@ table th{
     bottom: 22px;*/
 }
 @media screen and (min-width:960px) {
+    .wp-13 {
+        width: 13%;
+    }
 
+    .wp-12 {
+        width: 12%;
+    }
+
+    .wp-10 {
+        width: 10%;
+    }
+    .wp-5 {
+        width: 5%;
+    }
     /* .footer {
         text-align: center;
         margin-top: 12px;

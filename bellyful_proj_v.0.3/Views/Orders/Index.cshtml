@@ -85,10 +85,10 @@
             @if (order.StatusId == 2 || order.StatusId == 1)
             {
                 <tr style="background-color:rgba(115, 115, 115,0.1);color:silver" class="text-black-50">
-                    <td  style="width:5%" data-label="Order Id.">
+                    <td  class="wp-5"  data-label="Order Id.">
                         @order.OrderId
                     </td>
-                    <td  style="width:10%"  data-label="Status">
+                    <td  class="wp-10" data-label="Status">
                         @switch (order.StatusId)
                         {
 
@@ -102,24 +102,24 @@
                                 break;
                         }
                     </td>
-                    <td style="width:13%" data-label=@Html.DisplayNameFor(model => model.OrderVms[0].RIdName)>
+                    <td class="wp-13" data-label=@Html.DisplayNameFor(model => model.OrderVms[0].RIdName)>
                         @order.RIdName
                     </td>
 
                     @if (order.VIdName == null)
                     {
-                        <td style="width:13%" data-label=@Html.DisplayNameFor(model => model.OrderVms[0].VIdName)> Null </td>
+                        <td class="wp-13" data-label=@Html.DisplayNameFor(model => model.OrderVms[0].VIdName)> Null </td>
                     }
                     else
                     {
-                        <td style="width:13%" data-label=@Html.DisplayNameFor(model => model.OrderVms[0].VIdName)>   @order.VIdName</td>
+                        <td class="wp-13" data-label=@Html.DisplayNameFor(model => model.OrderVms[0].VIdName)>   @order.VIdName</td>
                     }
 
-                    <td style="width:12%" data-label=@Html.DisplayNameFor(model => model.OrderVms[0].PlacedTime)> @GetTime(order.PlacedTime)</td>
-                    <td style="width:12%" data-label=@Html.DisplayNameFor(model => model.OrderVms[0].AssignedTime)> @GetTime(order.AssignedTime)</td>
-                    <td style="width:12%" data-label=@Html.DisplayNameFor(model => model.OrderVms[0].PickedUpTime)> @GetTime(order.PickedUpTime)</td>
-                    <td style="width:12%" data-label=@Html.DisplayNameFor(model => model.OrderVms[0].DeliveredTime)> @GetTime(order.DeliveredTime)</td>
-                    <td style="width:13%" data-label="Action">
+                    <td class="wp-12" data-label=@Html.DisplayNameFor(model => model.OrderVms[0].PlacedTime)> @GetTime(order.PlacedTime)</td>
+                    <td class="wp-12" data-label=@Html.DisplayNameFor(model => model.OrderVms[0].AssignedTime)> @GetTime(order.AssignedTime)</td>
+                    <td class="wp-12" data-label=@Html.DisplayNameFor(model => model.OrderVms[0].PickedUpTime)> @GetTime(order.PickedUpTime)</td>
+                    <td class="wp-12" data-label=@Html.DisplayNameFor(model => model.OrderVms[0].DeliveredTime)> @GetTime(order.DeliveredTime)</td>
+                    <td class="wp-13" data-label="Action">
                         <div class="action-btns">-</div>
                     </td>
                 </tr>
@@ -127,10 +127,10 @@
             else
             {
                 <tr>
-                    <td style="width:5%"  data-label="Order No.">
+                    <td class="wp-5" data-label="Order No.">
                         @order.OrderId
                     </td>
-                    <td style="width:10%"  data-label="Status">
+                    <td class="wp-10"  data-label="Status">
                         @switch (order.StatusId)
                         {
                             case 3:// Created   rgba(153, 204, 15,0.6);
@@ -149,24 +149,24 @@
                                 break;
                         }
                     </td>
-                    <td style="width:13%" data-label=@Html.DisplayNameFor(model => model.OrderVms[0].RIdName)>
+                    <td class="wp-13"data-label=@Html.DisplayNameFor(model => model.OrderVms[0].RIdName)>
                         @order.RIdName
                     </td>
 
                     @if (order.VIdName == null)
                     {
-                        <td  style="width:13%"data-label=@Html.DisplayNameFor(model => model.OrderVms[0].VIdName)> Null </td>
+                        <td  class="wp-13"data-label=@Html.DisplayNameFor(model => model.OrderVms[0].VIdName)> Null </td>
                     }
                     else
                     {
-                        <td style="width:13%"data-label=@Html.DisplayNameFor(model => model.OrderVms[0].VIdName)>   @order.VIdName</td>
+                        <td class="wp-13"data-label=@Html.DisplayNameFor(model => model.OrderVms[0].VIdName)>   @order.VIdName</td>
                     }
 
-                    <td style="width:12%" data-label=@Html.DisplayNameFor(model => model.OrderVms[0].PlacedTime)> @GetTime(order.PlacedTime)</td>
-                    <td style="width:12%"data-label=@Html.DisplayNameFor(model => model.OrderVms[0].AssignedTime)> @GetTime(order.AssignedTime)</td>
-                    <td style="width:12%"data-label=@Html.DisplayNameFor(model => model.OrderVms[0].PickedUpTime)> @GetTime(order.PickedUpTime)</td>
-                    <td style="width:12%"data-label=@Html.DisplayNameFor(model => model.OrderVms[0].DeliveredTime)> @GetTime(order.DeliveredTime)</td>
-                    <td style="width:13%">
+                    <td class="wp-12" data-label=@Html.DisplayNameFor(model => model.OrderVms[0].PlacedTime)> @GetTime(order.PlacedTime)</td>
+                    <td class="wp-12"data-label=@Html.DisplayNameFor(model => model.OrderVms[0].AssignedTime)> @GetTime(order.AssignedTime)</td>
+                    <td class="wp-12"data-label=@Html.DisplayNameFor(model => model.OrderVms[0].PickedUpTime)> @GetTime(order.PickedUpTime)</td>
+                    <td class="wp-12"data-label=@Html.DisplayNameFor(model => model.OrderVms[0].DeliveredTime)> @GetTime(order.DeliveredTime)</td>
+                    <td class="wp-13">
                         <div class="action-btns">
 
                             @if (order.StatusId == 3)
