@@ -196,6 +196,11 @@ table th{
     bottom: 22px;*/
 }
 @media screen and (min-width:960px) {
+    #btnStringUp {
+        position: relative;
+        bottom: 746px;
+        left: 25px;
+    }
     .wp-13 {
         width: 13%;
     }
@@ -231,6 +236,12 @@ table th{
 
 /* <= 568px */
 @media screen and (max-width: 35.5em) {
+
+    #btnStringUp {
+        position: relative;
+        bottom: 540px;
+        left: 15px;
+    }
     .alert-danger {
         
         color: azure;

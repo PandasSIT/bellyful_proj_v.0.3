@@ -188,9 +188,9 @@
     </tbody>
 </table>
 
-@if (mutipAddress != null)
+@if (mutipAddress != null && Model.All(x => x.StatusId != 5))
 {
-    <a style="position:absolute;top:88px;left:25px" class="btn btn-info" href="https://www.google.com/maps/dir\@mutipAddress" +> String Up! </a>
+    <a  id="btnStringUp" class="btn btn-info" href="https://www.google.com/maps/dir\@mutipAddress" +> String Up! </a>
 }
 
 @section Scripts{

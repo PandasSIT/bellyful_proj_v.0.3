@@ -17,17 +17,17 @@ namespace bellyful_proj_v._0._3.Controllers
     public class HomeController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+      //  private readonly RoleManager<IdentityRole> _roleManager;
         private readonly bellyful_v03Context _context;
 
         public HomeController(
             UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager,
+      //      RoleManager<IdentityRole> roleManager,
             bellyful_v03Context context
             )
         {
             _userManager = userManager;
-            _roleManager = roleManager;
+          //  _roleManager = roleManager;
             _context = context;
         }
 
