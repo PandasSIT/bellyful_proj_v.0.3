@@ -31,6 +31,10 @@ namespace bellyful_proj_v._0._3.ViewModels
         [Display(Name = "Address")]
         public string TheRecipientAddress { get; set; }
 
+        [Display (Name = "Meal Info")]
+        public string MealInfo { get; set; }
+
+
         [Display(Name = "Dog On Property")]
         public bool TheRecipientDogOnProperty { get; set; }
 

@@ -87,6 +87,7 @@ namespace bellyful_proj_v._0._3.Controllers
                             vm.TheRecipientAddress = r.AddressNumStreet;
                             if (r.DogOnProperty != null) vm.TheRecipientDogOnProperty = r.DogOnProperty.Value;
                             vm.RIdName = r.FirstName + "" + r.LastName;
+                            vm.MealInfo = string.Format(" A:{0} | B:{0} | C:{0} | D:{0}", r.AdultsNum );
                         }
 
                         if (o.CreatedDatetime != null)vm.PlacedTime = o.CreatedDatetime;

@@ -58,6 +58,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.TheRecipientAddress)
             </th>
+            <th>Meal Info</th>
             <th>
                 @Html.DisplayNameFor(model => model.PlacedTime)
             </th>
@@ -79,109 +80,109 @@
             // 1 Canceled 2 Completed 3 Created  4 Pushed  5 Assigned 6 Delivering
             @if (order.StatusId == 2 || order.StatusId == 1)
             {
-                <tr class="text-black-50">
-                    <td data-label="Order Id">
-                        @order.OrderId
-                    </td>
-                    <td data-label="Status">
-                        @switch (order.StatusId)
-                        {
-                            case 2: // Completed
+        <tr class="text-black-50">
+            <td data-label="Order Id">
+                @order.OrderId
+            </td>
+            <td data-label="Status">
+                @switch (order.StatusId)
+                {
+                    case 2: // Completed
 
-                                <span style="background-color:  rgb(211, 255, 253); color: grey; border-radius:15px; padding:1px 7px">Completed</span>
+                        <span style="background-color:  rgb(211, 255, 253); color: grey; border-radius:15px; padding:1px 7px">Completed</span>
 
-                                break;
-                            case 1: // Cancelled
+                        break;
+                    case 1: // Cancelled
 
-                                <span style="background-color:   rgb(222, 222, 222);   border-radius:15px; padding:1px 7px">Cancelled</span>
+                        <span style="background-color:   rgb(222, 222, 222);   border-radius:15px; padding:1px 7px">Cancelled</span>
 
 
-                                break;
-                            default:
-                                break;
-                        }
-                    </td>
-                    <td data-label=@Html.DisplayNameFor(model => model.RIdName)>
-                        @order.RIdName
-                    </td>
-                    <td data-label=@Html.DisplayNameFor(model => model.TheRecipientAddress)>
-                        <a href="https://Maps.google.com/?q= @order.TheRecipientAddress">@order.TheRecipientAddress</a>
-                        @if (order.StatusId == 6)
-                        {
-                            mutipAddress += order.TheRecipientAddress + "/";
-                        }
-                    </td>
-
-                    <td data-label=@Html.DisplayNameFor(model => model.PlacedTime)> @GetTime(order.PlacedTime)</td>
-                    <td data-label=@Html.DisplayNameFor(model => model.AssignedTime)> @GetTime(order.AssignedTime)</td>
-                    <td data-label=@Html.DisplayNameFor(model => model.PickedUpTime)> @GetTime(order.PickedUpTime)</td>
-                    <td data-label=@Html.DisplayNameFor(model => model.DeliveredTime)> @GetTime(order.DeliveredTime)</td>
-                    <td data-label="Action"><div class="action-btns">-</div></td>
-                </tr>
+                        break;
+                    default:
+                        break;
+                }
+            </td>
+            <td data-label=@Html.DisplayNameFor(model => model.RIdName)>
+                @order.RIdName
+            </td>
+            <td data-label=@Html.DisplayNameFor(model => model.TheRecipientAddress)>
+                <a href="https://Maps.google.com/?q= @order.TheRecipientAddress">@order.TheRecipientAddress</a>
+                @if (order.StatusId == 6)
+                {
+                    mutipAddress += order.TheRecipientAddress + "/";
+                }
+            </td>
+            <td data-label="Meal Info"> @order.MealInfo</td>
+            <td data-label=@Html.DisplayNameFor(model => model.PlacedTime)> @GetTime(order.PlacedTime)</td>
+            <td data-label=@Html.DisplayNameFor(model => model.AssignedTime)> @GetTime(order.AssignedTime)</td>
+            <td data-label=@Html.DisplayNameFor(model => model.PickedUpTime)> @GetTime(order.PickedUpTime)</td>
+            <td data-label=@Html.DisplayNameFor(model => model.DeliveredTime)> @GetTime(order.DeliveredTime)</td>
+            <td data-label="Action"><div class="action-btns">-</div></td>
+        </tr>
             }
             else
             {
-                <tr>
-                    <td  data-label="Order Id">
-                        @order.OrderId
-                    </td>
+    <tr>
+        <td data-label="Order Id">
+            @order.OrderId
+        </td>
 
 
-                    @switch (order.StatusId)
-                    {
+        @switch (order.StatusId)
+        {
 
-                        case 5: //Assigned
-                            <td  data-label="Status">
-                                <span style="background-color: rgba(241,238,103,0.6); border-radius:15px; padding:1px 7px">Taken</span>
-                            </td >
-                            break;
-                        case 6: // Delivering
-                            <td  data-label="Status">
-                                <span style="  background-color: rgba(241,126,97,0.6); border-radius:15px; padding:1px 7px">Delivering</span>
-                            </td>
-                            break;
-                        default:
-                            break;
-                    }
+            case 5: //Assigned
+                <td data-label="Status">
+                    <span style="background-color: rgba(241,238,103,0.6); border-radius:15px; padding:1px 7px">Taken</span>
+                </td>
+                break;
+            case 6: // Delivering
+                <td data-label="Status">
+                    <span style="  background-color: rgba(241,126,97,0.6); border-radius:15px; padding:1px 7px">Delivering</span>
+                </td>
+                break;
+            default:
+                break;
+        }
 
-                    <td data-label=@Html.DisplayNameFor(model => model.RIdName)>
-                        @order.RIdName
-                    </td>
-                    <td data-label=@Html.DisplayNameFor(model => model.TheRecipientAddress)>
-                        <a class="hoverLink" href="https://Maps.google.com/?q= @order.TheRecipientAddress">@order.TheRecipientAddress</a>
-                        @if (order.StatusId == 6)
-                        {
-                            mutipAddress += order.TheRecipientAddress + "/";
-                        }
-                    </td>
+        <td data-label=@Html.DisplayNameFor(model => model.RIdName)>
+            @order.RIdName
+        </td>
+        <td data-label=@Html.DisplayNameFor(model => model.TheRecipientAddress)>
+            <a class="hoverLink" href="https://Maps.google.com/?q= @order.TheRecipientAddress">@order.TheRecipientAddress</a>
+            @if (order.StatusId == 6)
+            {
+                mutipAddress += order.TheRecipientAddress + "/";
+            }
+        </td>
+        <td data-label="Meal Info"> @order.MealInfo</td>
+        <td data-label=@Html.DisplayNameFor(model => model.PlacedTime)> @GetTime(order.PlacedTime)</td>
+        <td data-label=@Html.DisplayNameFor(model => model.AssignedTime)> @GetTime(order.AssignedTime)</td>
+        <td data-label=@Html.DisplayNameFor(model => model.PickedUpTime)> @GetTime(order.PickedUpTime)</td>
+        <td data-label=@Html.DisplayNameFor(model => model.DeliveredTime)> @GetTime(order.DeliveredTime)</td>
 
-                    <td data-label=@Html.DisplayNameFor(model => model.PlacedTime)> @GetTime(order.PlacedTime)</td>
-                    <td data-label=@Html.DisplayNameFor(model => model.AssignedTime)> @GetTime(order.AssignedTime)</td>
-                    <td data-label=@Html.DisplayNameFor(model => model.PickedUpTime)> @GetTime(order.PickedUpTime)</td>
-                    <td data-label=@Html.DisplayNameFor(model => model.DeliveredTime)> @GetTime(order.DeliveredTime)</td>
 
 
+        @switch (order.StatusId)
+        {
+            case 5:
+                <td data-label="Action">
+                    <a onclick="spinerLoading(this)" style="background-color:lightblue;" class="btn text-black-50" asp-action="PickupMeal" asp-route-OrderId="@order.OrderId"
+                       asp-route-Name="@User.Identity.Name">Pick Up</a>
+                </td>
+                break;
+            case 6:
+                <td data-label="Action">
+                    <a onclick="spinerLoading(this)" style="background-color:lightblue;" class="btn text-black-50" asp-action="Finish" asp-route-OrderId="@order.OrderId"
+                       asp-route-Name="@User.Identity.Name">Finish</a>
+                </td>
+                break;
+            default:
+                <td data-label="Action"><div class="action-btns">-</div></td>
+                break;
 
-                    @switch (order.StatusId)
-                    {
-                        case 5:
-                            <td data-label="Action">
-                                <a onclick="spinerLoading(this)" style="background-color:lightblue;" class="btn text-black-50" asp-action="PickupMeal" asp-route-OrderId="@order.OrderId"
-                                   asp-route-Name="@User.Identity.Name">Pick Up</a>
-                            </td>
-                            break;
-                        case 6:
-                            <td data-label="Action">
-                                <a onclick="spinerLoading(this)" style="background-color:lightblue;" class="btn text-black-50" asp-action="Finish" asp-route-OrderId="@order.OrderId"
-                                   asp-route-Name="@User.Identity.Name">Finish</a>
-                            </td>
-                            break;
-                        default:
-                            <td data-label="Action"><div class="action-btns">-</div></td>
-                            break;
-
-                    }
-                </tr>
+        }
+    </tr>
             }
 
         }
